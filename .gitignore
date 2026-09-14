@@ -1,0 +1,14 @@
+# MyBB configuration (contains DB credentials)
+/inc/config.php
+
+# Installer lock file
+/install/lock
+
+# Cache files
+/cache/*.php
+/cache/*.json
+!cache/index.html
+
+# Logs
+*.log
+/inc/settings.php
