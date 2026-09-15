@@ -1,0 +1,42 @@
+<html lang="tr">
+<head>
+  <meta charset="{$charset}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>{$mybb->settings['bbname']}</title>
+  {$headerinclude}
+</head>
+<body>
+  {$header}
+  <section class="nextgen-hero" aria-labelledby="nextgen-forum-title">
+    <div class="nextgen-hero-content">
+      <span class="nextgen-eyebrow"><i class="fa-solid fa-cubes" aria-hidden="true"></i> KRİPTO / WEB3 TOPLULUĞU</span>
+      <h1 id="nextgen-forum-title">{$mybb->settings['nextgen_hero_title']}</h1>
+      <p>{$mybb->settings['nextgen_hero_subtitle']}</p>
+    </div>
+  </section>
+  <section class="nextgen-promo-grid" aria-label="Öne çıkan kutular">
+    <a class="nextgen-promo-card" href="{$mybb->settings['nextgen_box1_link']}"><i class="fa-solid fa-parachute-box" aria-hidden="true"></i><strong>{$mybb->settings['nextgen_box1_title']}</strong><span>{$mybb->settings['nextgen_box1_text']}</span></a>
+    <a class="nextgen-promo-card" href="{$mybb->settings['nextgen_box2_link']}"><i class="fa-solid fa-shield-halved" aria-hidden="true"></i><strong>{$mybb->settings['nextgen_box2_title']}</strong><span>{$mybb->settings['nextgen_box2_text']}</span></a>
+  </section>
+  <section class="nextgen-forum-directory" aria-label="Forum kategorileri">
+    {$forums}
+  </section>
+  {$boardstats}
+  <section class="nextgen-community-notice">
+    <i class="fa-solid fa-shield-halved" aria-hidden="true"></i>
+    <span>Kripto içerikleri yatırım tavsiyesi değildir. Bağlantıları ve projeleri kendi araştırmanla doğrula.</span>
+  </section>
+  <dl class="forum_legend smalltext">
+    <dt><span class="forum_status forum_on" title="{$lang->new_posts}"></span></dt>
+    <dd>{$lang->new_posts}</dd>
+    <dt><span class="forum_status forum_off" title="{$lang->no_new_posts}"></span></dt>
+    <dd>{$lang->no_new_posts}</dd>
+    <dt><span class="forum_status forum_offclose" title="{$lang->forum_closed}"></span></dt>
+    <dd>{$lang->forum_closed}</dd>
+    <dt><span class="forum_status forum_offlink" title="{$lang->forum_redirect}"></span></dt>
+    <dd>{$lang->forum_redirect}</dd>
+  </dl>
+  <br class="clear" />
+  {$footer}
+</body>
+</html>

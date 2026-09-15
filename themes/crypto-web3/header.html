@@ -1,0 +1,65 @@
+<div id="container">
+  <a name="top" id="top"></a>
+  <header id="header" class="nextgen-header">
+    <div id="logo">
+      <div class="wrapper">
+        <a href="{$mybb->settings['bburl']}/index.php" aria-label="{$mybb->settings['bbname']} ana sayfa">
+          <span class="crypto-brand-logo" role="img" aria-label="Crypton Web3 Community" title="Crypton Web3 Community">
+            <span class="crypto-brand-mark"><i class="fa-solid fa-cube" aria-hidden="true"></i></span>
+            <span class="crypto-brand-copy"><strong>CRYPTON</strong><small>WEB3 COMMUNITY</small></span>
+          </span>
+        </a>
+        <button type="button" class="nextgen-menu-toggle" aria-controls="nextgen-top-links" aria-expanded="false">
+          <i class="fa-solid fa-bars" aria-hidden="true"></i><span class="visually-hidden">Menü</span>
+        </button>
+        <ul class="menu top_links" id="nextgen-top-links">
+          {$menu_portal}
+          {$menu_search}
+          {$menu_memberlist}
+          {$menu_calendar}
+          <li><a href="{$mybb->settings['bburl']}/misc.php?action=help" class="help"><i class="fa-solid fa-circle-question" aria-hidden="true"></i> {$lang->toplinks_help}</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="panel">
+      <div class="upper">
+        <div class="wrapper">
+          <button type="button" class="nextgen-search-trigger" aria-controls="nextgen-search-modal" aria-expanded="false">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><span>Arama</span>
+          </button>
+          <div class="nextgen-search-modal" id="nextgen-search-modal" hidden>
+            <div class="nextgen-search-backdrop" data-search-close></div>
+            <div class="nextgen-search-dialog" role="dialog" aria-modal="true" aria-labelledby="nextgen-search-title">
+              <button type="button" class="nextgen-search-close" data-search-close aria-label="Aramayı kapat">&times;</button>
+              <h2 id="nextgen-search-title"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Forumda ara</h2>
+              <p class="nextgen-search-hint">Airdrop, Web3, Bitcoin veya topluluk konularında arama yapın.</p>
+              <form action="{$mybb->settings['bburl']}/search.php" method="get">
+                <input type="hidden" name="action" value="do_search" />
+                <input type="text" name="keywords" class="nextgen-search-input" placeholder="Aramak istediğinizi yazın..." autocomplete="off" />
+                <button type="submit" class="nextgen-search-submit"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i> Ara</button>
+              </form>
+              <div class="nextgen-search-suggestions" aria-label="Önerilen aramalar">
+                <span>Önerilenler</span>
+                <button type="button" data-search-suggestion="Airdrop fırsatları">Airdrop fırsatları</button>
+                <button type="button" data-search-suggestion="Bitcoin analiz">Bitcoin analiz</button>
+                <button type="button" data-search-suggestion="Testnet projeleri">Testnet projeleri</button>
+                <button type="button" data-search-suggestion="Web3 haberleri">Web3 haberleri</button>
+              </div>
+            </div>
+          </div>
+          {$welcomeblock}
+        </div>
+      </div>
+    </div>
+  </header>
+  <main id="content">
+    <div class="wrapper">
+      {$pm_notice}
+      {$remote_avatar_notice}
+      {$bannedwarning}
+      {$bbclosedwarning}
+      {$modnotice}
+      {$pending_joinrequests}
+      {$awaitingusers}
+      <navigation>
+      <br />

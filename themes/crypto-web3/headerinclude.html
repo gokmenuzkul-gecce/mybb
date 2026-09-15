@@ -1,0 +1,74 @@
+<link rel="preconnect" href="https://cdn.jsdelivr.net" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          crypto: { 500: '#3b82f6', 600: '#2563eb' },
+          gain: { 500: '#22c55e', 600: '#16a34a' }
+        }
+      }
+    }
+  };
+</script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="alternate" type="application/rss+xml" title="{$lang->latest_threads} (RSS 2.0)" href="{$mybb->settings['bburl']}/syndication.php" />
+<link rel="alternate" type="application/atom+xml" title="{$lang->latest_threads} (Atom 1.0)" href="{$mybb->settings['bburl']}/syndication.php?type=atom1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset={$charset}" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="theme-color" content="#0f172a" />
+<meta http-equiv="Content-Script-Type" content="text/javascript" />
+<script type="text/javascript" src="{$mybb->asset_url}/jscripts/jquery.js?ver=1823"></script>
+<script type="text/javascript" src="{$mybb->asset_url}/jscripts/jquery.plugins.min.js?ver=1821"></script>
+<script type="text/javascript" src="{$mybb->asset_url}/jscripts/general.js?ver=1827"></script>
+{$stylesheets}
+<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=6" />
+<script type="text/javascript">
+var templates = { modal: '{$jsTemplates['modal']}', modal_button: '{$jsTemplates['modal_button']}' };
+var cookieDomain = "{$mybb->settings['cookiedomain']}";
+var cookiePath = "{$mybb->settings['cookiepath']}";
+var cookiePrefix = "{$mybb->settings['cookieprefix']}";
+var cookieSecureFlag = "{$mybb->settings['cookiesecureflag']}";
+var deleteevent_confirm = "{$lang->deleteevent_confirm}";
+var removeattach_confirm = "{$lang->removeattach_confirm}";
+var loading_text = '{$lang->ajax_loading}';
+var saving_changes = '{$lang->saving_changes}';
+var use_xmlhttprequest = "{$mybb->settings['use_xmlhttprequest']}";
+var my_post_key = "{$mybb->post_code}";
+var rootpath = "{$mybb->settings['bburl']}";
+var imagepath = "{$theme['imgdir']}";
+var yes_confirm = "{$lang->yes}";
+var no_confirm = "{$lang->no}";
+var MyBBEditor = null;
+var spinner_image = "{$theme['imgdir']}/spinner.gif";
+var spinner = "<img src='" + spinner_image +"' alt='' />";
+var modal_zindex = 9999;
+document.addEventListener('DOMContentLoaded', function() {
+  var toggle = document.querySelector('.nextgen-menu-toggle');
+  var links = document.getElementById('nextgen-top-links');
+  if (toggle && links) {
+    toggle.addEventListener('click', function() {
+      var open = links.classList.toggle('nextgen-menu-open');
+      toggle.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+  var searchTrigger = document.querySelector('.nextgen-search-trigger');
+  var searchModal = document.getElementById('nextgen-search-modal');
+  if (searchTrigger && searchModal) {
+    var closeSearch = function() { searchModal.hidden = true; searchTrigger.setAttribute('aria-expanded', 'false'); };
+    searchTrigger.addEventListener('click', function() { searchModal.hidden = false; searchTrigger.setAttribute('aria-expanded', 'true'); var input = searchModal.querySelector('input[name="keywords"]'); if (input) input.focus(); });
+    searchModal.querySelectorAll('[data-search-close]').forEach(function(item) { item.addEventListener('click', closeSearch); });
+    searchModal.querySelectorAll('[data-search-suggestion]').forEach(function(item) { item.addEventListener('click', function() { var input = searchModal.querySelector('input[name="keywords"]'); input.value = item.getAttribute('data-search-suggestion'); input.focus(); }); });
+    document.addEventListener('keydown', function(event) { if (event.key === 'Escape') closeSearch(); });
+  }
+  document.querySelectorAll('.sceditor-container').forEach(function(editor) {
+    if (!editor.querySelector('.nextgen-editor-suggestions')) {
+      var suggestion = document.createElement('div');
+      suggestion.className = 'nextgen-editor-suggestions';
+      suggestion.innerHTML = '<strong>Yazım önerisi:</strong> Konunuza açıklayıcı bir başlık verin, içerikte bağlantıları ve önemli noktaları düzenli paylaşın.';
+      editor.appendChild(suggestion);
+    }
+  });
+});
+</script>
