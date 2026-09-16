@@ -240,94 +240,98 @@ form #message { width: 100%; min-height: 480px; padding: 15px 17px; border: 1px 
 .nextgen-forum-directory > table.tborder > thead .thead { min-height: 68px; padding: 16px 20px; background: linear-gradient(135deg, #172554, #1e40af); font-size: 16px; }
 .nextgen-forum-directory > table.tborder > thead .thead a { color: #eff6ff; }
 .nextgen-forum-category { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; }
-.nextgen-forum-category i { color: #93c5fd; font-size: 15px; }
+.nextgen-forum-category i { color: #93c5fd; font-size: 18px; animation: nextgen-icon-float 4.4s ease-in-out infinite; }
 .nextgen-forum-colhead .tcat { padding: 9px 14px; color: var(--text-dim); background: #111827; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
 .nextgen-forum-row .trow1,
 .nextgen-forum-row .trow2 { padding: 13px 12px; background: transparent; border: 0; }
 .nextgen-forum-row:hover .trow1,
 .nextgen-forum-row:hover .trow2 { background: rgba(59, 130, 246, .07); }
 
-/* Read/unread dot. The sprite the stock theme uses is dropped in favour of a
-   drawn dot: it stays sharp at this size and each state gets its own look.
-   The element keeps its id, classes and title because general.js drives
-   "mark as read" off them. */
-.nextgen-forum-status { width: 30px; padding: 0 6px !important; vertical-align: middle; text-align: center; }
-.nextgen-forum-status .forum_status {
+/* The icon leads the row and carries the read/unread state as a corner badge,
+   so the row keeps a single focal point. .forum_status keeps its id, classes
+   and title because general.js drives "mark as read" off them. */
+.nextgen-forum-icon { width: 86px; padding: 12px 10px !important; vertical-align: middle; text-align: center; }
+.nextgen-forum-glyph {
   position: relative;
-  display: inline-block;
-  width: 11px;
-  height: 11px;
-  border: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(148, 163, 184, .18);
+  border-radius: 15px;
+  background: rgba(148, 163, 184, .08);
+  color: var(--glyph, #64748b);
+  font-size: 20px;
+  transition: transform .22s ease, border-color .22s ease, background .22s ease, box-shadow .22s ease;
+}
+/* The float rides the glyph's child so it never fights the hover transform. */
+.nextgen-forum-glyph i { animation: nextgen-icon-float 3.6s ease-in-out infinite; }
+.nextgen-forum-row:hover .nextgen-forum-glyph {
+  transform: translateY(-2px) scale(1.07);
+  border-color: var(--glyph, #64748b);
+  background: rgba(148, 163, 184, .15);
+  box-shadow: 0 15px 28px -15px var(--glyph, #64748b);
+}
+.nextgen-forum-icon .forum_status {
+  position: absolute;
+  right: -3px;
+  bottom: -3px;
+  display: block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid #0b1120;
   border-radius: 50%;
   background: #475569;
   filter: none;
-  vertical-align: middle;
-  transition: transform .18s ease, box-shadow .18s ease;
 }
-.nextgen-forum-status .forum_on { background: #22c55e; box-shadow: 0 0 0 4px rgba(34, 197, 94, .16); }
-.nextgen-forum-status .forum_off { background: #475569; }
-.nextgen-forum-status .forum_offclose,
-.nextgen-forum-status .forum_offlink { background: #475569; opacity: .7; }
-.nextgen-forum-row:hover .nextgen-forum-status .forum_status { transform: scale(1.18); }
-.nextgen-forum-status .forum_offclose::after,
-.nextgen-forum-status .forum_offlink::after {
-  position: absolute;
-  right: -7px;
-  bottom: -6px;
-  width: 13px;
-  height: 13px;
-  border-radius: 4px;
-  background: #334155;
-  color: #e2e8f0;
-  font-family: 'Font Awesome 6 Free';
-  font-size: 7px;
-  font-weight: 900;
-  line-height: 13px;
-  text-align: center;
+/* Shape and colour both change per state: a dot reads as a plain flag, the
+   squared badge reads as "not open for posting". */
+.nextgen-forum-icon .forum_on { background: #22c55e; animation: nextgen-presence-pulse 2.4s ease-in-out infinite; }
+.nextgen-forum-icon .forum_off { background: #475569; }
+.nextgen-forum-icon .forum_offclose { border-radius: 3px; background: #f59e0b; }
+.nextgen-forum-icon .forum_offlink { border-radius: 3px; background: #38bdf8; }
+
+@keyframes nextgen-icon-float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
 }
-.nextgen-forum-status .forum_offclose::after { content: '\f023'; }
-.nextgen-forum-status .forum_offlink::after { content: '\f08e'; }
 
 .nextgen-forum-main { vertical-align: middle; }
-/* nowrap keeps the chip on the title's line; the title itself wraps inside its
-   own box, which min-width: 0 is required to allow. */
-.nextgen-forum-head { display: flex; align-items: center; gap: 9px; }
-.nextgen-forum-name { min-width: 0; }
 .nextgen-forum-name a { color: var(--text-main); font-size: 15px; font-weight: 800; letter-spacing: -.01em; text-decoration: none; }
 .nextgen-forum-name a:hover { color: var(--accent); }
-
-/* Topic chip, pinned to the right of the forum title. */
-.nextgen-forum-glyph {
-  display: inline-flex;
-  flex: 0 0 auto;
-  align-items: center;
-  justify-content: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid rgba(148, 163, 184, .18);
-  border-radius: 10px;
-  background: rgba(148, 163, 184, .08);
-  color: var(--glyph, #64748b);
-  font-size: 13px;
-  transition: transform .18s ease, border-color .18s ease, background .18s ease, box-shadow .18s ease;
-}
-.nextgen-forum-row:hover .nextgen-forum-glyph {
-  transform: translateY(-1px);
-  border-color: var(--glyph, #64748b);
-  background: rgba(148, 163, 184, .14);
-  box-shadow: 0 9px 18px -11px var(--glyph, #64748b);
-}
 .nextgen-forum-desc { margin-top: 5px; color: var(--text-muted); font-size: 12px; line-height: 1.5; }
 .nextgen-forum-count { width: 84px; vertical-align: middle; color: var(--text-muted); font-size: 13px; font-variant-numeric: tabular-nums; }
 
-.nextgen-forum-last { width: 250px; padding: 12px 14px !important; vertical-align: middle; }
-.nextgen-lastpost { display: flex; align-items: center; justify-content: flex-end; gap: 10px; }
+.nextgen-forum-last { width: 250px; padding: 12px 14px !important; vertical-align: middle; text-align: right; }
+.nextgen-lastpost { display: flex; align-items: center; justify-content: flex-end; gap: 11px; }
+.nextgen-lastpost-body { display: flex; min-width: 0; flex: 1 1 auto; flex-direction: column; align-items: flex-end; gap: 2px; }
 .nextgen-lastpost-avatar { flex: 0 0 auto; width: 34px; height: 34px; border: 1px solid rgba(148, 163, 184, .22); border-radius: 50%; background: rgba(148, 163, 184, .1); object-fit: cover; }
-.nextgen-lastpost-body { display: flex; min-width: 0; flex-direction: column; gap: 2px; }
-.nextgen-lastpost-subject { overflow: hidden; color: var(--text-main); font-size: 13px; font-weight: 700; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
+.nextgen-lastpost-subject { display: block; max-width: 100%; overflow: hidden; color: var(--text-main); font-size: 13px; font-weight: 700; text-decoration: none; text-overflow: ellipsis; white-space: nowrap; }
 .nextgen-lastpost-subject:hover { color: var(--accent); }
 .nextgen-lastpost-meta { color: var(--text-dim); font-size: 11px; }
 .nextgen-lastpost.is-empty .nextgen-lastpost-avatar { display: none; }
+
+/* VIP members carry a gold name everywhere the group namestyle is applied. */
+.vip-name { color: #fbbf24; font-weight: 800; }
+a.vip-name:hover { color: #fcd34d; }
+.nextgen-vip-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-left: 7px;
+  padding: 2px 8px;
+  border: 1px solid rgba(251, 191, 36, .4);
+  border-radius: 999px;
+  background: rgba(251, 191, 36, .12);
+  color: #fbbf24;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  vertical-align: middle;
+}
+.nextgen-vip-badge i { font-size: 9px; }
 .thead {
   padding: 15px 18px;
   border: 0;
@@ -512,8 +516,8 @@ form #message { width: 100%; min-height: 480px; padding: 15px 17px; border: 1px 
   .nextgen-forum-row .nextgen-forum-count,
   .nextgen-forum-colhead .tcat:nth-child(3),
   .nextgen-forum-colhead .tcat:nth-child(4) { display: none; }
-  .nextgen-forum-status { width: 20px; padding: 0 4px !important; }
-  .nextgen-forum-glyph { width: 26px; height: 26px; border-radius: 8px; font-size: 12px; }
+  .nextgen-forum-icon { width: 64px; padding: 10px 6px !important; }
+  .nextgen-forum-glyph { width: 40px; height: 40px; border-radius: 12px; font-size: 17px; }
   .nextgen-forum-name a { font-size: 14px; }
   .nextgen-forum-last { width: auto; padding: 10px 10px !important; }
   .nextgen-lastpost { gap: 8px; }
