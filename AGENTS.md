@@ -120,13 +120,17 @@ redesigned areas. Each pairs with specific templates in `mybb_templates`:
   match the tallest sibling, which ballooned them to 101px.
 - **Forum rows on the index** — `forumbit_depth1_cat` (the category shell),
   `forumbit_depth2_forum`, `forumbit_depth2_cat` and
-  `forumbit_depth2_forum_lastpost`. Each row is a read/unread dot, the forum
-  name, a per-forum icon chip immediately **right of the name**, the two
-  counters, and a last-post block with the poster's avatar. The chip colour
-  comes from `--glyph`, set inline from `{$forum['icon_color']}`.
-  `.nextgen-forum-head` is a `nowrap` flex row and `.nextgen-forum-name` needs
-  `min-width: 0`, otherwise a long forum name pushes the chip onto its own line
-  below 400px.
+  `forumbit_depth2_forum_lastpost`. Each row is a per-forum icon chip that
+  **leads the row** (its own first cell, 48px, hover scale plus a float
+  animation), the read/unread dot as a corner badge on that chip, the forum
+  name with its description, the two counters, and a last-post block whose
+  avatar sits to the **right** of the last-post text. The chip colour comes
+  from `--glyph`, set inline from `{$forum['icon_color']}`.
+  `.nextgen-forum-name` needs `min-width: 0`, otherwise a long forum name
+  overflows its cell instead of wrapping.
+  The icon chip's `translateY` hover and the child `<i>`'s float animation are
+  deliberately on separate elements; combining them on one node makes the
+  animation win and the hover do nothing.
 
 The login modal reuses MyBB's jQuery-modal plugin, so the theme also overrides
 the generic `.modal` and `.blocker` classes to keep the overlay consistent.
