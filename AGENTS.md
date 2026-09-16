@@ -295,3 +295,29 @@ welcome that a second, later order still owes.
 ("portal sayfasını kullanamazsınız"), not a 404. Judge these by the body, not the
 status code. Note that `inc/settings.php` is a flat generated cache — a settings
 write stays invisible until `rebuild_settings()` regenerates it.
+
+### Test harness
+
+`requests` is not installed; use stdlib `urllib` plus `http.cookiejar`. Do not
+drive HTTP tests through the CLI PDO SQLite driver — an open handle blocks the
+PHP process's writes and the requests hang. Seed state with Python's `sqlite3`
+first, then issue the HTTP calls.
+
+Front-end auth is a `mybbuser=<uid>_<loginkey>; sid=<sid>` cookie, and a row in
+`mybb_sessions`. ACP auth needs `mybb_adminsessions` instead, keyed by the admin
+uid. The `sid` column is 32 chars.
+
+Every `curl` to the board creates a guest row in `mybb_sessions`. Sweep
+`uid=0` before committing the database, or the diff is full of session noise.
+
+Vocabulary used in the task list (the user's own words, worth keeping):
+"vitrin" = the homepage VIP teaser, "tebrik" = the approval congratulation
+banner, "duyuru" = announcements, "sari alan" = the yellow inline error/message
+area.
+
+### Environment can be reset between turns
+
+PHP was reinstalled mid-project and `/tmp` was wiped, so `/tmp` test scripts are
+not durable. The board needs `php-cli php-sqlite3 php-mbstring php-gd php-curl
+php-xml`. PHP 8.4 renders everything cleanly (0 deprecations across the public
+pages); re-check after any PHP version change rather than assuming.
