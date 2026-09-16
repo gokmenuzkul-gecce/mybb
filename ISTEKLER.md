@@ -49,18 +49,18 @@ Durum (bu dosya güncel tutulmalı):
 | 3 | bitti | `board_promos` duyuru şeridi |
 | 4 | bitti | `board_promos` reklam slotları |
 | 5 | bitti | `board_promos` sponsor + affiliate + tıklama takibi |
-| 6 | YAPILMADI | sosyal giriş hiç yok — `social_login` eklentisi |
-| 7 | kısmi | kayıt sayfası hâlâ stok düzen |
+| 6 | bitti | `social_login` eklentisi (Google/GitHub/Discord, e-posta çakışması reddi) |
+| 7 | bitti | `member_register` + 11 alt şablon `nextgen` div düzeni; sözleşme ve giriş sayfası da modern |
 | 8 | bitti | `portal=0` kapatıldı |
 | 9 | bitti | vip.php form ikonları var |
-| 10 | YAPILMADI | canlı borsa tablosu hiç yok — `market_ticker` eklentisi |
+| 10 | bitti | `market_ticker` şeridi + 5 dk zamanlanmış görev (CoinGecko) |
 | 11 | bitti | sceditor renk override |
 | 12 | bitti | profil menüsü |
 | 13 | bitti | hero + `nextgen-slider` |
 | 14 | bitti | `nextgen-userpanel` |
 | 15 | bitti | `nextgen-login` modal |
-| 16 | kısmi | forum satırları modern; cevap sayısı göstergesi yok |
-| 17 | YAPILMADI | `error_inline` hâlâ stok `.error` div'i |
+| 16 | bitti | `forumdisplay_thread` kart düzeni + cevap/okunma rozetleri |
+| 17 | bitti | `error_inline`/`global_pm_alert` → `nextgen-alert` |
 | 18 | bitti | `regtype=verify` |
 | 19 | bitti | `vip_networks` + `vip.php` |
 | 20 | bitti | `rss_news_bot` |

@@ -475,3 +475,15 @@ a file on disk, copy it into the matching row (`header` tid=160,
 `headerinclude` tid=962, `index` tid=176) or the change never reaches the
 page. The `?v=N` cache-buster in `headerinclude` lives in that DB row too —
 bumping only the file on disk leaves the browser loading the old stylesheet.
+Templates that have no disk copy — the whole registration flow
+(`member_register`, `member_register_agreement` and its 11 sub-templates),
+`member_login`, `forumdisplay_thread`, `error_inline`, `error_inline_item`,
+`global_pm_alert` — live only in `mybb_templates` (`sid=-2`). Edit them there
+and bump the `?v=N` cache-buster in `headerinclude`; a CSS edit without the
+bump ships unseen.
+
+Two constraints on the registration form: `inc/jscripts/member.js` binds to
+`#registration_form`, `#username` and `#password2`, and the submit control must
+stay `<input type="submit" name="regsubmit">` — MyBB checks that field name
+server-side, so a `<button>` silently breaks the POST. `{$passboxes}` emits
+bare `<tr>` rows, so the password section has to keep a `<table>` wrapper.
