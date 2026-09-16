@@ -1535,3 +1535,216 @@ textarea,
   transition: transform .2s ease, box-shadow .2s ease;
 }
 .nextgen-sponsor-submit input.button:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(59, 130, 246, .42); }
+
+/* ------------------------------------------------------ market ticker --- */
+
+/* Deliberately low-key: a thin strip, muted chrome, no heavy card. It should
+   read as ambient market context, not compete with the hero or the VIP plate. */
+.nextgen-market-ticker {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 0 18px;
+  padding: 10px 18px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: rgba(15, 23, 42, .55);
+  overflow: hidden;
+}
+
+.nextgen-ticker-head {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: column;
+  gap: 2px;
+  padding-right: 16px;
+  border-right: 1px solid var(--border);
+}
+
+.nextgen-ticker-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--accent);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+
+.nextgen-ticker-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 0 rgba(34, 197, 94, .6);
+  animation: nextgen-ticker-pulse 2s ease-out infinite;
+}
+
+@keyframes nextgen-ticker-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(34, 197, 94, .55); }
+  70%  { box-shadow: 0 0 0 7px rgba(34, 197, 94, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+}
+
+.nextgen-ticker-updated { color: var(--text-muted); font-size: 10.5px; white-space: nowrap; }
+
+/* The track is a horizontal scroller so a long coin list never wraps into a
+   tall block. Scrollbar is hidden because the head already signals liveness. */
+.nextgen-ticker-track {
+  display: flex;
+  flex: 1 1 auto;
+  gap: 22px;
+  min-width: 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.nextgen-ticker-track::-webkit-scrollbar { display: none; }
+
+.nextgen-ticker-item {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  gap: 8px;
+  white-space: nowrap;
+}
+
+.nextgen-ticker-symbol { color: var(--text-muted); font-size: 12px; font-weight: 800; letter-spacing: .04em; }
+.nextgen-ticker-price { color: var(--text-main); font-size: 13.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.nextgen-ticker-change { display: inline-flex; align-items: center; gap: 4px; font-size: 11.5px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.nextgen-ticker-change.is-up { color: #4ade80; }
+.nextgen-ticker-change.is-down { color: #f87171; }
+.nextgen-ticker-change.is-flat { color: var(--text-muted); }
+
+.nextgen-market-ticker.is-compact { padding: 8px 16px; }
+.nextgen-market-ticker.is-compact .nextgen-ticker-price { font-size: 13px; }
+
+@media (max-width: 760px) {
+  .nextgen-market-ticker { flex-direction: column; align-items: stretch; gap: 10px; padding: 12px 14px; }
+  .nextgen-ticker-head { flex-direction: row; align-items: center; justify-content: space-between; padding-right: 0; border-right: 0; }
+}
+/* --------------------------------------------------- inline errors --- */
+
+/* Stock `.error` is a bare orange bold block with no background, which reads as
+   unstyled text on the dark theme. error_inline wraps login failures, so it is
+   one of the first things a returning member sees. Rebuilt as a callout that
+   keeps the warning intent but sits in the theme's palette. */
+.error,
+textarea.error,
+select.error,
+input.error {
+  border: 1px solid rgba(248, 113, 113, .45);
+  border-radius: 12px;
+  color: #fecaca;
+}
+
+.error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 0 16px;
+  padding: 14px 18px;
+  background: linear-gradient(135deg, rgba(248, 113, 113, .16), rgba(248, 113, 113, .07));
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.error p:last-child,
+.error ul:last-child { margin-bottom: 0; }
+
+/* The heading line ("Lütfen aşağıdaki hataları düzeltin") — stock uses <em>. */
+.error p em {
+  display: block;
+  margin-bottom: 4px;
+  color: #fca5a5;
+  font-size: 13.5px;
+  font-style: normal;
+  font-weight: 800;
+  letter-spacing: .01em;
+}
+
+.error ul { margin: 0; padding-left: 18px; }
+.error li { margin: 4px 0; line-height: 1.6; color: #fecaca; }
+.error li::marker { color: rgba(248, 113, 113, .7); }
+.error a:link, .error a:visited, .error a:hover, .error a:active { color: #fee2e2; font-weight: 700; text-decoration: underline; }
+
+/* A tick replaces the stock bullet when the block is a success notice. */
+.error:has(em)::before {
+  content: "\f071";
+  flex: 0 0 auto;
+  padding-top: 2px;
+  font-family: "Font Awesome 6 Free";
+  font-weight: 900;
+  color: #fca5a5;
+}
+
+/* The same `.error` class styles field-level errors; those are inline and must
+   not become a full callout with an icon. */
+.trow1 .error, .trow2 .error, td .error {
+  display: inline-block;
+  margin: 6px 0 0;
+  padding: 8px 12px;
+}
+.trow1 .error::before, .trow2 .error::before, td .error::before { content: none; }
+/* ------------------------------------------------------- social login --- */
+
+.nextgen-social-login { margin: 18px 0 6px; }
+
+.nextgen-social-divider {
+  position: relative;
+  margin-bottom: 14px;
+  color: var(--text-muted);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: .08em;
+  text-align: center;
+  text-transform: uppercase;
+}
+.nextgen-social-divider::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--border);
+}
+.nextgen-social-divider span { position: relative; padding: 0 12px; background: var(--bg-card); }
+
+.nextgen-social-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.nextgen-social-btn {
+  display: inline-flex;
+  flex: 1 1 0;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-width: 150px;
+  padding: 11px 16px;
+  border: 1px solid var(--border);
+  border-radius: 11px;
+  background: rgba(15, 23, 42, .6);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .18s ease, border-color .18s ease, background .18s ease;
+}
+.nextgen-social-btn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(96, 165, 250, .5);
+  background: rgba(37, 99, 235, .16);
+  color: #ffffff;
+  text-decoration: none;
+}
+.nextgen-social-btn i { font-size: 15px; }
+
+/* Provider marks keep their brand colour so the buttons read at a glance. */
+.nextgen-social-btn .fa-google { color: #ea4335; }
+.nextgen-social-btn .fa-github { color: #e6edf3; }
+.nextgen-social-btn .fa-discord { color: #5865f2; }

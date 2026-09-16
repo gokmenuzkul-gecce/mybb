@@ -401,3 +401,77 @@ curl -s -o /dev/null -w '%{redirect_url}' 'http://127.0.0.1:12000/promo.php?go=s
 The sponsor form's honeypot field is `website` and must stay hidden — a filled
 value returns the success page without writing a row, which is the intended
 behaviour, not a bug.
+
+## `market_ticker` plugin (live crypto prices)
+
+Home-page strip fed by CoinGecko's keyless `/simple/price` endpoint. Binance's
+API is blocked from this environment; CoinGecko works.
+
+Prices are served from the `market_ticker` datacache, never fetched during a
+page view. `index_start` refreshes opportunistically at most once per the
+configured window, and the `market_ticker` scheduled task (every 5 min) does
+the same on a timer. A failed fetch keeps the previous snapshot, so the strip
+goes stale rather than blank — `market_ticker_refresh()` returns the old cache
+rather than `false` in every failure branch.
+
+Coins and currency are settings (`market_ticker_coins`,
+`market_ticker_currency`); up to 12 coin ids are accepted and sanitised to
+`[a-z0-9-]` before being used in the request URL, so a setting cannot inject
+query parameters.
+
+Installing from the CLI follows the `board_promos` recipe; the task row and
+settings group are created by `market_ticker_install()`, and the plugin must
+then be added to the `plugins` cache and `market_ticker_activate()` called.
+
+## `social_login` plugin (Google / GitHub / Discord OAuth 2.0)
+
+Plain OAuth authorization-code client — no SDK. Providers differ only by URL
+and JSON shape, so `social_login_providers()` is one table and
+`social_login_fetch_profile()` normalises the result.
+
+Security invariants that must not be relaxed:
+
+- `state` is a random nonce in `mybb_social_states`, consumed exactly once and
+  compared with `hash_equals()`. A wrong or reused state is rejected.
+- Only `email_verified` addresses are trusted for account matching. An
+  unverified match must never resolve to an existing member.
+- An existing local account is never auto-linked. If the verified email
+  belongs to a member who is not the current `$mybb->user`, the attempt is
+  refused with `email_taken`. Silently linking would let whoever controls that
+  provider address take over the local account.
+- `redirect` is restricted to same-board paths (no `//`, no `:`), so the
+  callback cannot become an open redirect.
+
+`social_login.php` is a root-level script (`THIS_SCRIPT == 'social_login.php'`),
+so `member.php`'s action dispatch is bypassed. Test hooks that guard on
+`THIS_SCRIPT` must be run with the name set to `member.php` or the button
+renderer legitimately returns the input unchanged.
+
+MyBB caps passwords at **30 characters**. `bin2hex(random_bytes(12))` (24 hex)
+is the largest safe random password for the `UserDataHandler('insert')` path;
+16 bytes (32 hex) fails `invalid_password_length` and account creation silently
+returns `create`.
+
+The buttons render after the `</table>` that closes the login/register form,
+anchored on `name="username"` (falling back to `name="password"`).
+
+To exercise the flow, temporarily set `social_*_on=1` plus dummy `*_id`/
+`*_secret` values, run the checks, then set them back to `0`/`''` and
+`rebuild_settings()`. Leaving dummy secrets in the committed database would be
+a credential leak.
+
+## Warning and error styling
+
+`.pm_alert` (stock MyBB's yellow bar) and `.red_alert` are themed as callouts
+in `global.css`. `.error` / `.error_inline` — the login-failure and validation
+block — are styled too; field-level `.error` inside `.trow1`/`.trow2`/`td` is
+narrowed back to an inline chip so it does not become a full-width callout.
+
+## Pushing disk templates into the database
+
+`themes/crypto-web3/{header,headerinclude,index}.html` are the source of
+truth, but MyBB renders the rows in `mybb_templates` (`sid=-2`). After editing
+a file on disk, copy it into the matching row (`header` tid=160,
+`headerinclude` tid=962, `index` tid=176) or the change never reaches the
+page. The `?v=N` cache-buster in `headerinclude` lives in that DB row too —
+bumping only the file on disk leaves the browser loading the old stylesheet.
