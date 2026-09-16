@@ -93,13 +93,14 @@ if($action == 'approve' || $action == 'reject')
 $page->output_header('VIP Ödeme Kuyruğu');
 
 $table = new Table;
-$table->construct_header('Üye', array('width' => '16%'));
+$table->construct_header('Üye', array('width' => '14%'));
 $table->construct_header('Plan');
-$table->construct_header('Tutar', array('class' => 'align_center', 'width' => '11%'));
+$table->construct_header('Ağ', array('class' => 'align_center', 'width' => '9%'));
+$table->construct_header('Tutar', array('class' => 'align_center', 'width' => '10%'));
 $table->construct_header('TXID', array('width' => '20%'));
-$table->construct_header('Tarih', array('class' => 'align_center', 'width' => '11%'));
-$table->construct_header('Durum', array('class' => 'align_center', 'width' => '10%'));
-$table->construct_header('İşlem', array('class' => 'align_center', 'width' => '14%'));
+$table->construct_header('Tarih', array('class' => 'align_center', 'width' => '10%'));
+$table->construct_header('Durum', array('class' => 'align_center', 'width' => '9%'));
+$table->construct_header('İşlem', array('class' => 'align_center', 'width' => '13%'));
 
 $status_labels = array(
 	'pending' => array('Ödeme Bekliyor', '#f59e0b'),
@@ -119,10 +120,39 @@ while($order = $db->fetch_array($query))
 	$label = isset($status_labels[$order['status']]) ? $status_labels[$order['status']] : array($order['status'], '#64748b');
 
 	$profile = build_profile_link(htmlspecialchars_uni($order['username']), (int)$order['uid']);
-	$txid = $order['txid'] ? '<code style="font-size:11px;word-break:break-all;">'.htmlspecialchars_uni(substr($order['txid'], 0, 24)).'&hellip;</code>' : '<em>girilmedi</em>';
+
+	// Link the TXID straight at the right chain's explorer. Which chain that is
+	// comes from the order, not from the current default, so reviewing an old
+	// order still opens the ledger it was actually paid on.
+	$network = vip_membership_order_network($order['network']);
+	$net_name = ($network && $network['name'] !== '') ? htmlspecialchars_uni($network['name']) : '—';
+
+	if(!$order['txid'])
+	{
+		$txid = '<em>girilmedi</em>';
+	}
+	else
+	{
+		$short = htmlspecialchars_uni(substr($order['txid'], 0, 24));
+		$full = htmlspecialchars_uni($order['txid']);
+		$explorer = ($network && trim((string)$network['explorer']) !== '')
+			? trim((string)$network['explorer'])
+			: '';
+
+		if($explorer !== '')
+		{
+			$href = htmlspecialchars_uni($explorer).$full;
+			$txid = '<a href="'.$href.'" target="_blank" rel="noopener noreferrer" title="'.$full.'"><code style="font-size:11px;word-break:break-all;">'.$short.'&hellip;</code></a>';
+		}
+		else
+		{
+			$txid = '<code style="font-size:11px;word-break:break-all;" title="'.$full.'">'.$short.'&hellip;</code>';
+		}
+	}
 
 	$table->construct_cell($profile);
 	$table->construct_cell(htmlspecialchars_uni($order['title']).' <small>('.(int)$order['days'].' gün)</small>');
+	$table->construct_cell($net_name, array('class' => 'align_center'));
 	$table->construct_cell(htmlspecialchars_uni($order['amount_exact'] ? $order['amount_exact'] : $order['amount']), array('class' => 'align_center'));
 	$table->construct_cell($txid);
 	$table->construct_cell(my_date('relative', (int)$order['dateline']), array('class' => 'align_center'));
@@ -150,7 +180,7 @@ while($order = $db->fetch_array($query))
 
 if($count == 0)
 {
-	$table->construct_cell('Kayıtlı ödeme yok.', array('colspan' => 7, 'class' => 'align_center'));
+	$table->construct_cell('Kayıtlı ödeme yok.', array('colspan' => 8, 'class' => 'align_center'));
 	$table->construct_row();
 }
 

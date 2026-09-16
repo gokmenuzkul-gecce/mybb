@@ -65,6 +65,44 @@ function rss_news_bot_uninstall()
 
 /* -------------------------------------------------------------- schema --- */
 
+/**
+ * Adds columns introduced after the first release to boards that already have
+ * the tables. CREATE TABLE only runs on a fresh install, so without this an
+ * existing queue would never see the per-feed forum target or the edited body.
+ */
+function rss_news_bot_upgrade_tables()
+{
+	global $db;
+
+	if($db->table_exists('rss_feeds'))
+	{
+		if(!$db->field_exists('fid_forum', 'rss_feeds'))
+		{
+			// 0 means "use the global target forum", so existing feeds keep
+			// posting where they always did.
+			$db->add_column('rss_feeds', 'fid_forum', 'INT NOT NULL DEFAULT 0');
+		}
+		if(!$db->field_exists('summary_length', 'rss_feeds'))
+		{
+			$db->add_column('rss_feeds', 'summary_length', 'INT NOT NULL DEFAULT 0');
+		}
+	}
+
+	if($db->table_exists('rss_queue'))
+	{
+		if(!$db->field_exists('body', 'rss_queue'))
+		{
+			// An admin-edited body. Empty means "build it from the summary at
+			// approval time", which is what the bot did before.
+			$db->add_column('rss_queue', 'body', 'TEXT');
+		}
+		if(!$db->field_exists('fid_forum', 'rss_queue'))
+		{
+			$db->add_column('rss_queue', 'fid_forum', 'INT NOT NULL DEFAULT 0');
+		}
+	}
+}
+
 function rss_news_bot_create_tables()
 {
 	global $db;
@@ -83,9 +121,13 @@ function rss_news_bot_create_tables()
 			active {$int} NOT NULL DEFAULT 1,
 			dateline {$int} NOT NULL DEFAULT 0,
 			last_fetch {$int} NOT NULL DEFAULT 0,
-			last_error VARCHAR(255) NOT NULL DEFAULT ''
+			last_error VARCHAR(255) NOT NULL DEFAULT '',
+			fid_forum {$int} NOT NULL DEFAULT 0,
+			summary_length {$int} NOT NULL DEFAULT 0
 		){$tail};");
 	}
+
+	rss_news_bot_upgrade_tables();
 
 	if(!$db->table_exists('rss_queue'))
 	{
@@ -97,6 +139,8 @@ function rss_news_bot_create_tables()
 			link VARCHAR(255) NOT NULL,
 			guid VARCHAR(255) NOT NULL,
 			summary TEXT NOT NULL,
+			body TEXT,
+			fid_forum {$int} NOT NULL DEFAULT 0,
 			dateline {$int} NOT NULL DEFAULT 0,
 			status VARCHAR(20) NOT NULL DEFAULT 'queued',
 			tid {$int} NOT NULL DEFAULT 0,
@@ -330,13 +374,19 @@ function rss_news_bot_fetch_all($force = false)
 
 			$description = isset($item['description']) ? $item['description'] : '';
 
+			// A per-feed forum target lets the admin route categories to the
+			// board sections they belong in; 0 means "use the global setting".
+			$feed_forum = isset($feed['fid_forum']) ? (int)$feed['fid_forum'] : 0;
+			$feed_len = isset($feed['summary_length']) ? (int)$feed['summary_length'] : 0;
+
 			$db->insert_query('rss_queue', array(
 				'feed_id' => (int)$feed['fid'],
 				'source' => $db->escape_string($feed['title']),
 				'title' => $db->escape_string($title),
 				'link' => $db->escape_string($link),
 				'guid' => $db->escape_string($guid),
-				'summary' => $db->escape_string(rss_news_bot_clean_summary($description)),
+				'summary' => $db->escape_string(rss_news_bot_clean_summary($description, $feed_len)),
+				'fid_forum' => $feed_forum,
 				'dateline' => (int)$item['date_timestamp'] ? (int)$item['date_timestamp'] : TIME_NOW,
 				'status' => 'queued',
 			));
@@ -353,22 +403,37 @@ function rss_news_bot_fetch_all($force = false)
 
 /**
  * Feed descriptions are HTML fragments with tracking pixels and relative URLs.
- * Keep a short plain-text excerpt; the topic itself links to the source.
+ * Keep a plain-text excerpt; the topic itself links to the source.
+ *
+ * $limit is per feed. The default is high enough that a topic reads like a real
+ * post rather than a truncated teaser, but the full article is still never
+ * copied — that is the publisher's content, not ours.
  */
-function rss_news_bot_clean_summary($html)
+function rss_news_bot_clean_summary($html, $limit = 0)
 {
-	$text = strip_tags((string)$html);
+	$limit = (int)$limit;
+	if($limit < 100 || $limit > 5000)
+	{
+		$limit = 900;
+	}
+
+	// strip_tags drops the tags but leaves the text between <script>/<style>,
+	// which would surface as gibberish in the excerpt. Remove those blocks first.
+	$html = (string)$html;
+	$html = preg_replace('#<(script|style)\b[^>]*>.*?</\1>#is', ' ', $html);
+
+	$text = strip_tags($html);
 	$text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 	$text = preg_replace('/\s+/u', ' ', $text);
 	$text = trim($text);
 
-	if(function_exists('my_strlen') && my_strlen($text) > 320)
+	if(function_exists('my_strlen') && my_strlen($text) > $limit)
 	{
-		$text = my_substr($text, 0, 320).'...';
+		$text = my_substr($text, 0, $limit).'...';
 	}
-	elseif(strlen($text) > 320)
+	elseif(strlen($text) > $limit)
 	{
-		$text = substr($text, 0, 320).'...';
+		$text = substr($text, 0, $limit).'...';
 	}
 
 	return $text;
@@ -379,10 +444,11 @@ function rss_news_bot_clean_summary($html)
 /**
  * Turn a queued item into a real thread.
  *
- * The body quotes the excerpt and always carries the source link, so a reader
- * can verify the headline against the publisher.
+ * $override lets the ACP pass an edited body and a different target forum. The
+ * body is what the admin reviewed on screen, so editing it here is the last
+ * chance to fix a machine-translated headline before it goes public.
  */
-function rss_news_bot_approve($qid, $admin_uid)
+function rss_news_bot_approve($qid, $admin_uid, $override = array())
 {
 	global $db, $mybb;
 
@@ -399,7 +465,22 @@ function rss_news_bot_approve($qid, $admin_uid)
 		return array(false, 'Bu haber zaten işleme alınmış.');
 	}
 
-	$fid = (int)$mybb->settings['rss_bot_forum'];
+	// Forum resolution order: what the admin picked for this post, then the
+	// feed's own target, then the global setting.
+	$fid = 0;
+	if(isset($override['fid']) && (int)$override['fid'] > 0)
+	{
+		$fid = (int)$override['fid'];
+	}
+	elseif((int)$item['fid_forum'] > 0)
+	{
+		$fid = (int)$item['fid_forum'];
+	}
+	else
+	{
+		$fid = (int)$mybb->settings['rss_bot_forum'];
+	}
+
 	$forum = $db->fetch_array($db->simple_select('forums', 'fid, name', "fid='{$fid}'"));
 	if(!$forum)
 	{
@@ -413,7 +494,27 @@ function rss_news_bot_approve($qid, $admin_uid)
 		return array(false, 'Paylaşan kullanıcı bulunamadı. Ayarlardan geçerli bir kullanıcı ID girin.');
 	}
 
-	$message = rss_news_bot_build_message($item);
+	$subject = $item['title'];
+	if(isset($override['subject']) && trim($override['subject']) !== '')
+	{
+		$subject = trim($override['subject']);
+	}
+
+	$body_override = isset($override['body']) ? trim($override['body']) : '';
+	if($body_override !== '')
+	{
+		$message = $body_override;
+		// The source link is the one thing that must survive editing, so append
+		// it when the admin's text dropped it.
+		if(strpos($message, $item['link']) === false)
+		{
+			$message .= "\n\n[kaynak]".$item['link']."[/kaynak]";
+		}
+	}
+	else
+	{
+		$message = rss_news_bot_build_message($item);
+	}
 
 	require_once MYBB_ROOT.'inc/datahandlers/post.php';
 	$posthandler = new PostDataHandler('insert');
@@ -421,7 +522,7 @@ function rss_news_bot_approve($qid, $admin_uid)
 
 	$new_thread = array(
 		'fid' => $fid,
-		'subject' => $item['title'],
+		'subject' => $subject,
 		'prefix' => 0,
 		'icon' => 0,
 		'uid' => $uid,
@@ -446,6 +547,8 @@ function rss_news_bot_approve($qid, $admin_uid)
 	$db->update_query('rss_queue', array(
 		'status' => 'approved',
 		'tid' => $tid,
+		'body' => $db->escape_string($message),
+		'fid_forum' => $fid,
 		'handled_by' => (int)$admin_uid,
 		'handled_at' => TIME_NOW,
 	), "qid='{$qid}'");

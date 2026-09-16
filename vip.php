@@ -73,9 +73,35 @@ if($action == 'order' && $is_member)
 		$errors[] = 'VIP üyelik satışı şu anda kapalı.';
 	}
 
-	if(!$mybb->settings['vip_wallet'])
+	// A network with no address cannot take money, so treat it as missing
+	// rather than sending the member to a page with an empty wallet field.
+	$networks = vip_membership_enabled_networks();
+	if(!$networks)
 	{
 		$errors[] = 'Ödeme adresi tanımlı değil. Lütfen yönetime bildirin.';
+	}
+
+	$nid = $mybb->get_input('nid', MyBB::INPUT_INT);
+	$network = null;
+	foreach($networks as $n)
+	{
+		if((int)$n['nid'] == $nid)
+		{
+			$network = $n;
+			break;
+		}
+	}
+
+	// Default to the first network so a member who never sees the picker — one
+	// network configured, say — still completes an order.
+	if(!$network && $networks)
+	{
+		$network = $networks[0];
+	}
+
+	if(!$network)
+	{
+		$errors[] = 'Lütfen bir ödeme ağı seçin.';
 	}
 
 	$pid = $mybb->get_input('pid', MyBB::INPUT_INT);
@@ -107,6 +133,7 @@ if($action == 'order' && $is_member)
 			'amount_exact' => 0,
 			'status' => 'pending',
 			'txid' => '',
+			'network' => $db->escape_string($network['name']),
 			'dateline' => TIME_NOW,
 		);
 		$oid = $db->insert_query('vip_orders', $order);
@@ -140,12 +167,20 @@ if($action == 'txid' && $is_member)
 	{
 		$errors[] = 'Lütfen işlem kimliğini (TXID) girin.';
 	}
-	// A TRON transaction hash is 64 hex characters. Rejecting anything else
-	// catches pasted block-explorer URLs and truncated hashes early, before an
-	// admin wastes time on them.
-	elseif(!preg_match('/^[0-9a-fA-F]{64}$/', $txid))
+	else
 	{
-		$errors[] = 'TXID 64 karakterlik hexadecimal bir işlem kimliği olmalı (örn. 3f8a...).';
+		// Validate against the chain this order was placed on: a TRON hash and
+		// an EVM hash have different shapes, and accepting either everywhere
+		// just pushes the mistake onto the admin reviewing the queue.
+		$network = vip_membership_order_network($order['network']);
+		if($network)
+		{
+			$txerr = vip_membership_txid_error($txid, $network);
+			if($txerr !== '')
+			{
+				$errors[] = $txerr;
+			}
+		}
 	}
 
 	if(!$errors)
@@ -192,11 +227,21 @@ if($action == 'pay' && $is_member)
 	}
 	else
 	{
-		$wallet = htmlspecialchars_uni($mybb->settings['vip_wallet']);
-		$currency = htmlspecialchars_uni($mybb->settings['vip_currency']);
+		$network = vip_membership_order_network($order['network']);
+		$net_name = $network ? htmlspecialchars_uni($network['name']) : '';
+		// Currency comes from the network when we know it, so an order placed on
+		// a non-USDT chain still shows the unit the member actually sent.
+		$currency = htmlspecialchars_uni($network && $network['currency'] !== ''
+			? $network['currency']
+			: $mybb->settings['vip_currency']);
+		$wallet = htmlspecialchars_uni($network ? $network['wallet'] : '');
+		$hint = $network && $network['txid_hint'] !== ''
+			? htmlspecialchars_uni($network['txid_hint'])
+			: '64 karakterlik işlem kimliği';
 		$exact = htmlspecialchars_uni($order['amount_exact']);
 		$plain = htmlspecialchars_uni($order['amount']);
 		$title = htmlspecialchars_uni($order['title']);
+		$oid = (int)$order['oid'];
 
 		$post_key = $mybb->post_code;
 		$form_action = htmlspecialchars_uni($mybb->settings['bburl']).'/vip.php';
@@ -209,7 +254,7 @@ if($action == 'pay' && $is_member)
   <p class="nextgen-vip-pay-lead">Aşağıdaki adrese <strong>tam olarak {$exact} {$currency}</strong> gönderin. Tutardaki kuruş farkı ödemenizin eşleştirilmesi içindir; lütfen yuvarlamayın.</p>
 
   <div class="nextgen-vip-field">
-    <span class="nextgen-vip-label">Cüzdan adresi (TRC-20 / TRON)</span>
+    <span class="nextgen-vip-label">Cüzdan adresi ({$net_name})</span>
     <div class="nextgen-vip-copyrow">
       <code id="vip-wallet">{$wallet}</code>
       <button type="button" class="nextgen-vip-copy" data-copy="#vip-wallet"><i class="fa-regular fa-copy"></i> Kopyala</button>
@@ -227,7 +272,7 @@ if($action == 'pay' && $is_member)
 
   <div class="nextgen-vip-warn">
     <i class="fa-solid fa-triangle-exclamation"></i>
-    <div>Yalnızca <strong>TRC-20 (TRON)</strong> ağı üzerinden USDT gönderin. Farklı bir ağdan yapılan transferler kaybolur ve iade edilemez.</div>
+    <div>Yalnızca <strong>{$net_name}</strong> ağı üzerinden {$currency} gönderin. Farklı bir ağdan yapılan transferler kaybolur ve iade edilemez.</div>
   </div>
 
   <form action="{$form_action}" method="post" class="nextgen-vip-txform">
@@ -235,7 +280,7 @@ if($action == 'pay' && $is_member)
     <input type="hidden" name="oid" value="{$oid}" />
     <input type="hidden" name="my_post_key" value="{$post_key}" />
     <label for="vip-txid">Ödeme sonrası işlem kimliği (TXID)</label>
-    <input type="text" id="vip-txid" name="txid" class="textbox" placeholder="64 karakterlik işlem kimliği" autocomplete="off" />
+    <input type="text" id="vip-txid" name="txid" class="textbox" placeholder="{$hint}" autocomplete="off" />
     <button type="submit" class="nextgen-vip-submit"><i class="fa-solid fa-paper-plane"></i> Ödemeyi Bildir</button>
   </form>
 </div>
@@ -252,6 +297,7 @@ else
 	// Plan grid. Guests see the same grid, with the button pointing at login.
 	$q = $db->simple_select('vip_plans', '*', "enabled='1'", array('order_by' => 'disporder', 'order_dir' => 'ASC'));
 	$plans = '';
+	$pay_networks = vip_membership_enabled_networks();
 	while($p = $db->fetch_array($q))
 	{
 		$ptitle = htmlspecialchars_uni($p['title']);
@@ -262,10 +308,31 @@ else
 
 		if($is_member)
 		{
+			// Only offer a picker when there is a real choice to make; a single
+			// network would just be a form control that cannot be changed.
+			$picker = '';
+			if(count($pay_networks) > 1)
+			{
+				$opts = '';
+				foreach($pay_networks as $n)
+				{
+					$nid = (int)$n['nid'];
+					$nlabel = htmlspecialchars_uni($n['name'].' — '.$n['label']);
+					$opts .= '<option value="'.$nid.'">'.$nlabel.'</option>';
+				}
+				$picker = '<label class="nextgen-vip-network"><span>Ödeme ağı</span>'
+					.'<select name="nid">'.$opts.'</select></label>';
+			}
+			elseif($pay_networks)
+			{
+				$picker = '<input type="hidden" name="nid" value="'.(int)$pay_networks[0]['nid'].'" />';
+			}
+
 			$cta = '<form action="'.htmlspecialchars_uni($mybb->settings['bburl']).'/vip.php" method="post">
 				<input type="hidden" name="action" value="order" />
 				<input type="hidden" name="pid" value="'.(int)$p['pid'].'" />
 				<input type="hidden" name="my_post_key" value="'.$mybb->post_code.'" />
+				'.$picker.'
 				<button type="submit" class="nextgen-vip-submit">Şimdi Satın Al</button>
 			</form>';
 		}

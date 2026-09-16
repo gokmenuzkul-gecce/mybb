@@ -14,6 +14,7 @@ function vip_membership_meta()
 	$sub_menu = array();
 	$sub_menu['10'] = array('id' => 'orders', 'title' => 'Ödeme Kuyruğu', 'link' => 'index.php?module=vip_membership-orders');
 	$sub_menu['20'] = array('id' => 'plans', 'title' => 'Planlar', 'link' => 'index.php?module=vip_membership-plans');
+	$sub_menu['30'] = array('id' => 'networks', 'title' => 'Ödeme Ağları', 'link' => 'index.php?module=vip_membership-networks');
 
 	$sub_menu = $plugins->run_hooks('admin_vip_membership_menu', $sub_menu);
 
@@ -30,6 +31,7 @@ function vip_membership_action_handler($action)
 	$actions = array(
 		'orders' => array('active' => 'orders', 'file' => 'orders.php'),
 		'plans' => array('active' => 'plans', 'file' => 'plans.php'),
+		'networks' => array('active' => 'networks', 'file' => 'networks.php'),
 	);
 
 	if(isset($actions[$action]))
@@ -50,6 +52,7 @@ function vip_membership_admin_permissions()
 		'vip_membership' => array(
 			'orders' => 'Ödeme kuyruğunu görüntüle ve onayla',
 			'plans' => 'VIP planlarını yönet',
+			'networks' => 'Ödeme ağlarını ve cüzdan adreslerini yönet',
 		),
 	);
 }

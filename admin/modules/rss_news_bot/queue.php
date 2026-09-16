@@ -45,13 +45,30 @@ if($action == 'approve' || $action == 'reject')
 
 		if($action == 'approve')
 		{
-			$forum = $db->fetch_array($db->simple_select('forums', 'name', "fid='".(int)$mybb->settings['rss_bot_forum']."'"));
-			$target = $forum ? $forum['name'] : '(geçersiz forum ayarı)';
+			// Forum choices: the feed's own target, the global target, then the
+			// rest of the board, so the admin can reroute a mis-categorised
+			// headline without leaving this screen.
+			$options = array();
+			$global_fid = (int)$mybb->settings['rss_bot_forum'];
+			$selected = (int)$item['fid_forum'] > 0 ? (int)$item['fid_forum'] : $global_fid;
+
+			$fq = $db->simple_select('forums', 'fid, name, type', "type='f'", array('order_by' => 'name'));
+			while($f = $db->fetch_array($fq))
+			{
+				$options[(int)$f['fid']] = htmlspecialchars_uni($f['name']);
+			}
+
+			// The body the admin will edit: whatever was saved before, else the
+			// generated quote so the textarea is never unexpectedly empty.
+			$existing_body = isset($item['body']) && trim((string)$item['body']) !== ''
+				? $item['body']
+				: rss_news_bot_build_message($item);
 
 			$form_container = new FormContainer('Haberi Onayla');
-			$form_container->output_row('Başlık', '', htmlspecialchars_uni($item['title']));
+			$form_container->output_row('Başlık', 'Gerekirse düzenleyip yayınlayın.', $form->generate_text_box('subject', htmlspecialchars_uni($item['title']), array('style' => 'width:100%')));
 			$form_container->output_row('Kaynak', '', htmlspecialchars_uni($item['source']));
-			$form_container->output_row('Açılacak forum', 'Konu bu foruma taşınacak konu olarak eklenecek.', htmlspecialchars_uni($target));
+			$form_container->output_row('Açılacak forum', 'Haberin hangi foruma açılacağını seçin.', $form->generate_select_box('fid', $options, $selected));
+			$form_container->output_row('Konu içeriği', 'Yayınlanmadan önce metni düzenleyebilirsiniz. Kaynak bağlantısı korunur.', $form->generate_text_area('body', $existing_body, array('style' => 'width:100%;height:260px;')));
 			$form_container->output_row('Onay', 'Onayladığınızda konu açılır ve haber yayınlanır.', $form->generate_hidden_field('qid', $qid).$form->generate_hidden_field('action', $action));
 			$form_container->end();
 			$buttons[] = $form->generate_submit_button('Onayla ve Konu Aç');
@@ -73,7 +90,14 @@ if($action == 'approve' || $action == 'reject')
 
 	if($action == 'approve')
 	{
-		list($ok, $message) = rss_news_bot_approve($qid, (int)$mybb->user['uid']);
+		// The form lets the admin edit the headline, body and target forum; pass
+		// those through so what gets published is what was reviewed.
+		$override = array(
+			'subject' => $mybb->get_input('subject'),
+			'body' => $mybb->get_input('body'),
+			'fid' => $mybb->get_input('fid', MyBB::INPUT_INT),
+		);
+		list($ok, $message) = rss_news_bot_approve($qid, (int)$mybb->user['uid'], $override);
 		flash_message($message, $ok ? 'success' : 'error');
 	}
 	else

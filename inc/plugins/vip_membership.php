@@ -63,6 +63,7 @@ function vip_membership_uninstall()
 
 	$db->drop_table('vip_plans');
 	$db->drop_table('vip_orders');
+	$db->drop_table('vip_networks');
 
 	$db->delete_query('settings', "name IN ('vip_enabled','vip_wallet','vip_currency','vip_rate','vip_group','vip_days','vip_pending_note','vip_txid_note')");
 	$db->delete_query('settinggroups', "name='vip_membership'");
@@ -103,6 +104,93 @@ function vip_membership_upgrade_tables()
 	if(!$db->field_exists('welcomed', 'vip_orders'))
 	{
 		$db->add_column('vip_orders', 'welcomed', "{$tiny} NOT NULL DEFAULT 0");
+	}
+
+	// Which chain the member paid on. Orders created before multiple networks
+	// existed were all TRC-20, so that is the right default for old rows.
+	if(!$db->field_exists('network', 'vip_orders'))
+	{
+		$db->add_column('vip_orders', 'network', "VARCHAR(40) NOT NULL DEFAULT 'TRC-20'");
+	}
+
+	vip_membership_seed_networks();
+}
+
+/**
+ * Creates the payment-network table and adopts the legacy single wallet.
+ *
+ * Older installs hold one address in the vip_wallet setting. Rather than
+ * dropping it on the floor — which would leave the board unable to take money
+ * until an admin noticed — that value becomes the first network row.
+ */
+function vip_membership_seed_networks()
+{
+	global $db, $mybb;
+
+	if($db->table_exists('vip_networks'))
+	{
+		return;
+	}
+
+	$mysql = ($db->engine == 'mysql');
+	$tail = $mysql ? ' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4' : '';
+	$pk = $mysql ? 'INT(11) NOT NULL AUTO_INCREMENT' : 'INTEGER PRIMARY KEY AUTOINCREMENT';
+	$int = $mysql ? 'INT(11)' : 'INTEGER';
+	$tiny = $mysql ? 'TINYINT(1)' : 'INTEGER';
+
+	$db->write_query("CREATE TABLE ".TABLE_PREFIX."vip_networks (
+		nid {$pk},
+		name VARCHAR(60) NOT NULL,
+		label VARCHAR(120) NOT NULL DEFAULT '',
+		wallet VARCHAR(200) NOT NULL DEFAULT '',
+		currency VARCHAR(20) NOT NULL DEFAULT 'USDT',
+		explorer VARCHAR(200) NOT NULL DEFAULT '',
+		txid_hint VARCHAR(200) NOT NULL DEFAULT '',
+		txid_regex VARCHAR(200) NOT NULL DEFAULT '',
+		disporder {$int} NOT NULL DEFAULT 0,
+		enabled {$tiny} NOT NULL DEFAULT 1".($mysql ? ",\n\t\tPRIMARY KEY (nid)" : "")."
+	){$tail};");
+
+	$legacy = '';
+	if(isset($mybb->settings['vip_wallet']))
+	{
+		$legacy = trim((string)$mybb->settings['vip_wallet']);
+	}
+
+	// The legacy address belongs to TRC-20, so that row is the one that gets it.
+	// The EVM rows start with an empty wallet and stay hidden from members until
+	// an admin fills the address in, which is exactly the desired behaviour.
+	$seeds = array(
+		array('TRC-20', 'Tether (TRON ağı)', $legacy, 'USDT',
+			'https://tronscan.org/#/transaction/',
+			'64 karakterlik hexadecimal işlem kimliği (örn. 3f8a...)',
+			'^[0-9a-fA-F]{64}$', 1),
+		array('ERC-20', 'Tether (Ethereum ağı)', '', 'USDT',
+			'https://etherscan.io/tx/',
+			'0x ile başlayan 66 karakterlik işlem kimliği',
+			'^0x[0-9a-fA-F]{64}$', 2),
+		array('BEP-20', 'Tether (BNB Chain ağı)', '', 'USDT',
+			'https://bscscan.com/tx/',
+			'0x ile başlayan 66 karakterlik işlem kimliği',
+			'^0x[0-9a-fA-F]{64}$', 3),
+	);
+
+	foreach($seeds as $s)
+	{
+		$db->insert_query('vip_networks', array(
+			'name' => $s[0],
+			'label' => $s[1],
+			'wallet' => $db->escape_string($s[2]),
+			'currency' => $s[3],
+			'explorer' => $s[4],
+			'txid_hint' => $s[5],
+			'txid_regex' => $db->escape_string($s[6]),
+			'disporder' => $s[7],
+			// A network with no address cannot take payment, so ship any
+			// address-less seed disabled and let the admin switch it on when
+			// they paste theirs in.
+			'enabled' => ($s[2] !== '' ? 1 : 0),
+		));
 	}
 }
 
@@ -158,6 +246,7 @@ function vip_membership_create_tables()
 			amount_exact {$dec6} NOT NULL DEFAULT 0,
 			status VARCHAR(20) NOT NULL DEFAULT 'pending',
 			txid VARCHAR(120) NOT NULL DEFAULT '',
+			network VARCHAR(40) NOT NULL DEFAULT 'TRC-20',
 			note TEXT,
 			admin_note TEXT,
 			dateline {$int} NOT NULL DEFAULT 0,
@@ -612,6 +701,86 @@ HTML;
 }
 
 /* ------------------------------------------------------------ helpers --- */
+
+/**
+ * Payment networks a member can actually pay to.
+ *
+ * A row with no wallet address is filtered out: showing a member an empty
+ * address field invites a transfer into the void, which is unrecoverable.
+ */
+function vip_membership_enabled_networks()
+{
+	global $db;
+
+	$out = array();
+	$q = $db->simple_select('vip_networks', '*', "enabled='1'", array('order_by' => 'disporder', 'order_dir' => 'ASC'));
+	while($row = $db->fetch_array($q))
+	{
+		if(trim((string)$row['wallet']) === '')
+		{
+			continue;
+		}
+		$out[] = $row;
+	}
+	return $out;
+}
+
+/**
+ * The network an order was placed on, falling back to the first enabled one.
+ *
+ * Orders predating the networks table have no meaningful network value, so a
+ * lookup that finds nothing returns null and the caller decides what to show
+ * rather than rendering the wrong address.
+ */
+function vip_membership_order_network($name)
+{
+	global $db;
+
+	$name = trim((string)$name);
+	if($name !== '')
+	{
+		$q = $db->simple_select('vip_networks', '*', "name='".$db->escape_string($name)."'", array('limit' => 1));
+		if($db->num_rows($q))
+		{
+			return $db->fetch_array($q);
+		}
+	}
+
+	$networks = vip_membership_enabled_networks();
+	return $networks ? $networks[0] : null;
+}
+
+/**
+ * Explains why a submitted TXID does not look like one for this chain, or ''
+ * when it does. Patterns live on the network row, so adding a chain is a row
+ * rather than a code change.
+ */
+function vip_membership_txid_error($txid, $network)
+{
+	$regex = isset($network['txid_regex']) ? trim((string)$network['txid_regex']) : '';
+	if($regex === '')
+	{
+		return '';
+	}
+
+	// A malformed pattern must not reject every payment, so one that will not
+	// compile is treated as "no opinion" rather than as a failed match.
+	if(@preg_match('/'.$regex.'/', '') === false)
+	{
+		return '';
+	}
+
+	if(!preg_match('/'.$regex.'/', $txid))
+	{
+		$hint = (isset($network['txid_hint']) && $network['txid_hint'] !== '')
+			? $network['txid_hint']
+			: 'Geçerli bir işlem kimliği girin.';
+		return 'TXID bu ağ için geçerli görünmüyor. '.$hint;
+	}
+
+	return '';
+}
+
 
 /**
  * Assigns the VIP group and extends the paid period. Central so the ACP, the
