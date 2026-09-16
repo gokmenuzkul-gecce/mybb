@@ -4,7 +4,7 @@ html, body, p, code:before, table {
 	padding: 0;
 	font-family: Tahoma, Verdana, Arial, Sans-Serif;
 	font-size: 14px;
-	color: #333;
+	color: #f8fafc;
 }
 
 html {
@@ -53,9 +53,9 @@ code {
 	font-size: 13px !important;
 	padding: 10px;
 	position: relative;
-	background: white;
+	background: rgba(15, 23, 42, .72);
 	margin: .25em .05em 0 0;
-	border: 1px solid #ccc;
+	border: 1px solid rgba(148, 163, 184, .28);
 	white-space: pre-wrap;
 	display: block;
 	-moz-border-radius: 6px;
@@ -74,9 +74,9 @@ code:before, code {
 
 blockquote {
 	position: relative;
-	background: white;
+	background: rgba(15, 23, 42, .72);
 	margin: .25em .05em 0 0;
-	border: 1px solid #ccc;
+	border: 1px solid rgba(148, 163, 184, .28);
 	padding: 10px;
 	-moz-border-radius: 6px;
 	-webkit-border-radius: 6px;
