@@ -23,7 +23,7 @@
 <script type="text/javascript" src="{$mybb->asset_url}/jscripts/jquery.plugins.min.js?ver=1821"></script>
 <script type="text/javascript" src="{$mybb->asset_url}/jscripts/general.js?ver=1827"></script>
 {$stylesheets}
-<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=6" />
+<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=17" />
 <script type="text/javascript">
 var templates = { modal: '{$jsTemplates['modal']}', modal_button: '{$jsTemplates['modal_button']}' };
 var cookieDomain = "{$mybb->settings['cookiedomain']}";
@@ -70,5 +70,36 @@ document.addEventListener('DOMContentLoaded', function() {
       editor.appendChild(suggestion);
     }
   });
+  var slider = document.querySelector('[data-slider]');
+  if (slider) {
+    var slides = slider.querySelectorAll('.nextgen-slide');
+    var dots = slider.querySelectorAll('.nextgen-slider-dot');
+    if (slides.length > 1) {
+      var current = 0;
+      var timer = null;
+      var show = function(index) {
+        current = (index + slides.length) % slides.length;
+        slides.forEach(function(slide, i) { slide.classList.toggle('is-active', i === current); });
+        dots.forEach(function(dot, i) { dot.classList.toggle('is-active', i === current); });
+      };
+      var start = function() {
+        stop();
+        timer = setInterval(function() { show(current + 1); }, 6500);
+      };
+      var stop = function() { if (timer) { clearInterval(timer); timer = null; } };
+      dots.forEach(function(dot) {
+        dot.addEventListener('click', function() {
+          show(parseInt(dot.getAttribute('data-slide'), 10));
+          start();
+        });
+      });
+      slider.addEventListener('mouseenter', stop);
+      slider.addEventListener('mouseleave', start);
+      // Respect users who asked the OS to reduce motion: no auto-advance.
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        start();
+      }
+    }
+  }
 });
 </script>

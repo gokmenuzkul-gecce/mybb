@@ -31,6 +31,7 @@ if(defined('THIS_SCRIPT') && THIS_SCRIPT == 'index.php')
 }
 
 $plugins->add_hook('build_forumbits_forum', 'crypto_forumcards_enrich');
+$plugins->add_hook('pre_output_page', 'crypto_forumcards_slider');
 
 function crypto_forumcards_info()
 {
@@ -231,4 +232,113 @@ function crypto_forumcards_avatar_for($uid)
 	}
 
 	return $cache[$uid];
+}
+
+/**
+ * Featured-thread slider for the board index.
+ *
+ * Threads are pulled live rather than hard-coded so the hero never goes stale,
+ * and every candidate is filtered through the viewer's own forum permissions —
+ * surfacing a thread from a forum they cannot read would leak both its title
+ * and its existence.
+ */
+function crypto_forumcards_slider($contents)
+{
+        global $mybb, $db;
+
+        if(THIS_SCRIPT != 'index.php')
+        {
+                return $contents;
+        }
+
+        // Guard on the markup, not the bare class prefix: headerinclude carries
+        // the slider's JS, which contains "nextgen-slider-dot" and would
+        // otherwise make this bail out on every page that loads the theme.
+        if(strpos($contents, 'class="nextgen-slider"') !== false)
+        {
+                return $contents;
+        }
+
+        $perms = forum_permissions();
+        $readable = array();
+        foreach($perms as $fid => $perm)
+        {
+                if(!empty($perm['canview']) && !empty($perm['canviewthreads']))
+                {
+                        $readable[] = (int)$fid;
+                }
+        }
+
+        if(!$readable)
+        {
+                return $contents;
+        }
+
+        // Prefer threads with discussion behind them; a slider of empty test
+        // topics reads as a dead board. If the board is too young to have any,
+        // fall back to whatever exists rather than showing nothing.
+        $fids = implode(',', $readable);
+        $sql = "
+                SELECT t.tid, t.subject, t.replies, t.views, t.dateline, t.uid, t.username,
+                       f.name AS forumname, f.fid
+                FROM ".TABLE_PREFIX."threads t
+                LEFT JOIN ".TABLE_PREFIX."forums f ON (f.fid = t.fid)
+                WHERE t.visible='1' AND t.fid IN ({$fids}) AND t.closed NOT LIKE 'moved|%'
+                {FILTER}
+                ORDER BY t.replies DESC, t.views DESC, t.dateline DESC
+                LIMIT 5
+        ";
+
+        // str_replace rather than sprintf: the LIKE pattern above contains a
+        // literal '%' that sprintf would read as a conversion specifier.
+        $query = $db->query(str_replace('{FILTER}', 'AND (t.replies >= 2 OR t.views >= 50)', $sql));
+        if($db->num_rows($query) < 2)
+        {
+                $query = $db->query(str_replace('{FILTER}', '', $sql));
+        }
+
+        $slides = '';
+        $dots = '';
+        $i = 0;
+        while($t = $db->fetch_array($query))
+        {
+                $subject = htmlspecialchars_uni($t['subject']);
+                $forum = htmlspecialchars_uni($t['forumname']);
+                $url = htmlspecialchars_uni(get_thread_link((int)$t['tid']));
+                $replies = (int)$t['replies'];
+                $views = (int)$t['views'];
+                $active = ($i === 0) ? ' is-active' : '';
+
+                $slides .= '<a class="nextgen-slide'.$active.'" href="'.$url.'" data-slide="'.$i.'">'
+                        . '<span class="nextgen-slide-forum">'.$forum.'</span>'
+                        . '<strong class="nextgen-slide-title">'.$subject.'</strong>'
+                        . '<span class="nextgen-slide-meta">'.$replies.' yanıt &middot; '.$views.' görüntüleme</span>'
+                        . '</a>';
+
+                $dots .= '<button type="button" class="nextgen-slider-dot'.$active.'" data-slide="'.$i.'" aria-label="'.$subject.'"></button>';
+                $i++;
+        }
+
+        if($i < 2)
+        {
+                return $contents;
+        }
+
+        $slider = <<<HTML
+<section class="nextgen-slider" aria-label="Öne çıkan konular" data-slider>
+  <div class="nextgen-slider-track">{$slides}</div>
+  <div class="nextgen-slider-nav">{$dots}</div>
+</section>
+HTML;
+
+        // Sits directly above the forum directory so it reads as the board's
+        // own highlight reel rather than as an advertisement.
+        $needle = '<section class="nextgen-forum-directory"';
+        $pos = strpos($contents, $needle);
+        if($pos !== false)
+        {
+                $contents = substr_replace($contents, $slider.$needle, $pos, strlen($needle));
+        }
+
+        return $contents;
 }

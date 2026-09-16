@@ -1,4 +1,4 @@
-# MyBB Forum — Repo Notes
+# MyBB Forum â€” Repo Notes
 
 Crypton Web3 Community forum, MyBB 1.8.40, Turkish language pack.
 
@@ -27,7 +27,7 @@ The custom design lives in `themes/crypto-web3/` (`global.css`, `header.html`,
 `headerinclude.html`, `index.html`) and is linked directly from the
 `headerinclude` template. Design markup (`nextgen-*`, `crypto-brand-*` classes)
 is baked into the global templates in the database (header tid=160, index
-tid=176, headerinclude tid=962, footer tid=65) — not into files.
+tid=176, headerinclude tid=962, footer tid=65) â€” not into files.
 
 All templates live in `sid = -2` (MyBB Master Style) with 971 rows; theme 2
 (`Default`) points its `templateset` at `1` but that set is empty, so Master
@@ -38,7 +38,7 @@ theme.
 
 The custom `header` and `footer` templates are intentionally asymmetric:
 `header` has two unclosed `<div>`s (+2, closed by `footer`) and `footer` opens
-with `</div>` before `</main>` (−2). They cancel across the page — an
+with `</div>` before `</main>` (âˆ’2). They cancel across the page â€” an
 unbalanced `header` or `footer` alone is *not* a bug, so never "fix" them
 without checking the sum against a full rendered page.
 
@@ -71,15 +71,15 @@ without external network access. FontAwesome (CDN) is still used for icons.
 ## Localization
 
 Turkish is the board default. `inc/languages/turkish/` has full key coverage
-(0 missing vs `english`). Not everything translatable lives in language files —
+(0 missing vs `english`). Not everything translatable lives in language files â€”
 these DB tables also carry user-visible English and were translated in place:
 
 - `mybb_tasks` (`title`, `description`)
 - `mybb_helpdocs` (`name`, `description`, `document`) and `mybb_helpsections`
 - `mybb_usergroups` (`title`, `description`, `usertitle`)
 
-`mybb_datacache` holds serialized caches (`usergroups`, `helpdocs`, …). Delete
-the specific rows after editing the source tables — **never** `DELETE FROM
+`mybb_datacache` holds serialized caches (`usergroups`, `helpdocs`, â€¦). Delete
+the specific rows after editing the source tables â€” **never** `DELETE FROM
 mybb_datacache` wholesale, that drops `internal_settings`/`version` and the
 board starts returning HTTP 503.
 
@@ -92,15 +92,15 @@ supplies the same classes and is what actually renders.
 Beyond the base `nextgen-*` shell, `themes/crypto-web3/global.css` styles four
 redesigned areas. Each pairs with specific templates in `mybb_templates`:
 
-- **Logo** — `.crypto-brand-logo` / `.crypto-brand-mark` / `.crypto-brand-ring`
+- **Logo** â€” `.crypto-brand-logo` / `.crypto-brand-mark` / `.crypto-brand-ring`
   in the `header` template.
-- **Search popup** — `.nextgen-search-modal`, opened by `.nextgen-search-trigger`
+- **Search popup** â€” `.nextgen-search-modal`, opened by `.nextgen-search-trigger`
   via the `DOMContentLoaded` handler in `headerinclude`.
-- **Login popup** — `.nextgen-login*`, a two-column grid. The wrapper lives in
+- **Login popup** â€” `.nextgen-login*`, a two-column grid. The wrapper lives in
   `header_welcomeblock_guest`; the `<tr>` fields come from
   `header_welcomeblock_guest_login_modal`, injected as `{$loginform}`. Styling
   the inner rows requires touching both templates.
-- **Postbit** — `postbit`, `postbit_author_user`, `postbit_avatar`, plus
+- **Postbit** â€” `postbit`, `postbit_author_user`, `postbit_avatar`, plus
   `postbit_online` / `postbit_offline`, `postbit_reputation`,
   `postbit_warninglevel` and `postbit_profilefield`. The author column is a
   centred card: `.nextgen-author-card` (avatar + presence pill), then
@@ -111,14 +111,14 @@ redesigned areas. Each pairs with specific templates in `mybb_templates`:
   renders unstyled in normal flow. Stats are label-left / value-right rows
   (`b` carries `order: 2; margin-left: auto`), which stays readable at any
   username length, unlike the earlier 3-up grid.
-- **Member profile** — `member_profile` is a two-part layout:
+- **Member profile** â€” `member_profile` is a two-part layout:
   `.nextgen-profile-hero` (avatar, name, title pill, fact cards) above a
   `.nextgen-profile-grid` of two equal columns. The stock template used a
   `<fieldset>` with a `width="75%"` table and a right-aligned avatar cell; both
   are gone, so `fieldset` styling no longer applies to this page. The fact
-  cards need `align-content: center` — as bare auto grid rows they stretch to
+  cards need `align-content: center` â€” as bare auto grid rows they stretch to
   match the tallest sibling, which ballooned them to 101px.
-- **Forum rows on the index** — `forumbit_depth1_cat` (the category shell),
+- **Forum rows on the index** â€” `forumbit_depth1_cat` (the category shell),
   `forumbit_depth2_forum`, `forumbit_depth2_cat` and
   `forumbit_depth2_forum_lastpost`. Each row is a per-forum icon chip that
   **leads the row** (its own first cell, 48px, hover scale plus a float
@@ -149,7 +149,7 @@ posting form (new thread / new reply):
 
 The form's `table.tborder` must also be excluded from the mobile
 `.tborder table { min-width: 620px }` floor; that floor otherwise pushes the
-editor off-screen at ≤760px. The form stacks its cells into blocks there and the
+editor off-screen at â‰¤760px. The form stacks its cells into blocks there and the
 smilie sidebar drops below the editor.
 
 `regdateformat` was changed from `"M Y"` to `"m.Y"` so registration dates render
@@ -160,7 +160,7 @@ translate `M`).
 
 - `bburl` / `homeurl` are stored in the database. A stale value breaks every
   asset URL, since `{$mybb->settings['bburl']}` prefixes all CSS/JS links.
-- After editing `mybb_settings`, regenerate `inc/settings.php` — MyBB reads the
+- After editing `mybb_settings`, regenerate `inc/settings.php` â€” MyBB reads the
   PHP file on every request and does not re-read the table.
 - `headerinclude` links `global.css` with a `?v=N` cache-buster. Bump it after
   editing the stylesheet or browsers keep serving the old file.
@@ -196,7 +196,7 @@ rendered width when a "blurry avatar" report comes in.
 Post-count titles (`Newbie`, `Junior Member`, ...) are rows in `mybb_usertitles`,
 not language strings, so the Turkish language pack leaves them in English. They
 are also cached in `mybb_datacache` under the `usertitles` key. Updating the
-table alone does nothing — rebuild the cache through MyBB's own handler
+table alone does nothing â€” rebuild the cache through MyBB's own handler
 (`$mybb->cache->update_usertitles()`) or the ACP, so the serialized format on
 disk stays correct.
 
@@ -206,7 +206,7 @@ disk stays correct.
 `<tbody>` and every child row. It reads as pure header markup, but dropping the
 opening `<table ...>` or the closing `</table>` makes the browser discard the
 foster-parented `<tr>`/`<td>` tags entirely. The page then renders as a flat
-list of cells with no row classes at all — `.nextgen-forum-row` matches zero
+list of cells with no row classes at all â€” `.nextgen-forum-row` matches zero
 elements while `grep` on the raw HTML still finds 18 of them, which is a
 confusing way to find out. Keep `<table>`/`</table>` balanced in that template
 and assert the count when editing it.
@@ -232,7 +232,7 @@ things to know:
 
 The plugin is a data provider only; the markup ships in the theme's templates.
 `build_forumbits_forum` fires inside the recursion in `build_forumbits()`, so
-the hook runs once per forum per page — keep the work memoised.
+the hook runs once per forum per page â€” keep the work memoised.
 
 ### Activating a plugin without the ACP
 
@@ -242,3 +242,56 @@ writes the cache and calls `{codename}_activate()`. Headlessly, require
 `$cache->update('plugins', ...)`, then invoke the activate function. Booting
 `global.php` needs `THIS_SCRIPT` defined, and any script doing this should be
 deleted afterwards.
+
+### Theme templates live in the database, not on disk
+
+Editing `themes/crypto-web3/*.html` changes nothing until the matching row in
+`mybb_templates` is updated. Every theme template here exists in two places:
+
+- `themes/crypto-web3/<name>.html` — the source of truth for review and diff
+- `mybb_templates` where `title='<name>' AND sid=-2` — what MyBB actually renders
+
+`sid=-2` is the global override; a row keyed to a real `sid` wins over it, so
+check for one before editing. After any theme template edit, push the file into
+the DB and assert the two match:
+
+    disk = open('themes/crypto-web3/headerinclude.html').read()
+    db.execute("update mybb_templates set template=? "
+               "where title='headerinclude' and sid=-2", (disk,))
+
+The half-applied edit is the failure mode to watch for: the file looks right,
+the page does not change, yet `grep` on the file confirms the fix. The theme's
+CSS link carries a `?v=N` cache-buster that also lives in the `headerinclude`
+row — bump it in both places whenever `global.css` changes.
+
+### A `strpos` guard on a bare class prefix can match your own JavaScript
+
+`pre_output_page` injectors that skip work when their markup is already present
+usually test for a class name. If that name also appears in inline JS in
+`headerinclude` (any `querySelector('.nextgen-slider-dot')`, say), the guard
+matches the script text, every page looks already-rendered, and the feature
+silently never appears. Guard on the markup itself — `class="nextgen-slider"` —
+not on the bare prefix.
+
+### `sprintf` and SQL `LIKE` patterns
+
+`LIKE 'moved|%'` inside a query later passed to `sprintf()` throws
+`ValueError: Unknown format specifier` — the `%` is read as a conversion. Use
+`str_replace` with a placeholder, or escape it as `%%`.
+
+### VIP approval congratulations
+
+`vip_membership_send_welcome()` sends the PM and
+`vip_membership_welcome_banner()` renders the one-time banner, both driven by
+`vip_orders.welcomed`. The column is added by
+`vip_membership_upgrade_tables()`, which runs off `vip_membership_create_tables()`
+so a fresh install and an upgrade both get it. The banner clears the flag for
+the **approved** order only; clearing every row for the user would consume a
+welcome that a second, later order still owes.
+
+### Disabled MyBB features still answer HTTP 200
+
+`portal.php` with `portal=0` returns 200 with an error body
+("portal sayfasını kullanamazsınız"), not a 404. Judge these by the body, not the
+status code. Note that `inc/settings.php` is a flat generated cache — a settings
+write stays invisible until `rebuild_settings()` regenerates it.

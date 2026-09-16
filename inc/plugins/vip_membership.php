@@ -20,6 +20,8 @@ if(!defined('IN_MYBB'))
 
 $plugins->add_hook('global_start', 'vip_membership_global_start');
 $plugins->add_hook('pre_output_page', 'vip_membership_inject_button');
+$plugins->add_hook('pre_output_page', 'vip_membership_welcome_banner');
+$plugins->add_hook('pre_output_page', 'vip_membership_home_showcase');
 $plugins->add_hook('member_profile_end', 'vip_membership_profile_badge');
 
 function vip_membership_info()
@@ -78,9 +80,37 @@ function vip_membership_uninstall()
 
 /* ------------------------------------------------------------- schema --- */
 
+/**
+ * Brings an already-installed vip_orders table up to the current schema.
+ *
+ * CREATE TABLE only runs on a fresh install, so columns added in later versions
+ * would never reach boards that installed the plugin earlier. Each step is
+ * guarded by field_exists() because ALTER TABLE ADD has no IF NOT EXISTS in
+ * MySQL and the plugin install is expected to be safe to re-run.
+ */
+function vip_membership_upgrade_tables()
+{
+	global $db;
+
+	if(!$db->table_exists('vip_orders'))
+	{
+		return;
+	}
+
+	$mysql = ($db->engine == 'mysql');
+	$tiny = $mysql ? 'TINYINT(1)' : 'INTEGER';
+
+	if(!$db->field_exists('welcomed', 'vip_orders'))
+	{
+		$db->add_column('vip_orders', 'welcomed', "{$tiny} NOT NULL DEFAULT 0");
+	}
+}
+
 function vip_membership_create_tables()
 {
 	global $db;
+
+	vip_membership_upgrade_tables();
 
 	// The board ships on SQLite but a real deployment is usually MySQL, and the
 	// two disagree on the CREATE TABLE tail. Build it per engine rather than
@@ -133,7 +163,8 @@ function vip_membership_create_tables()
 			dateline {$int} NOT NULL DEFAULT 0,
 			paid_until {$int} NOT NULL DEFAULT 0,
 			handled_by {$int} NOT NULL DEFAULT 0,
-			handled_at {$int} NOT NULL DEFAULT 0".($mysql ? ",\n\t\t\tPRIMARY KEY (oid),\n\t\t\tKEY uid (uid),\n\t\t\tKEY status (status),\n\t\t\tKEY txid (txid)" : "")."
+			handled_at {$int} NOT NULL DEFAULT 0,
+			welcomed {$tiny} NOT NULL DEFAULT 0".($mysql ? ",\n\t\t\tPRIMARY KEY (oid),\n\t\t\tKEY uid (uid),\n\t\t\tKEY status (status),\n\t\t\tKEY txid (txid)" : "")."
 		){$tail};");
 
 		if(!$mysql)
@@ -231,7 +262,7 @@ function vip_membership_create_templates()
 </div>
 <div class="wrapper nextgen-vip-wrap">
   <div class="nextgen-vip-perks">
-    <div class="nextgen-vip-perk"><i class="fa-solid fa-whale"></i><strong>Balina Sinyalleri</strong><span>Spot sepeti ve giriş-çıkış seviyeleri.</span></div>
+    <div class="nextgen-vip-perk"><i class="fa-solid fa-fish-fins"></i><strong>Balina Sinyalleri</strong><span>Spot sepeti ve giriş-çıkış seviyeleri.</span></div>
     <div class="nextgen-vip-perk"><i class="fa-solid fa-user-shield"></i><strong>Hesap Alım-Satım</strong><span>Doğrulanmış hesap ve hizmet pazarı.</span></div>
     <div class="nextgen-vip-perk"><i class="fa-solid fa-code"></i><strong>Otomasyon Scriptleri</strong><span>Çoklu hesap ve bot scriptleri.</span></div>
     <div class="nextgen-vip-perk"><i class="fa-solid fa-fire"></i><strong>Erken Airdrop</strong><span>Listelenmemiş erken aşama fırsatlar.</span></div>
@@ -366,6 +397,220 @@ function vip_membership_profile_badge()
 	}
 }
 
+/**
+ * Congratulates the member the moment the payment is approved: a private
+ * message that survives as a record, plus a one-off banner on their next page
+ * view. The banner is driven by vip_orders.welcomed rather than a users column
+ * so the core users table stays untouched.
+ */
+function vip_membership_send_welcome($order, $paid_until)
+{
+	global $db, $mybb;
+
+	$uid = (int)$order['uid'];
+	if(!$uid)
+	{
+		return;
+	}
+
+	$until = my_date($mybb->settings['dateformat'], (int)$paid_until);
+	$plan = $order['title'] ? $order['title'] : 'VIP Üyelik';
+
+	$subject = 'VIP Club üyeliğiniz onaylandı!';
+	$message = "[b]Tebrikler, VIP Club üyeliğiniz onaylandı![/b]\n\n"
+		. "Planınız: [b]".$plan."[/b]\n"
+		. "Erişim bitiş tarihi: [b]".$until."[/b]\n\n"
+		. "Artık aşağıdaki VIP alanlarının tamamı hesabınıza açıldı:\n"
+		. "[list]\n"
+		. "[*] VIP Balina Sinyalleri ve Spot Sepetleri\n"
+		. "[*] Erken Aşama Airdrop Rehberleri\n"
+		. "[*] Otomasyon ve Çoklu Hesap Scriptleri\n"
+		. "[*] Hesap ve Hizmet Alım Satımı\n"
+		. "[/list]\n"
+		. "Üyeliğiniz [b]".$until."[/b] tarihine kadar geçerlidir.\n\n"
+		. "Aramıza hoş geldiniz!\n";
+
+	if(function_exists('send_pm'))
+	{
+		send_pm(array(
+			'subject' => $subject,
+			'message' => $message,
+			'touid' => $uid,
+		), 0, true);
+	}
+
+	// Re-arm the banner for this order only, so a renewal celebrates again without
+	// resurrecting an older, already-dismissed congratulation.
+	$db->update_query('vip_orders', array('welcomed' => 0), "oid='".(int)$order['oid']."'");
+}
+
+/**
+ * Renders the celebration banner on the member's first page view after an
+ * approval, then clears the flag so it does not follow them around.
+ */
+function vip_membership_welcome_banner($contents)
+{
+	global $mybb, $db;
+
+	$uid = (int)$mybb->user['uid'];
+	if(!$uid)
+	{
+		return $contents;
+	}
+
+	if(strpos($contents, 'class="nextgen-vip-welcome"') !== false)
+	{
+		return $contents;
+	}
+
+	$q = $db->simple_select('vip_orders', 'oid, title, paid_until', "uid='{$uid}' AND status='approved' AND welcomed='0' ORDER BY handled_at DESC", array('limit' => 1));
+	if(!$db->num_rows($q))
+	{
+		return $contents;
+	}
+
+	$order = $db->fetch_array($q);
+	$plan = htmlspecialchars_uni($order['title'] ? $order['title'] : 'VIP Üyelik');
+	$until = htmlspecialchars_uni(my_date($mybb->settings['dateformat'], (int)$order['paid_until']));
+	$vip_url = htmlspecialchars_uni($mybb->settings['bburl']).'/vip.php';
+
+	$banner = <<<HTML
+<div class="nextgen-vip-welcome" role="status">
+  <div class="nextgen-vip-welcome-icon"><i class="fa-solid fa-crown" aria-hidden="true"></i></div>
+  <div class="nextgen-vip-welcome-body">
+    <strong>Tebrikler, VIP Club üyeliğiniz onaylandı!</strong>
+    <span>Planınız: {$plan} &middot; Erişiminiz {$until} tarihine kadar geçerli. Balina sinyalleri, erken airdrop rehberleri ve otomasyon alanları hesabınıza açıldı.</span>
+    <a href="{$vip_url}" class="nextgen-vip-welcome-link">Ayrıcalıkları gör <i class="fa-solid fa-arrow-right" aria-hidden="true"></i></a>
+  </div>
+</div>
+HTML;
+
+	// Mark it seen only after it has actually been built, so a failed render
+	// does not silently swallow the congratulation.
+	$db->update_query('vip_orders', array('welcomed' => 1), "oid='".(int)$order['oid']."'");
+
+	$needle = '<main id="content">';
+	$pos = strpos($contents, $needle);
+	if($pos !== false)
+	{
+		$contents = substr_replace($contents, $needle.$banner, $pos, strlen($needle));
+	}
+	else
+	{
+		$contents = $banner.$contents;
+	}
+
+	return $contents;
+}
+
+/**
+ * Homepage showcase for the VIP category.
+ *
+ * The VIP forums are permission-gated, so non-members never see them in the
+ * forum list and have no way to know what they are missing. This renders a
+ * locked teaser card in their place, built from the live plan rows, so the
+ * value is visible before the purchase rather than after it.
+ *
+ * Shown only to visitors who cannot already read the VIP category, and only on
+ * the board index.
+ */
+function vip_membership_home_showcase($contents)
+{
+	global $mybb, $db;
+
+	if(THIS_SCRIPT != 'index.php')
+	{
+		return $contents;
+	}
+
+	if(strpos($contents, 'class="nextgen-vip-showcase"') !== false)
+	{
+		return $contents;
+	}
+
+	// Already inside (member or admin) — the teaser would be noise.
+	$vip_gid = (int)$mybb->settings['vip_group'];
+	if((int)$mybb->user['uid'] > 0 && (int)$mybb->user['usergroup'] == $vip_gid)
+	{
+		return $contents;
+	}
+	if($mybb->usergroup['cancp'] == 1)
+	{
+		return $contents;
+	}
+
+	$currency = htmlspecialchars_uni($mybb->settings['vip_currency']);
+	$vip_url = htmlspecialchars_uni($mybb->settings['bburl']).'/vip.php';
+
+	$perks = array(
+		array('fa-chart-line', 'Balina Sinyalleri', 'Spot sepeti ve giriş-çıkış seviyeleri'),
+		array('fa-rocket', 'Erken Airdrop', 'Listelenmemiş erken aşama fırsatlar'),
+		array('fa-code', 'Otomasyon Scriptleri', 'Çoklu hesap ve bot scriptleri'),
+		array('fa-user-shield', 'Hesap Pazarı', 'Doğrulanmış hesap ve hizmet alım-satımı'),
+	);
+
+	$perk_html = '';
+	foreach($perks as $perk)
+	{
+		$perk_html .= '<div class="nextgen-vip-showcase-perk"><i class="fa-solid '.$perk[0].'" aria-hidden="true"></i>'
+			. '<div><strong>'.$perk[1].'</strong><span>'.$perk[2].'</span></div></div>';
+	}
+
+	$plan_html = '';
+	if($mybb->settings['vip_enabled'] == 1)
+	{
+		$q = $db->simple_select('vip_plans', '*', "enabled='1'", array('order_by' => 'disporder', 'order_dir' => 'ASC', 'limit' => 3));
+		while($pl = $db->fetch_array($q))
+		{
+			$ptitle = htmlspecialchars_uni($pl['title']);
+			$price = htmlspecialchars_uni(number_format((float)$pl['price'], 2, '.', ''));
+			$days = (int)$pl['days'];
+
+			$plan_html .= '<div class="nextgen-vip-showcase-plan">'
+				. '<span class="nextgen-vip-showcase-days">'.$days.' gün</span>'
+				. '<strong>'.$ptitle.'</strong>'
+				. '<span class="nextgen-vip-showcase-price">'.$price.' <small>'.$currency.'</small></span>'
+				. '</div>';
+		}
+	}
+
+	// Guests get the same pitch; the button routes them through registration.
+	$cta = ((int)$mybb->user['uid'] > 0)
+		? '<a class="nextgen-vip-showcase-cta" href="'.$vip_url.'"><i class="fa-solid fa-crown" aria-hidden="true"></i> VIP Başvurusu Yap</a>'
+		: '<a class="nextgen-vip-showcase-cta" href="'.htmlspecialchars_uni($mybb->settings['bburl']).'/member.php?action=register"><i class="fa-solid fa-crown" aria-hidden="true"></i> Kayıt Ol ve Başvur</a>';
+
+	$showcase = <<<HTML
+<section class="nextgen-vip-showcase" aria-labelledby="nextgen-vip-showcase-title">
+  <div class="nextgen-vip-showcase-head">
+    <span class="nextgen-vip-showcase-lock"><i class="fa-solid fa-lock" aria-hidden="true"></i> Kilitli Kategori</span>
+    <h2 id="nextgen-vip-showcase-title">VIP Club</h2>
+    <p>VIP Club, balina sinyalleri ve erken aşama fırsatların paylaşıldığı kapalı bir bölümdür. Üyeliğiniz onaylandığı anda tüm VIP forumları hesabınıza açılır.</p>
+  </div>
+  <div class="nextgen-vip-showcase-perks">{$perk_html}</div>
+  <div class="nextgen-vip-showcase-plans">{$plan_html}</div>
+  <div class="nextgen-vip-showcase-actions">
+    {$cta}
+    <span class="nextgen-vip-showcase-note">Ödeme TRC-20 USDT ile alınır; her işlem yönetim tarafından zincir üzerinde doğrulanır.</span>
+  </div>
+</section>
+HTML;
+
+	// Place it directly above the forum directory so the locked category reads as
+	// part of the category list rather than as an unrelated advertisement.
+	$needle = '<section class="nextgen-forum-directory"';
+	$pos = strpos($contents, $needle);
+	if($pos !== false)
+	{
+		$contents = substr_replace($contents, $showcase.$needle, $pos, strlen($needle));
+	}
+	else
+	{
+		$contents = str_replace('</main>', $showcase.'</main>', $contents);
+	}
+
+	return $contents;
+}
+
 /* ------------------------------------------------------------ helpers --- */
 
 /**
@@ -415,6 +660,9 @@ function vip_membership_grant($order, $days, $admin_uid = 0)
 	), "oid='".(int)$order['oid']."'");
 
 	$cache->update_usergroups();
+
+	vip_membership_send_welcome($order, $paid_until);
+
 	return $paid_until;
 }
 
