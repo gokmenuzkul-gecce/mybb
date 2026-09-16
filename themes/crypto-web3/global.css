@@ -1214,3 +1214,324 @@ textarea,
   outline-offset: 1px;
 }
 
+
+/* ==========================================================================
+   Duyuru şeridi / reklam alanları / sponsor bölümü  (board_promos eklentisi)
+   ========================================================================== */
+
+/* --- Duyuru şeridi: forum listesinin ve VIP vitrinin üstünde -------------- */
+
+.nextgen-announce {
+  position: relative;
+  margin: 18px 0 4px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background:
+    radial-gradient(120% 140% at 0% 0%, rgba(59, 130, 246, .12), transparent 55%),
+    linear-gradient(135deg, rgba(30, 41, 59, .92), rgba(15, 23, 42, .92));
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.nextgen-announce::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(180deg, var(--announce-accent, #f97316), transparent);
+  opacity: .9;
+}
+
+.nextgen-announce-viewport { position: relative; min-height: 74px; }
+
+.nextgen-announce-slide {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 22px;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity .5s ease, transform .5s cubic-bezier(.2, .8, .3, 1);
+}
+
+/* Only one slide is in flow; the others are stacked behind it so the strip does
+   not jump in height as they rotate. */
+.nextgen-announce-slide:first-child { position: relative; }
+.nextgen-announce-slide.is-active { opacity: 1; transform: none; pointer-events: auto; }
+
+.nextgen-announce-icon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  flex: 0 0 42px;
+  border-radius: 13px;
+  font-size: 17px;
+  color: var(--announce-accent, #f97316);
+  background: color-mix(in srgb, var(--announce-accent, #f97316) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--announce-accent, #f97316) 34%, transparent);
+}
+
+.nextgen-announce-copy { min-width: 0; flex: 1 1 auto; }
+.nextgen-announce-copy strong { display: block; font-size: 14.5px; letter-spacing: -.01em; }
+.nextgen-announce-copy p { margin: 2px 0 0; color: var(--text-muted); font-size: 12.5px; line-height: 1.5; }
+
+.nextgen-announce-link {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #0b1220;
+  background: var(--announce-accent, #f97316);
+  transition: transform .2s ease, filter .2s ease;
+}
+.nextgen-announce-link:hover, .nextgen-announce-link:active { color: #0b1220; transform: translateY(-1px); filter: brightness(1.08); }
+
+.nextgen-announce-dots { display: flex; gap: 7px; justify-content: center; padding: 0 0 13px; }
+.nextgen-announce-dot {
+  width: 7px; height: 7px; padding: 0;
+  border: 0; border-radius: 50%; cursor: pointer;
+  background: rgba(148, 163, 184, .35);
+  transition: background .2s ease, transform .2s ease;
+}
+.nextgen-announce-dot.is-active { background: var(--primary); transform: scale(1.3); }
+
+@media (prefers-reduced-motion: reduce) {
+  .nextgen-announce-slide { transition: none; }
+}
+
+/* --- Reklam alanları ------------------------------------------------------ */
+
+.nextgen-ad-slot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  margin: 22px 0;
+}
+
+.nextgen-ad {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+  padding: 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, rgba(30, 41, 59, .78), rgba(15, 23, 42, .62));
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.nextgen-ad-label {
+  position: absolute;
+  top: 9px; left: 11px;
+  font-size: 9.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.nextgen-ad-copy { color: var(--text-muted); font-size: 13px; line-height: 1.5; }
+.nextgen-ad-link { display: block; line-height: 0; }
+.nextgen-ad-link img { max-width: 100%; height: auto; border-radius: 10px; }
+.nextgen-ad-missing { display: block; padding: 26px; color: var(--text-dim); font-size: 12px; border: 1px dashed var(--border); border-radius: 10px; }
+
+.nextgen-ad-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), #6366f1);
+  box-shadow: 0 10px 24px rgba(59, 130, 246, .3);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.nextgen-ad-button:hover, .nextgen-ad-button:active { color: #fff; transform: translateY(-1px); box-shadow: 0 14px 30px rgba(59, 130, 246, .4); }
+
+/* The unsold-slot invitation reads as dashed and muted so it is never mistaken
+   for a paying advertiser. */
+.nextgen-ad-placeholder { border-style: dashed; background: rgba(15, 23, 42, .5); }
+.nextgen-ad-placeholder .nextgen-ad-button { background: rgba(148, 163, 184, .18); color: var(--text-main); box-shadow: none; }
+.nextgen-ad-placeholder .nextgen-ad-button:hover { background: rgba(148, 163, 184, .28); }
+
+.nextgen-ad-leaderboard { width: 100%; min-height: 96px; }
+.nextgen-ad-rectangle { width: 336px; min-height: 250px; }
+.nextgen-ad-skyscraper { width: 168px; min-height: 300px; }
+.nextgen-ad-inline { width: 100%; min-height: 60px; flex-direction: row; justify-content: space-between; text-align: left; }
+.nextgen-ad-fluid { width: 100%; }
+
+@media (max-width: 760px) {
+  .nextgen-ad-rectangle, .nextgen-ad-skyscraper { width: 100%; }
+  .nextgen-ad-inline { flex-direction: column; text-align: center; }
+}
+
+/* --- Sponsor şeridi ------------------------------------------------------- */
+
+.nextgen-sponsor-strip {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin: 22px 0;
+  padding: 15px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: rgba(15, 23, 42, .55);
+}
+
+.nextgen-sponsor-strip-label {
+  font-size: 10.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  flex: 0 0 auto;
+}
+
+.nextgen-sponsor-strip-row { display: flex; gap: 12px; flex: 1 1 auto; flex-wrap: wrap; min-width: 0; }
+
+.nextgen-sponsor-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px 14px 9px 10px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  transition: transform .22s cubic-bezier(.2, .8, .3, 1), border-color .22s ease, background .22s ease;
+}
+.nextgen-sponsor-card:hover, .nextgen-sponsor-card:active { color: var(--text-main); border-color: rgba(59, 130, 246, .45); background: var(--bg-card-hover); transform: translateY(-2px); }
+.nextgen-sponsor-card img { width: 30px; height: 30px; border-radius: 9px; object-fit: contain; background: rgba(148, 163, 184, .1); }
+
+.nextgen-sponsor-initial {
+  display: grid; place-items: center;
+  width: 30px; height: 30px;
+  border-radius: 9px;
+  font-weight: 700; font-size: 13px;
+  color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.nextgen-sponsor-meta { display: flex; flex-direction: column; line-height: 1.25; }
+.nextgen-sponsor-meta strong { font-size: 12.5px; }
+.nextgen-sponsor-meta small { color: var(--text-dim); font-size: 10.5px; }
+
+.nextgen-sponsor-strip-cta {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 15px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  border: 1px solid rgba(59, 130, 246, .4);
+  color: #bfdbfe;
+  background: var(--primary-soft);
+  transition: background .2s ease, transform .2s ease;
+}
+.nextgen-sponsor-strip-cta:hover, .nextgen-sponsor-strip-cta:active { color: #dbeafe; background: rgba(59, 130, 246, .25); transform: translateY(-1px); }
+
+/* --- Sponsor sayfası ------------------------------------------------------ */
+
+.nextgen-promo-hero {
+  padding: 46px 0 30px;
+  text-align: center;
+  border-bottom: 1px solid var(--border);
+  background: radial-gradient(90% 130% at 50% 0%, rgba(59, 130, 246, .16), transparent 60%);
+}
+.nextgen-promo-hero h1 { margin: 12px 0 10px; font-size: clamp(26px, 4vw, 38px); letter-spacing: -.02em; }
+.nextgen-promo-hero p { max-width: 640px; margin: 0 auto; color: var(--text-muted); line-height: 1.65; }
+
+.nextgen-sponsor-wrap { padding: 30px 0 50px; display: flex; flex-direction: column; gap: 26px; }
+
+.nextgen-sponsor-wall { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+.nextgen-sponsor-wall .nextgen-sponsor-card {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 20px;
+}
+.nextgen-sponsor-wall .nextgen-sponsor-logo { display: grid; place-items: center; width: 46px; height: 46px; }
+.nextgen-sponsor-wall .nextgen-sponsor-logo img { width: 46px; height: 46px; border-radius: 13px; }
+.nextgen-sponsor-wall .nextgen-sponsor-initial { width: 46px; height: 46px; border-radius: 13px; font-size: 18px; }
+.nextgen-sponsor-wall .nextgen-sponsor-card p { margin: 0; color: var(--text-muted); font-size: 12.5px; line-height: 1.6; }
+
+.nextgen-sponsor-notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(34, 197, 94, .3);
+  background: var(--accent-soft);
+  color: #bbf7d0;
+}
+.nextgen-sponsor-notice i { margin-top: 3px; }
+.nextgen-sponsor-notice strong { display: block; }
+.nextgen-sponsor-notice p { margin: 3px 0 0; font-size: 13px; }
+.nextgen-sponsor-notice ul { margin: 6px 0 0; padding-left: 18px; font-size: 13px; }
+.nextgen-sponsor-notice.is-error { border-color: rgba(239, 68, 68, .4); background: rgba(239, 68, 68, .1); color: #fca5a5; }
+
+.nextgen-sponsor-form-wrap {
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  background: linear-gradient(135deg, rgba(30, 41, 59, .7), rgba(15, 23, 42, .6));
+  box-shadow: var(--shadow-card);
+}
+.nextgen-sponsor-form-wrap h2 { margin: 0 0 6px; font-size: 20px; }
+.nextgen-sponsor-form-sub { margin: 0 0 20px; color: var(--text-muted); font-size: 13px; }
+
+/* Grid on <label> wrappers, so a field's caption cannot drift from its input. */
+.nextgen-sponsor-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; }
+.nextgen-sponsor-field { display: flex; flex-direction: column; gap: 7px; }
+.nextgen-sponsor-field-wide { margin-top: 14px; }
+.nextgen-sponsor-field > span { font-size: 12.5px; color: var(--text-muted); }
+.nextgen-sponsor-field em { color: #f87171; font-style: normal; }
+.nextgen-sponsor-field input[type="text"], .nextgen-sponsor-field textarea {
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 11px;
+  border: 1px solid var(--border);
+  background: var(--bg-input);
+  color: var(--text-main);
+  font: inherit;
+  font-size: 13.5px;
+}
+.nextgen-sponsor-field input[type="text"]:focus-visible, .nextgen-sponsor-field textarea:focus-visible {
+  outline: 2px solid rgba(56, 189, 248, .55);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+.nextgen-sponsor-field textarea { resize: vertical; min-height: 120px; }
+
+/* Hidden from sighted users and keyboard order; bots fill it anyway. */
+.nextgen-sponsor-honeypot { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.nextgen-sponsor-submit { margin-top: 20px; }
+.nextgen-sponsor-submit input.button {
+  padding: 12px 26px;
+  border: 0;
+  border-radius: 999px;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(135deg, var(--primary), #6366f1);
+  box-shadow: 0 12px 28px rgba(59, 130, 246, .32);
+  cursor: pointer;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.nextgen-sponsor-submit input.button:hover { transform: translateY(-1px); box-shadow: 0 16px 34px rgba(59, 130, 246, .42); }

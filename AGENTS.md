@@ -317,7 +317,87 @@ area.
 
 ### Environment can be reset between turns
 
-PHP was reinstalled mid-project and `/tmp` was wiped, so `/tmp` test scripts are
-not durable. The board needs `php-cli php-sqlite3 php-mbstring php-gd php-curl
-php-xml`. PHP 8.4 renders everything cleanly (0 deprecations across the public
-pages); re-check after any PHP version change rather than assuming.
+PHP was reinstalled twice mid-project and `/tmp` was wiped with it, so `/tmp`
+test scripts and a running `php -S` are both gone at the start of a turn.
+Re-provision before assuming a failure is real:
+
+```bash
+sudo apt-get update -q          # needed first: a stale index cannot find php-cli
+sudo apt-get install -y php-cli php-sqlite3 php-mbstring php-gd php-curl php-xml
+php -S 0.0.0.0:12000 -t /workspace/project > /tmp/php-server.log 2>&1 &
+```
+
+The base image is Debian trixie and the packages are versioned (`php8.4-cli`),
+but the unversioned aliases resolve once the apt index is refreshed. `php -v`
+should read 8.4.x, which renders every page with 0 deprecations.
+
+The board's own state survives a reset — `inc/config.php`, `inc/settings.php`
+and `cache/mybb.sqlite` are all still on disk. Only the toolchain is transient.
+
+## `board_promos` plugin (announcements, ads, sponsors)
+
+Installed and active. State lives entirely in the database, so a fresh clone
+needs `install()` + activation, not just a file copy.
+
+### Installing from the CLI
+
+There is no `inc/functions_plugins.php` in 1.8.40 — `find_replace_templatesets()`
+comes from `inc/adminfunctions_templates.php`, and the install functions are
+ordinary plugin functions you call directly:
+
+```php
+require_once MYBB_ROOT.'global.php';
+require_once MYBB_ROOT.'inc/plugins/board_promos.php';  // not loaded until active
+board_promos_install();
+```
+
+`board_promos_install()` is idempotent per step, so re-running it repairs a
+partial install instead of erroring. Activation is a cache write:
+
+```php
+$c = $cache->read('plugins');
+$c['active']['board_promos'] = 'board_promos';
+$cache->update('plugins', $c);
+board_promos_activate();     // adds the footer variable + find_replace_templatesets
+rebuild_settings();
+```
+
+### The SQLite driver does not escape `insert_query()` values
+
+`db_sqlite`'s `quote_val()` only wraps values in quotes. Every string bound for
+`insert_query()`/`update_query()` must be escaped by the caller, or an
+apostrophe truncates the query — `"VIP Club'ı keşfet"` in the seed data did
+exactly that and produced an unhelpful blank "SQL Error" page. Use
+`$db->escape_string($value)` on the whole array, as
+`board_promos_create_templates()` and the seed loops already do.
+
+### Avoid the ACP-only `Form` class
+
+`new Form(...)` (`inc/class_form.php`) is loaded by the ACP only; using it in a
+front-end script dies with `Class "Form" not found`. `sponsor.php` builds its
+form as plain HTML for this reason. Likewise prefer `validate_email_format()`
+from `inc/functions.php` over anything only defined further downstream.
+
+### URL handling
+
+`board_promos_safe_url()` accepts `http(s)://`, `/absolute` and bare relative
+board paths, and rejects any other scheme. It deliberately does NOT guess a
+scheme for `tronscan.org/x`: the same heuristic rewrites the valid relative
+path `sponsor.php` into `https://sponsor.php`. External links must be written
+with their scheme.
+
+When building an href that already contains `&`, pass the raw `&` to
+`htmlspecialchars_uni()` — passing `&amp;` double-escapes into `&amp;amp;` in
+the rendered page.
+
+### Verifying
+
+```bash
+curl -s http://127.0.0.1:12000/index.php | grep -c nextgen-announce-slide
+curl -s http://127.0.0.1:12000/sponsor.php | grep -c nextgen-sponsor-form-wrap
+curl -s -o /dev/null -w '%{redirect_url}' 'http://127.0.0.1:12000/promo.php?go=sponsor&id=1'
+```
+
+The sponsor form's honeypot field is `website` and must stay hidden — a filled
+value returns the success page without writing a row, which is the intended
+behaviour, not a bug.
