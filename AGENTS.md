@@ -118,6 +118,15 @@ redesigned areas. Each pairs with specific templates in `mybb_templates`:
   are gone, so `fieldset` styling no longer applies to this page. The fact
   cards need `align-content: center` — as bare auto grid rows they stretch to
   match the tallest sibling, which ballooned them to 101px.
+- **Forum rows on the index** — `forumbit_depth1_cat` (the category shell),
+  `forumbit_depth2_forum`, `forumbit_depth2_cat` and
+  `forumbit_depth2_forum_lastpost`. Each row is a read/unread dot, the forum
+  name, a per-forum icon chip immediately **right of the name**, the two
+  counters, and a last-post block with the poster's avatar. The chip colour
+  comes from `--glyph`, set inline from `{$forum['icon_color']}`.
+  `.nextgen-forum-head` is a `nowrap` flex row and `.nextgen-forum-name` needs
+  `min-width: 0`, otherwise a long forum name pushes the chip onto its own line
+  below 400px.
 
 The login modal reuses MyBB's jQuery-modal plugin, so the theme also overrides
 the generic `.modal` and `.blocker` classes to keep the overlay consistent.
@@ -186,3 +195,46 @@ are also cached in `mybb_datacache` under the `usertitles` key. Updating the
 table alone does nothing — rebuild the cache through MyBB's own handler
 (`$mybb->cache->update_usertitles()`) or the ACP, so the serialized format on
 disk stays correct.
+
+### A forumbit template must keep its table shell
+
+`forumbit_depth1_cat` is the `<table>` that wraps a category's `<thead>`,
+`<tbody>` and every child row. It reads as pure header markup, but dropping the
+opening `<table ...>` or the closing `</table>` makes the browser discard the
+foster-parented `<tr>`/`<td>` tags entirely. The page then renders as a flat
+list of cells with no row classes at all — `.nextgen-forum-row` matches zero
+elements while `grep` on the raw HTML still finds 18 of them, which is a
+confusing way to find out. Keep `<table>`/`</table>` balanced in that template
+and assert the count when editing it.
+
+### Last-post avatars need a plugin, not just a template
+
+`build_forumbits()` only ever exposes `lastposteruid`, `lastposter`,
+`lastpostsubject` and `lastposttid` to the templates, and
+`forumbit_depth2_forum_lastpost` has no avatar placeholder. The avatar is added
+by `inc/plugins/crypto_forumcards.php`, which hooks `build_forumbits_forum` and
+attaches `lastpost_avatar`, `icon_class` and `icon_color` to `$forum`. Two
+things to know:
+
+- `format_avatar()` takes the **raw** `mybb_users.avatar` column value. An
+  uploaded avatar is already stored as a full path
+  (`./uploads/avatars/avatar_1.jpg?dateline=...`), so prefixing
+  `avataruploadpath` doubles it into
+  `./uploads/avatars/./uploads/avatars/...`. Pass the column value straight
+  through.
+- A category row stores `lastpost = 0` and renders a child's last post, so its
+  own `lastposteruid` is useless. `crypto_forumcards_category_posters()` walks
+  `parentlist` once to find the newest descendant poster.
+
+The plugin is a data provider only; the markup ships in the theme's templates.
+`build_forumbits_forum` fires inside the recursion in `build_forumbits()`, so
+the hook runs once per forum per page — keep the work memoised.
+
+### Activating a plugin without the ACP
+
+Registration is just the codename in the `plugins` datacache; the ACP then
+writes the cache and calls `{codename}_activate()`. Headlessly, require
+`global.php`, append the codename to `$cache->read('plugins')['active']`, call
+`$cache->update('plugins', ...)`, then invoke the activate function. Booting
+`global.php` needs `THIS_SCRIPT` defined, and any script doing this should be
+deleted afterwards.
