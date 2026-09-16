@@ -668,6 +668,17 @@ function vip_membership_home_showcase($contents)
 		? '<a class="nextgen-vip-showcase-cta" href="'.$vip_url.'"><i class="fa-solid fa-crown" aria-hidden="true"></i> VIP Başvurusu Yap</a>'
 		: '<a class="nextgen-vip-showcase-cta" href="'.htmlspecialchars_uni($mybb->settings['bburl']).'/member.php?action=register"><i class="fa-solid fa-crown" aria-hidden="true"></i> Kayıt Ol ve Başvur</a>';
 
+	// Derive the accepted networks from the live rows: hard-coding a chain here
+	// went stale the moment a second network was enabled.
+	$net_names = array();
+	foreach(vip_membership_enabled_networks() as $net)
+	{
+		$net_names[] = htmlspecialchars_uni($net['name']);
+	}
+	$net_note = $net_names
+		? 'Ödeme '.implode(', ', $net_names).' ağında '.$currency.' ile alınır; her işlem yönetim tarafından zincir üzerinde doğrulanır.'
+		: 'Ödeme ayrıntıları için başvuru sayfasına göz atın.';
+
 	$showcase = <<<HTML
 <section class="nextgen-vip-showcase" aria-labelledby="nextgen-vip-showcase-title">
   <div class="nextgen-vip-showcase-head">
@@ -679,7 +690,7 @@ function vip_membership_home_showcase($contents)
   <div class="nextgen-vip-showcase-plans">{$plan_html}</div>
   <div class="nextgen-vip-showcase-actions">
     {$cta}
-    <span class="nextgen-vip-showcase-note">Ödeme TRC-20 USDT ile alınır; her işlem yönetim tarafından zincir üzerinde doğrulanır.</span>
+    <span class="nextgen-vip-showcase-note">{$net_note}</span>
   </div>
 </section>
 HTML;
