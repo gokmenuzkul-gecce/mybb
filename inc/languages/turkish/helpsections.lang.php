@@ -1,14 +1,21 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-// Help Section 1
-$l['s1_name'] = "User Maintenance";
-$l['s1_desc'] = "Basic instructions for maintaining a forum account.";
+// Yardım Belgesi Kategori #1
+$l['s1_name'] = "Hesap Ayarları ve Forum Kullanımı";
+$l['s1_desc'] = "Forum hesabınızın yönetimi ve forumu kullanımı ile ilgili basit ipuçlarını içerir.";
 
-// Help Section 2
-$l['s2_name'] = "Posting";
-$l['s2_desc'] = "Posting, replying, and basic usage of forum.";
+// Yardım Belgesi Kategori #2
+$l['s2_name'] = "Konu ve Yorum Gönderimi";
+$l['s2_desc'] = "Forumda bir konu göndermek, varolan bir konuya bir yanıt göndermek gibi temel forum işlevselliğinin anlatıldığı basit ipuçlarını içerir.";

@@ -1,69 +1,75 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 01.12.2024 (v1.8.38)
  */
 
-$l['calendars'] = "Calendars";
-$l['manage_calendars'] = "Manage Calendars";
-$l['manage_calendars_desc'] = "This section allows you to manage the calendars on your board. If you change the display order for one or more calendars make sure you submit the form at the bottom of the page.";
-$l['add_calendar'] = "Add New Calendar";
-$l['add_calendar_desc'] = "Here you can create a new calendar.";
-$l['edit_calendar'] = "Edit Calendar";
-$l['edit_calendar_desc'] = "Here you can edit the settings for this calendar.";
+$l['calendars'] = "Takvimler";
+$l['manage_calendars'] = "Takvimleri Yönet";
+$l['manage_calendars_desc'] = "Bu bölüm forumunuzdaki takvimleri yönetmenizi sağlar. Bir veya daha fazla takvimin görüntüleme sırasını değiştirirseniz, sayfanın altındaki 'Takvim Sıralamasını Kaydet' butonuna tıkladığınızdan emin olun.Aksi takdirde takvim sıralamanız güncellenmeyecektir.";
+$l['add_calendar'] = "Yeni Takvim Ekle";
+$l['add_calendar_desc'] = "Burada yeni bir takvim oluşturabilirsiniz.";
+$l['edit_calendar'] = "Takvimi Düzenle";
+$l['edit_calendar_desc'] = "Burada bu takvimin ayarlarını düzenleyebilirsiniz.";
 
-$l['calendar'] = "Calendar";
-$l['order'] = "Order";
-$l['no_calendars'] = "There are no calendars on your forum at this time.";
-$l['save_calendar_orders'] = "Kaydet Calendar Display Order";
+$l['calendar'] = "Takvim";
+$l['order'] = "Sıralama";
+$l['no_calendars'] = "Şu anda forumunuzda takvim bulunmamaktadır.";
+$l['save_calendar_orders'] = "Takvim Sıralamasını Kaydet";
 
-$l['name'] = "Name";
-$l['display_order'] = "Display Order";
-$l['display_order_desc'] = "The order the calendars are shown in the calendar selection. The calendar with display order 1 will be shown on the calendar page by default.";
-$l['week_start'] = "Start of Week";
-$l['week_start_desc'] = "Here you can set the day weeks should start on for this calendar.";
-$l['sunday'] = "Sunday";
-$l['monday'] = "Monday";
-$l['tuesday'] = "Tuesday";
-$l['wednesday'] = "Wednesday";
-$l['thursday'] = "Thursday";
-$l['friday'] = "Friday";
-$l['saturday'] = "Saturday";
-$l['event_limit'] = "Event Limit";
-$l['event_limit_desc'] = "The number of events to be shown before a single link to all events on the particular day is shown instead.";
-$l['show_birthdays'] = "Show Birthdays?";
-$l['show_birthdays_desc'] = "Do you wish to show birthdays of registered users in this calendar?";
-$l['moderate_events'] = "Moderate New Events?";
-$l['moderate_events_desc'] = "If this option is set to 'Yes,' all events will be moderated apart from those created by members with 'Bypass moderation queue' set for their calendar permissions.";
-$l['allow_html'] = "Allow HTML in Events?";
-$l['allow_mycode'] = "Allow MyCode in Events?";
-$l['allow_img'] = "Allow [IMG] Code in Events?";
-$l['allow_video'] = "Allow [VIDEO] Code in Events?";
-$l['allow_smilies'] = "Allow Smilies in Events?";
-$l['save_calendar'] = "Kaydet Calendar";
+$l['name'] = "İsim";
+$l['display_order'] = "Gösterim Sırası";
+$l['display_order_desc'] = "Takvimlerin, takvim seçiminde gösterilecek sırasını burada belirleyebilirsiniz. Gösterim sırası <strong>1</strong> olan takvim, varsayılan olarak takvim sayfasında gösterilecektir.";
+$l['week_start'] = "Hafta Başı";
+$l['week_start_desc'] = "Burada, bu takvim için haftaların başlaması gereken günü ayarlayabilirsiniz.";
+$l['sunday'] = "Pazar";
+$l['monday'] = "Pazartesi";
+$l['tuesday'] = "Salı";
+$l['wednesday'] = "Çarşamba";
+$l['thursday'] = "Perşembe";
+$l['friday'] = "Cuma";
+$l['saturday'] = "Cumartesi";
+$l['event_limit'] = "Etkinlik Sınırı";
+$l['event_limit_desc'] = "Belirli bir gündeki tüm etkinliklere tek bir bağlantı gösterilmeden önce gösterilecek etkinlik sayısı.";
+$l['show_birthdays'] = "Doğum günlerini göster?";
+$l['show_birthdays_desc'] = "Bu takvimde kayıtlı kullanıcıların doğum günlerini göstermek istiyor musunuz?";
+$l['moderate_events'] = "Yeni Etkinlikleri Yönet?";
+$l['moderate_events_desc'] = "Bu seçenek 'Evet' olarak ayarlanırsa, takvim izinleri için 'Moderasyonu Yoksay' seçeneği seçili olan üyeler tarafından oluşturulan etkinlikler dışındaki tüm etkinlikler moderatörler tarafından denetlenir.";
+$l['allow_html'] = "Etkinliklerde HTML'ye İzin Verilsin mi?";
+$l['allow_mycode'] = "Etkinliklerde MyCode'a İzin Verilsin mi?";
+$l['allow_img'] = "Etkinliklerde [IMG] Koduna İzin Verilsin mi?";
+$l['allow_video'] = "Etkinliklerde [VİDEO] Koduna İzin Verilsin mi?";
+$l['allow_smilies'] = "Etkinliklerde İfadelere İzin Verilsin mi?";
+$l['save_calendar'] = "Takvimi Kaydet";
 
-$l['permissions'] = "Permissions";
-$l['edit_permissions'] = "Edit Calendar Permissions";
-$l['calendar_permissions_for'] = "Calendar Permissions for";
-$l['permissions_group'] = "Group";
-$l['permissions_view'] = "View";
-$l['permissions_post_events'] = "Post Events";
-$l['permissions_bypass_moderation'] = "Bypass Moderation";
-$l['permissions_moderator'] = "Moderator Permissions";
-$l['permissions_all'] = "All?";
-$l['permissions_use_group_default'] = "Use Group Default";
-$l['save_permissions'] = "Kaydet Permissions";
+$l['permissions'] = "İzinler";
+$l['edit_permissions'] = "Takvim İzinlerini Düzenleme";
+$l['calendar_permissions_for'] = "Takvim İzinleri";
+$l['permissions_group'] = "Grup";
+$l['permissions_view'] = "Görüntüleme";
+$l['permissions_post_events'] = "Etkinlik Sonrası";
+$l['permissions_bypass_moderation'] = "Moderasyonu Yoksay";
+$l['permissions_moderator'] = "Moderatör İzinleri";
+$l['permissions_all'] = "Tümü?";
+$l['permissions_use_group_default'] = "Grup Varsayılanını Kullan";
+$l['save_permissions'] = "İzinleri Kaydet";
 
-$l['error_invalid_calendar'] = "The specified calendar does not exist.";
-$l['error_missing_name'] = "You did not enter a name for this calendar";
-$l['error_missing_order'] = "You did not enter a display order for this calendar";
+$l['error_invalid_calendar'] = "Belirtilen takvim mevcut değil.";
+$l['error_missing_name'] = "Bu takvim için bir ad girmediniz.";
+$l['error_missing_order'] = "Bu takvim için bir görüntüleme sırası girmediniz.";
 
-$l['success_calendar_created'] = "The calendar has been created successfully.";
-$l['success_calendar_updated'] = "The calendar has been updated successfully.";
-$l['success_calendar_permissions_updated'] = "The calendar permissions have been updated successfully.";
-$l['success_calendar_deleted'] = "The selected calendar has been deleted successfully.";
-$l['success_calendar_orders_updated'] = "The calendar display orders have been updated successfully.";
+$l['success_calendar_created'] = "Takvim başarıyla oluşturuldu.";
+$l['success_calendar_updated'] = "Takvim başarıyla güncellendi.";
+$l['success_calendar_permissions_updated'] = "Takvim izinleri başarıyla güncellendi.";
+$l['success_calendar_deleted'] = "Seçilen takvim başarıyla silindi.";
+$l['success_calendar_orders_updated'] = "Takvim gösterim sırası başarıyla güncellendi.";
 
-$l['confirm_calendar_deletion'] = "Are you sure you wish to delete this calendar?";
-
+$l['confirm_calendar_deletion'] = "Bu takvimi silmek istediğinizden emin misiniz?";

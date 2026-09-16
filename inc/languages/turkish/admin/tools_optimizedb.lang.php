@@ -1,20 +1,26 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
-$l['optimize_database'] = "Optimize Database";
+$l['optimize_database'] = "Veritabanını Optimize Et";
 
-$l['table_selection'] = "Table Selection";
-$l['tables_select_desc'] = "You may select the database tables you wish to perform this action on here. Hold down CTRL to select multiple tables.";
-$l['select_all'] = "Select All";
-$l['deselect_all'] = "Deselect All";
-$l['select_forum_tables'] = "Select Forum Tables";
-$l['optimize_selected_tables'] = "Optimize Selected Tables";
+$l['table_selection'] = "Tablo Seçimi";
+$l['tables_select_desc'] = "Bu eylemi gerçekleştirmek istediğiniz veritabanı tablolarını buradan seçebilirsiniz. Birden fazla tablo seçmek için CTRL tuşunu basılı tutun.";
+$l['select_all'] = "Tümünü Seç";
+$l['deselect_all'] = "Tümünün Seçimini Kaldır";
+$l['select_forum_tables'] = "Forum Tablolarını Seçin";
+$l['optimize_selected_tables'] = "Seçilen Tabloları Optimize Et";
 
-$l['error_no_tables_selected'] = "You did not select any database tables to optimize.";
+$l['error_no_tables_selected'] = "Optimize edilecek herhangi bir veritabanı tablosu seçmediniz.";
 
-$l['success_tables_optimized'] = "The selected tables have been optimized and analyzed successfully.";
+$l['success_tables_optimized'] = "Seçilen tablolar başarıyla analiz ve optimize edildi.";
 

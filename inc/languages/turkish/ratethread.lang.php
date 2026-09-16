@@ -1,21 +1,28 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['redirect_threadrated'] = "Thank you, the thread has been rated successfully. You will now be returned to the thread.";
+$l['redirect_threadrated'] = "Teşekkürler, konu başarıyla değerlendirildi. Şimdi konuya geri yönlendirileceksiniz.";
 
-$l['error_invalidrating'] = "You have selected an invalid rating for this thread. Please go back and try again.";
-$l['error_alreadyratedthread'] = "Sorry, but you have already rated this thread.";
-$l['error_cannotrateownthread'] = "Sorry, you cannot rate your own thread.";
-$l['thread_doesnt_exist'] = "You can not rate a thread which does not exist.";
+$l['error_invalidrating'] = "Bu konu için geçersiz bir değerlendirme seçtiniz. Lütfen geri dönün ve tekrar deneyin.";
+$l['error_alreadyratedthread'] = "Üzgünüm ama bu başlığa zaten puan vermişsiniz.";
+$l['error_cannotrateownthread'] = "Üzgünüm, kendi başlığınıza puan veremezsiniz.";
+$l['thread_doesnt_exist'] = "Mevcut olmayan bir konuyu değerlendiremezsiniz.";
 
-$l['rating_votes_average'] = "{1} Vote(s) - {2} out of 5 in Average";
-$l['one_star'] = "1 star out of 5";
-$l['two_stars'] = "2 stars out of 5";
-$l['three_stars'] = "3 stars out of 5";
-$l['four_stars'] = "4 stars out of 5";
-$l['five_stars'] = "5 stars out of 5";
-$l['rating_added'] = "Your rating has been added!";
+$l['rating_votes_average'] = "{1} Oy(lar) - Ortalama 5 üzerinden {2}";
+$l['one_star'] = "5 üzerinden 1 yıldız";
+$l['two_stars'] = "5 üzerinden 2 yıldız";
+$l['three_stars'] = "5 üzerinden 3 yıldız";
+$l['four_stars'] = "5 üzerinden 4 yıldız";
+$l['five_stars'] = "5 üzerinden 5 yıldız";
+$l['rating_added'] = "Değerlendirmeniz eklendi!";

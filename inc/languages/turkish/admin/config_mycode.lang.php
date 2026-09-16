@@ -1,59 +1,65 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 06.12.2024 (v1.8.38)
  */
 
-$l['custom_mycode'] = "Custom MyCode";
+$l['custom_mycode'] = "Özel MyCode";
 $l['mycode'] = "MyCode";
-$l['mycode_desc'] = "Custom MyCode allows you to create additional MyCode for your members to use in their messages.";
-$l['add_new_mycode'] = "Add New MyCode";
-$l['add_new_mycode_desc'] = "Here you can add a new custom MyCode to your forum. You can use the MyCode Sandbox below the form to test your regular expression and replacement before saving.";
-$l['edit_mycode_desc'] = "Here you can edit a custom MyCode. You can use the MyCode Sandbox below the form to test your regular expression and replacement before saving your changes.";
+$l['mycode_desc'] = "Özel MyCode, üyelerinizin mesajlarında kullanmaları için ek MyCode oluşturmanıza olanak tanır.";
+$l['add_new_mycode'] = "Yeni MyCode Ekle";
+$l['add_new_mycode_desc'] = "Burada forumunuza yeni bir özel MyCode ekleyebilirsiniz. Kaydetmeden önce düzenli ifadenizi ve değiştirmenizi test etmek için formun altındaki MyCode'u Test Et alanını kullanabilirsiniz.";
+$l['edit_mycode_desc'] = "Burada özel bir MyCode düzenleyebilirsiniz. Değişikliklerinizi kaydetmeden önce düzenli ifadenizi ve değişikliklerinizi test etmek için formun altındaki MyCode'u Test Et alanını kullanabilirsiniz.";
 
-$l['title'] = "Title";
-$l['short_description'] = "Short Description";
-$l['regular_expression'] = "Regular Expression";
-$l['regular_expression_desc'] = "Enter a regular expression that will search for a specific combination of characters.  You must make sure the regular expression is valid and safe&mdash;no validation is performed.";
-$l['replacement'] = "Replacement";
-$l['replacement_desc'] = "Enter a replacement for the regular expression.";
-$l['example'] = "Example:";
-$l['enabled'] = "Enabled?";
-$l['parse_order'] = "Parse Order";
-$l['parse_order_desc'] = "MyCodes will be parsed in ascending order relative to other MyCodes.";
-$l['edit_mycode'] = "Edit MyCode";
-$l['activate_mycode'] = "Activate MyCode";
-$l['deactivate_mycode'] = "Deactivate MyCode";
-$l['delete_mycode'] = "Sil MyCode";
-$l['no_mycode'] = "No custom MyCodes exist at this time.";
-$l['save_mycode'] = "Kaydet MyCode";
-$l['add_mycode'] = "Add MyCode";
-$l['changes_not_saved'] = "Your changes have not yet been saved.";
+$l['title'] = "MyCode Başlığı";
+$l['short_description'] = "Kıça Açıklama";
+$l['regular_expression'] = "Düzenli İfade";
+$l['regular_expression_desc'] = "Belirli bir karakter kombinasyonunu arayacak düzenli bir ifade girin.  Düzenli ifadenin geçerli ve güvenli olduğundan emin olmalısınız&mdash;Doğrulama yapılmaz.";
+$l['replacement'] = "Yerine Gösterilecek İfade";
+$l['replacement_desc'] = "Düzenli ifade yerine gösterilecek bir ifade girin.";
+$l['example'] = "Örnek:";
+$l['enabled'] = "Etkinleştirilsin Mi?";
+$l['parse_order'] = "MyCode Sıralaması";
+$l['parse_order_desc'] = "Oluşturacağınız MyCode diğer oluşturduğunuz MyCode'lar arasında ki sırasını belirtin. MyCode listesinde belirttiğiniz sırada gösterilecektir. Aynı sıralamaya sahip MyCode'lar oluşturulma tarihine göre sıralanacaktır.";
+$l['edit_mycode'] = "MyCode'u Düzenle";
+$l['activate_mycode'] = "MyCode'u Etkinleştir";
+$l['deactivate_mycode'] = "MyCode'u Devredışı Bırak";
+$l['delete_mycode'] = "MyCode'u Sil";
+$l['no_mycode'] = "Şu anda herhangi bir özel MyCode bulunmamaktadır.";
+$l['save_mycode'] = "MyCode'u Kaydet";
+$l['add_mycode'] = "MyCode'u Ekle";
+$l['changes_not_saved'] = "Değişiklikleriniz henüz kaydedilmedi.";
 
-$l['sandbox'] = "Sandbox";
-$l['sandbox_desc'] = "You can use this area to test the regular expression and replacement above before saving your changes.";
-$l['test_value'] = "Test Value";
-$l['test_value_desc'] = "Enter in text to be tested in the box below.";
-$l['result_html'] = "HTML Result";
-$l['result_html_desc'] = "The text area below shows the resulting HTML using the regular expression on the test value.";
-$l['result_actual'] = "Actual Result";
-$l['result_actual_desc'] = "The area below shows the actual result when the HTML is rendered.";
-$l['test'] = "Test MyCode";
+$l['sandbox'] = "MyCode'u Test Et";
+$l['sandbox_desc'] = "Değişikliklerinizi kaydetmeden önce yukarıda oluşturduğunuz düzenli ifade ve yerine gösterilecek ifadeye sahip MyCode burada test edebilirsiniz.";
+$l['test_value'] = "Test Değeri";
+$l['test_value_desc'] = "Aşağıdaki kutuya test edilecek metni girin.";
+$l['result_html'] = "HTML Sonucu";
+$l['result_html_desc'] = "Aşağıdaki metin alanı, test değeri üzerinde düzenli ifade kullanılarak elde edilen HTML'yi gösterir.";
+$l['result_actual'] = "Gerçek Sonuç";
+$l['result_actual_desc'] = "Aşağıdaki alan, HTML yapısı işlendiğinde ortaya çıkan gerçek sonucu göstermektedir.";
+$l['test'] = "MyCode'u Test Et";
 
-$l['error_missing_title'] = "You did not enter a title.";
-$l['error_missing_regex'] = "You did not enter a regular expression.";
-$l['error_regex_already_available'] = "You entered a regular expression which is already defined in another MyCode. Please provide a different regular expression for this MyCode.";
-$l['error_missing_replacement'] = "You did not enter a replacement.";
-$l['error_invalid_mycode'] = "The specified MyCode does not exist.";
+$l['error_missing_title'] = "Bir MyCode başlığı girmediniz.";
+$l['error_missing_regex'] = "Düzenli bir ifade girmediniz.";
+$l['error_regex_already_available'] = "Başka bir MyCode'da zaten tanımlanmış olan bir düzenli ifade girdiniz. Lütfen bu MyCode için farklı bir düzenli ifade girin.";
+$l['error_missing_replacement'] = "Düzenli ifade yerine gösterilecek bir ifade girmediniz.";
+$l['error_invalid_mycode'] = "Belirtilen MyCode mevcut değil.";
 
-$l['success_added_mycode'] = "The MyCode has been added successfully.";
-$l['success_deleted_mycode'] = "The selected MyCode has been deleted successfully.";
-$l['success_updated_mycode'] = "The MyCode has been updated successfully.";
-$l['success_deactivated_mycode'] = "The selected MyCode has been deactivated successfully.";
-$l['success_activated_mycode'] = "The selected MyCode has been activated successfully.";
+$l['success_added_mycode'] = "MyCode başarıyla eklendi.";
+$l['success_deleted_mycode'] = "Seçilen MyCode başarıyla silindi.";
+$l['success_updated_mycode'] = "MyCode başarıyla güncellendi.";
+$l['success_deactivated_mycode'] = "Seçilen MyCode başarıyla devredışı bırakıldı.";
+$l['success_activated_mycode'] = "Seçilen MyCode başarıyla etkinleştirildi.";
 
-$l['confirm_mycode_deletion'] = "Are you sure you wish to delete this MyCode?";
+$l['confirm_mycode_deletion'] = "Bu MyCode'u silmek istediğinizden emin misiniz?";
 
-$l['mycode_sandbox_test_error'] = 'There was an error fetching the test results.';
-
+$l['mycode_sandbox_test_error'] = 'Test sonuçları alınırken bir hata oluştu.';

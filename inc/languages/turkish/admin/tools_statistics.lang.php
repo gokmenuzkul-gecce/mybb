@@ -1,27 +1,34 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 18.12.2024 (v1.8.38)
  */
 
-$l['statistics'] = "Statistics";
-$l['overall_statistics'] = "Overall Statistics";
-$l['overall_statistics_desc'] = "Here you can view overall statistics on your forum. All times are in UTC.";
+$l['statistics'] = "İstatistikler";
+$l['overall_statistics'] = "Genel İstatistikler";
+$l['overall_statistics_desc'] = "Burada forumunuzla ilgili genel istatistikleri görüntüleyebilirsiniz. Tüm zamanlar UTC cinsindendir.";
 
-$l['date_range'] = "Date Range";
+$l['date_range'] = "Tarih Aralığı";
 
-$l['date'] = "Date";
-$l['users'] = "Users";
+$l['date'] = "Tarih";
+$l['users'] = "Kullanıcılar";
 $l['threads'] = "Konular";
 $l['posts'] = "Gönderiler";
 
-$l['from'] = "From";
-$l['to'] = "to";
+$l['from'] = "";
+$l['to'] = "ile";
 
-$l['increase'] = "Increase";
-$l['no_change'] = "No Change";
-$l['decrease'] = "Decrease";
+$l['increase'] = "Artış";
+$l['no_change'] = "Değişiklik Yok";
+$l['decrease'] = "Azalma";
 
-$l['error_no_results_found_for_criteria'] = "We could not find any results for the date range you provided. Please try a different date range.";
-$l['error_no_statistics_available_yet'] = "We're sorry, there are currently no statistics data available for your forum yet.";
+$l['error_no_results_found_for_criteria'] = "Belirttiğiniz tarih aralığı için herhangi bir sonuç bulamadık. Lütfen farklı bir tarih aralığı deneyin.";
+$l['error_no_statistics_available_yet'] = "Üzgünüz, şu anda forumunuz için gösterilebilecek bir istatistik verisi mevcut değil.";

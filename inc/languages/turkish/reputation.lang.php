@@ -1,82 +1,89 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['nav_reputation'] = "Reputation Report";
-$l['nav_profile'] = "Profile of {1}";
-$l['reputation_disabled'] = "You cannot use the reputation system as it has been disabled by the Administrator.";
+$l['nav_reputation'] = "Rep Puanını Raporla";
+$l['nav_profile'] = "{1} Adlı Kullanıcının Profili";
+$l['reputation_disabled'] = "Yönetici tarafından devre dışı bırakıldığı için rep puanı sistemini kullanamazsınız.";
 
-$l['reputation'] = "Reputation";
-$l['error'] = "Error";
-$l['add_no_uid'] = "You did not specify a user to give a reputation to.";
-$l['add_no_permission'] = "You do not have permission to give reputation ratings to users.";
-$l['add_disabled'] = "You cannot add a reputation to users of this user group.";
-$l['add_yours'] = "You cannot add to your own reputation.";
-$l['add_invalidpower'] = "You have selected an invalid rating from the list.";
-$l['add_maxperday'] = "You have already given as many reputation ratings as you are allowed to for today.";
-$l['add_maxperuser'] = "You've already given this user as many reputation ratings as you can for today.";
-$l['add_maxperthread'] = "You've already given this user as many reputation ratings (in one thread) as you can for today.";
-$l['add_no_comment'] = "You must enter a comment of at least {1} characters to give this user a reputation rating.";
-$l['add_toolong'] = "You must enter a reason no longer than {1} characters.";
-$l['add_negative_disabled'] = "The administrator has disabled negative reputations.";
-$l['add_neutral_disabled'] = "The administrator has disabled neutral reputations.";
-$l['add_positive_disabled'] = "The administrator has disabled positive reputations.";
-$l['add_all_rep_disabled'] = "The administrator has disabled all types of reputation. You cannot rate this user.";
-$l['reputation_report'] = "Reputation Report for {1}";
-$l['reputation_members'] = "Reputation from Members:";
-$l['reputation_posts'] = "Reputation from Gönderiler:";
-$l['summary'] = "Summary";
-$l['total_reputation'] = "Total Reputation";
-$l['post_reputation'] = "Post Reputation";
-$l['positive_count'] = "Positives";
-$l['neutral_count'] = "Neutrals";
-$l['negative_count'] = "Negatives";
-$l['last_week'] = "Last week";
-$l['last_month'] = "Last month";
-$l['last_6months'] = "Last 6 months";
-$l['all_time'] = "All Time";
-$l['comments'] = "Comments";
-$l['close_window'] = "Close Window";
-$l['add_reputation_vote'] = "Add a reputation rating for {1}";
-$l['add_reputation_to_post'] = "This reputation is for {1}'s post.<br />";
-$l['neg_rep_disabled'] = "<span class=\"smalltext\">* - <em>Negative reputation is currently disabled</em></span>";
-$l['pos_rep_disabled'] = "<span class=\"smalltext\">* - <em>Positive reputation is currently disabled</em></span>";
-$l['neu_rep_disabled'] = "<span class=\"smalltext\">* - <em>Neutral reputation is currently disabled</em></span>";
-$l['no_comment_needed'] = "You're adding reputation because of this user's post, which is linked in their profile. A comment isn't needed, but if you want to leave one, please enter it below.<br />";
-$l['no_comment'] = "[No comment]";
-$l['vote_added'] = "Rating Added";
-$l['vote_updated'] = "Rating Güncelled";
-$l['vote_deleted'] = "Rating Sild";
-$l['vote_added_message'] = "Your reputation rating has successfully been added for this user.";
-$l['vote_updated_message'] = "Your reputation rating has successfully been updated for this user.";
-$l['vote_deleted_message'] = "The reputation rating has been deleted from this user.";
-$l['update_reputation_vote'] = "Güncelle your reputation rating for {1}";
-$l['positive'] = "Positive";
-$l['negative'] = "Negative";
-$l['neutral'] = "Neutral";
-$l['user_comments'] = "Your comments on {1}:";
-$l['add_vote'] = "Add Rating";
-$l['update_vote'] = "Güncelle Rating";
+$l['reputation'] = "Rep Puanı";
+$l['error'] = "Hata";
+$l['add_no_uid'] = "Rep Puanı verilecek bir kullanıcı belirtmediniz.";
+$l['add_no_permission'] = "Kullanıcılara rep puanı vermek için izniniz yok.";
+$l['add_disabled'] = "Bu kullanıcı grubundaki kullanıcılara rep puanı veremezsiniz.";
+$l['add_yours'] = "Kendi rep puanınıza katkıda bulunamazsınız.";
+$l['add_invalidpower'] = "Listeden geçersiz bir derecelendirme seçtiniz.";
+$l['add_maxperday'] = "Bugün için izin verildiği kadar rep puanı dağıttınız. Daha fazlası için beklemeniz gerek.";
+$l['add_maxperuser'] = "Bu kullanıcıya bugün için verebileceğiniz kadar rep puanı verdiniz.";
+$l['add_maxperthread'] = "Bu kullanıcıya bugün için verebileceğiniz en fazla rep puanını (tek bir konuda) zaten verdiniz.";
+$l['add_no_comment'] = "Bu kullanıcıya rep puanı vermek için en az {1} karakterlik bir yorum girmelisiniz.";
+$l['add_toolong'] = "{1} karakterden uzun olmayan bir neden girmelisiniz.";
+$l['add_negative_disabled'] = "Forum Yönetimi, Negatif rep puanlarını devre dışı bıraktı.";
+$l['add_neutral_disabled'] = "Forum Yönetimi, Nötr rep puanlarını devre dışı bıraktı.";
+$l['add_positive_disabled'] = "Forum Yönetimi, Pozitif rep puanlarını devre dışı bıraktı.";
+$l['add_all_rep_disabled'] = "Forum Yönetimi, tüm rep puanı türlerini devre dışı bırakmıştır. Bu kullanıcıya herhangi bir puan veremezsiniz.";
+$l['reputation_report'] = "{1}, Adlı Kullanıcının Rep Puanı Tablosu";
+$l['reputation_members'] = "Rep Puanı Veren Kullanıcı Sayısı:";
+$l['reputation_posts'] = "Rep Puanı Verilen Gönderi Sayısı:";
+$l['summary'] = "Özet";
+$l['total_reputation'] = "Toplam Rep Puanı";
+$l['post_reputation'] = "Gönderi Rep Puanı";
+$l['positive_count'] = "Pozitif";
+$l['neutral_count'] = "Nötr";
+$l['negative_count'] = "Negatif";
+$l['last_week'] = "Geçen Hafta";
+$l['last_month'] = "Geçen Ay";
+$l['last_6months'] = "Son 6 Ay";
+$l['all_time'] = "Tüm Zamanlar";
+$l['comments'] = "Yorumlar";
+$l['close_window'] = "Pencereyi Kapat";
+$l['add_reputation_vote'] = "{1} Adlı Kullanıcıya Rep Puanı Ver";
+$l['add_reputation_to_post'] = "{1} Adlı Kullanıcıya Bu Konu İçin Rep Puanı Ver<br />";
+$l['neg_rep_disabled'] = "<span class=\"smalltext\">* - <em>Negatif rep puanı şu anda devre dışıdır.</em></span>";
+$l['pos_rep_disabled'] = "<span class=\"smalltext\">* - <em>Pozitif rep puanı şu anda devre dışıdır.</em></span>";
+$l['neu_rep_disabled'] = "<span class=\"smalltext\">* - <em>Nötr rep puanı şu anda devre dışıdır.</em></span>";
+$l['no_comment_needed'] = "Bu kullanıcının profilinde bağlantılı olan gönderisi nedeniyle rep puanı ekliyorsunuz. Yoruma gerek yoktur, ancak yorum bırakmak isterseniz lütfen aşağıya yazın.<br />";
+$l['no_comment'] = "[Yorum Yok]";
+$l['vote_added'] = "Puan Eklendi";
+$l['vote_updated'] = "Puan Güncellendi";
+$l['vote_deleted'] = "Puan Silindi";
+$l['vote_added_message'] = "Bu kullanıcı için rep puanı başarıyla eklendi.";
+$l['vote_updated_message'] = "Verdiğiniz rep puanı bu kullanıcı için başarıyla güncellendi.";
+$l['vote_deleted_message'] = "Bu kullanıcıya verdiğiniz rep puanı başarıyla silindi.";
+$l['update_reputation_vote'] = "{1} İçin Rep Puanınızı Güncelleyin";
+$l['positive'] = "Pozitif";
+$l['negative'] = "Negatif";
+$l['neutral'] = "Nötr";
+$l['user_comments'] = "{1} İçin Rep Puanı Yorumunuz:";
+$l['add_vote'] = "Rep Puanı Ekle";
+$l['update_vote'] = "Rep Puanını Güncelle";
 $l['delete_vote'] = "Sil";
-$l['report_vote'] = "Report";
-$l['power_positive'] = "Positive ({1})";
-$l['power_neutral'] = "Neutral";
-$l['power_negative'] = "Negative ({1})";
-$l['show_all'] = "Show: All Votes";
-$l['show_positive'] = "Show: Positive Ratings";
-$l['show_neutral'] = "Show: Neutral Ratings";
-$l['show_negative'] = "Show: Negative Ratings";
-$l['sort_updated'] = "Sort by: Last Güncelled";
-$l['sort_username'] = "Sort by: Username";
-$l['last_updated'] = "Last updated {1}";
-$l['postrep_given'] = "Rating given for <a href=\"{1}\">{2}'s post</a> {3}<br />";
-$l['postrep_given_nolink'] = "Rating given for {1}'s post<br />";
-$l['postrep_given_thread'] = "in <a href=\"{1}\">{2}</a>";
-$l['no_reputation_votes'] = "This user currently does not have any reputation ratings with the specified criteria below.";
-$l['delete_reputation_confirm'] = "Are you sure you wish to delete this reputation Rating?";
-$l['delete_reputation_log'] = "Sild reputation rating by {1} (UID: {2})";
-$l['reputations_disabled_group'] = "The reputation system is disabled for users of this user group.";
-$l['rate_user'] = "Rate User";
+$l['report_vote'] = "Rapor Et";
+$l['power_positive'] = "Pozitif ({1})";
+$l['power_neutral'] = "Nötr";
+$l['power_negative'] = "Negatif ({1})";
+$l['show_all'] = "Tüm Puanları Göster";
+$l['show_positive'] = "Pozitif Puanları Göster";
+$l['show_neutral'] = "Nötr Puanları Göster";
+$l['show_negative'] = "Negatif Puanları Göster";
+$l['sort_updated'] = "Son Güncellenenleri Sırala";
+$l['sort_username'] = "Kullanıcı Adına Göre Sırala";
+$l['last_updated'] = "Son Güncelleme Tarihi: {1}";
+$l['postrep_given'] = "<strong>{2}</strong> kullanıcısına ait şu <em><strong><a href=\"{1}\">gönderi</a></em></strong> için rep puanı verildi. Konu:&#10174;{3}<br />";
+$l['postrep_given_nolink'] = "<strong>{1}</strong> gönderi için rep puanı verildi.<br />";
+$l['postrep_given_thread'] = "&nbsp;<a href=\"{1}\">{2}</a>";
+$l['no_reputation_votes'] = "Bu kullanıcı şu anda aşağıda belirtilen kriterlere sahip herhangi bir rep puanına sahip değildir.";
+$l['delete_reputation_confirm'] = "Bu rep puanını silmek istediğinizden emin misiniz?";
+$l['delete_reputation_log'] = "{1} tarafından verilen rep puanını sildi. <em>(UID: {2})</em>";
+$l['reputations_disabled_group'] = "Bu kullanıcı grubundaki kullanıcılar için rep puanı sistemi devre dışı bırakılmıştır.";
+$l['rate_user'] = "Rep Puanı Ver";

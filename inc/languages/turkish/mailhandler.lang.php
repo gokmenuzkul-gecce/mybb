@@ -1,16 +1,23 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['error_no_connection'] = 'There was an error establishing a connection through the server: ';
-$l['error_no_message'] = 'There was no message specified.';
-$l['error_no_subject'] = 'There was no subject specified.';
-$l['error_no_recipient'] = 'There was no recipient specified.';
-$l['error_not_sent'] = 'There was a error while trying to send the mail through php mail function.';
-$l['error_status_missmatch'] = 'The status from server mismatches expected result, returning: ';
-$l['error_data_not_sent'] = 'This data could not be sent to server: ';
+$l['error_no_connection'] = 'Sunucu üzerinden bağlantı kurulurken bir hata oluştu: ';
+$l['error_no_message'] = 'Herhangi bir mesaj belirtilmedi.';
+$l['error_no_subject'] = 'Herhangi bir konu belirtilmedi.';
+$l['error_no_recipient'] = 'Alıcı belirtilmedi.';
+$l['error_not_sent'] = 'PHP mail fonksiyonu ile mail göndermeye çalışırken bir hata oluştu.';
+$l['error_status_missmatch'] = 'Sunucudan gelen durum beklenen sonuçla eşleşmiyor, şunu geri döndürüyor: ';
+$l['error_data_not_sent'] = 'Bu veri sunucuya gönderilemedi: ';
 
-$l['error_occurred'] = 'One or more errors have occurred. Please correct the following errors before continuing.<br />';
+$l['error_occurred'] = 'Bir veya daha fazla hata oluştu. Lütfen, devam etmeden önce aşağıdaki hataları düzeltin.<br />';

@@ -1,30 +1,38 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 11.12.2024 (v1.8.38)
  */
 
-$l['preferences_and_personal_notes'] = "Tercihler ve Kişisel Notlar";
-$l['prefs_and_personal_notes_description'] = "Here you can manage your Admin Yönetim Paneli preferences and leave personal notes for yourself.";
+$l['preferences_and_personal_notes'] = "Tercihler &amp; Kişisel Notlar";
+$l['prefs_and_personal_notes_description'] = "Burada Admin Kontrol Paneli tercihlerinizi yönetebilir ve kendiniz için kişisel notlar bırakabilirsiniz.";
 
 $l['preferences'] = "Tercihler";
-$l['global_preferences'] = "Global Preferences";
-$l['acp_theme'] = "Admin Yönetim Paneli Theme";
-$l['select_acp_theme'] = "Please select a theme to use in the Admin Yönetim Paneli.";
-$l['acp_language'] = "Admin Yönetim Paneli Language";
-$l['select_acp_language'] = "Please select a language to use in the Admin Yönetim Paneli.";
-$l['notes_not_shared'] = "These notes are not shared with other Administrators.";
-$l['save_notes_and_prefs'] = "Kaydet Personal Notes & Preferences";
-$l['personal_notes'] = "Personal Notes";
-$l['codemirror'] = "Turn on / off Code Mirror";
-$l['use_codemirror_desc'] = "This preference allows you to turn off Code Mirror (used in template editing and stylesheet editing for syntax highlighting) if you are experiencing issues / slow loading.";
+$l['global_preferences'] = "Genel Tercihler";
+$l['acp_theme'] = "Admin Kontrol Paneli Teması";
+$l['select_acp_theme'] = "Lütfen Admin Kontrol Panelinde kullanmak için bir tema seçin.";
+$l['acp_language'] = "Admin Kontrol Paneli Dili";
+$l['select_acp_language'] = "Lütfen Admin Kontrol Panelinde kullanmak için bir dil seçin.";
+$l['notes_not_shared'] = "Bu notlar diğer Yöneticilerle paylaşılmaz.";
+$l['save_notes_and_prefs'] = "Kişisel Notları &amp; Tercihleri Kaydet";
+$l['personal_notes'] = "Kişisel Notlar";
+$l['codemirror'] = "Kod Renklendirme Aktif Edilsin Mi?";
+$l['use_codemirror_desc'] = "Bu özellik, tema ve tema şablonlarında kodları ve söz dizimlerini vurgulamak için renkli, anlaşılır bir şekilde göstermek için kullanılır. (Bkz: <a href=\"https://tr.wikipedia.org/wiki/S%C3%B6zdizimi_vurgulama\" target=\"_blank\" rel=\"noopener\">syntax highlighting</a>)<br />
+Bu özelliği kullanırken tarayıcınızda yavaşlamalar,donmalar gibi çeşitli sorunlar yaşıyorsanız bu ayarı kapatabilirsiniz.";
 
-$l['success_preferences_updated'] = "The preferences have been successfully updated.";
+$l['success_preferences_updated'] = "Tercihler başarıyla güncellendi.";
 
-$l['use_2fa_desc'] = "Two-Factor Authentication is a method to secure your admin account. After you've enabled it you'll see a QR Code below which you need to scan with an app <a href=\"https://docs.mybb.com/1.8/administration/security/2fa/\" target=\"_blank\" rel=\"noopener\">like Google Authenticator or Authy</a>. Those apps will generate a token which you need to enter on every acp login.";
-$l['my2fa_qr'] = "Two-Factor Authentication Code";
-$l['recovery_codes_desc'] = "View your <a href=\"index.php?module=home-preferences&amp;action=recovery_codes\">recovery codes</a>.";
-$l['recovery_codes'] = "Recovery Codes";
-$l['recovery_codes_warning'] = "<b>Note:</b> the codes will be regenerated on every page visit and can be only used once.";
-$l['print_recovery_codes'] = "Print Recovery Codes";
+$l['use_2fa_desc'] = "İki Faktörlü Kimlik Doğrulama, yönetici hesabınızın güvenliğini sağlamak için kullanılan bir yöntemdir. Etkinleştirdikten sonra aşağıda bir iki faktörlü kimlik doğrulama uygulaması ile taramanız gereken bir QR Kodu göreceksiniz ve bu QR kodunu <a href=\"https://mybb.pro/forum-mybb-yardim-belgeleri\" target=\"_blank\" rel=\"noopener\">Google Authenticator ya da Authy</a> gibi uygulamalar üzerinden taratacaksınız. Bu uygulamalar, her admin paneli girişinde girmeniz gereken 6 haneli rastgele kodlar oluşturacaktır. Bu kodlar kullandığınız uygulamaya bağlı olarak belirlenen sürede tekrar yenilenecektir.";
+$l['my2fa_qr'] = "İki Faktörlü Kimlik Doğrulama Kodu";
+$l['recovery_codes_desc'] = "<a href=\"index.php?module=home-preferences&amp;action=recovery_codes\">Hesap Kurtarma Kodlarınızı</a> görüntüleyin.";
+$l['recovery_codes'] = "Kurtarma Kodları";
+$l['recovery_codes_warning'] = "<b>Not:</b> kodlar her sayfa ziyaretinizde yeniden oluşturulacak ve yalnızca bir kez kullanılabilecektir.";
+$l['print_recovery_codes'] = "Kurtarma Kodlarını Yazdır";

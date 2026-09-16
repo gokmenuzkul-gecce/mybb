@@ -1,52 +1,59 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
-$l['recount_rebuild'] = "Recount &amp; Rebuild";
-$l['recount_rebuild_desc'] = "Here you can recount &amp; rebuild data to fix any synchronization errors in your forum.";
 
-$l['data_per_page'] = "Data Entries Per Page";
-$l['recount_stats'] = "Recount Statistics";
-$l['recount_stats_desc'] = "This will recount and update your forum statistics on the forum index and statistics pages.";
-$l['recount_reputation'] = "Recount Reputation";
-$l['recount_reputation_desc'] = "This will recount the reputation of each user.";
-$l['recount_warning'] = "Recount Warning Points";
-$l['recount_warning_desc'] = "This will recount the active warning points of each user.";
-$l['recount_private_messages'] = "Recount Özel Mesajlar";
-$l['recount_private_messages_desc'] = "This will recount the private message count for each user.";
-$l['recount_referrals'] = "Recount Referrals";
-$l['recount_referrals_desc'] = "This will recount the referral count of each user.";
-$l['recount_thread_ratings'] = "Recount Thread Ratings";
-$l['recount_thread_ratings_desc'] = "This will recount the rating of each thread.";
-$l['rebuild_forum_counters'] = "Rebuild Forum Counters";
-$l['rebuild_forum_counters_desc'] = "When this is run, the post/thread counters and last post of each forum will be updated to reflect the correct values.";
-$l['rebuild_thread_counters'] = "Rebuild Thread Counters";
-$l['rebuild_thread_counters_desc'] = "When this is run, the post/view counters and last post of each thread will be updated to reflect the correct values.";
-$l['rebuild_poll_counters'] = "Rebuild Poll Counters";
-$l['rebuild_poll_counters_desc'] = "When this is run, the vote counters and total number of votes of each poll will be updated to reflect the correct values.";
-$l['recount_user_posts'] = "Recount User Post Counts";
-$l['recount_user_posts_desc'] = "When this is run, the post count for each user will be updated to reflect its current live value based on the posts in the database, and forums that have post count disabled.";
-$l['recount_user_threads'] = "Recount User Thread Counts";
-$l['recount_user_threads_desc'] = "When this is run, the thread count for each user will be updated to reflect its current live value based on the threads in the database, and forums that have thread count disabled.";
-$l['rebuild_attachment_thumbs'] = "Rebuild Attachment Thumbnails";
-$l['rebuild_attachment_thumbs_desc'] = "This will rebuild attachment thumbnails to ensure they're using the current width and height dimensions and will also rebuild missing thumbnails.";
+$l['recount_rebuild'] = "Sayım &amp; Yapılandırma";
+$l['recount_rebuild_desc'] = "Burada, forumunuzdaki herhangi bir senkronizasyon hatasını düzeltmek için verileri yeniden sayabilir ve yeniden yapılandırabilirsiniz.";
 
-$l['success_rebuilt_forum_counters'] = "The forum counters have been rebuilt successfully.";
-$l['success_rebuilt_thread_counters'] = "The thread counters have been rebuilt successfully.";
-$l['success_rebuilt_poll_counters'] = "The poll counters have been rebuilt successfully.";
-$l['success_rebuilt_user_post_counters'] = "The user posts count have been recounted successfully.";
-$l['success_rebuilt_user_thread_counters'] = "The user threads count have been recounted successfully.";
-$l['success_rebuilt_attachment_thumbnails'] = "The attachment thumbnails have been rebuilt successfully.";
-$l['success_rebuilt_forum_stats'] = "The forum statistics have been rebuilt successfully.";
-$l['success_rebuilt_reputation'] = "The user reputation has been rebuilt successfully.";
-$l['success_rebuilt_warning'] = "The user warning points have been rebuilt successfully.";
-$l['success_rebuilt_private_messages'] = "The user private message count has been recounted successfully.";
-$l['success_rebuilt_referral'] = "The user referral count have been recounted successfully.";
-$l['success_rebuilt_thread_ratings'] = "The thread ratings have been recounted successfully.";
+$l['data_per_page'] = "Sayfa Başına Veri";
+$l['recount_stats'] = "Forum Sayaçlarını Yenile";
+$l['recount_stats_desc'] = "Bu, forum istatistiklerinizi forum dizini ve istatistik sayfalarında yeniden sayacak ve güncelleyecektir.";
+$l['recount_reputation'] = "Rep Puanı Sayaçlarını Yenile";
+$l['recount_reputation_desc'] = "Bu, her kullanıcının rep puanını yeniden sayacaktır.";
+$l['recount_warning'] = "Uyarı Puanı Sayaçlarını Yenile";
+$l['recount_warning_desc'] = "Bu, her kullanıcının aktif uyarı puanlarını yeniden sayacaktır.";
+$l['recount_private_messages'] = "Özel Mesaj Sayaçlarını Yenile";
+$l['recount_private_messages_desc'] = "Bu, her kullanıcı için özel mesaj sayısını yeniden sayacaktır.";
+$l['recount_referrals'] = "Referans Sayaçlarını Yenile";
+$l['recount_referrals_desc'] = "Bu, her kullanıcının referans sayısını yeniden sayacaktır.";
+$l['recount_thread_ratings'] = "Konu Değerlendirme Sayaçlarını Yenile";
+$l['recount_thread_ratings_desc'] = "Bu, her bir konunun değerlendirmesini yeniden sayacaktır.";
+$l['rebuild_forum_counters'] = "Forum Sayaçlarını Yeniden Oluştur";
+$l['rebuild_forum_counters_desc'] = "Bu çalıştırıldığında, her forumun gönderi/konu sayaçları ve son gönderisi doğru değerleri yansıtacak şekilde güncellenecektir.";
+$l['rebuild_thread_counters'] = "Konu Sayaçlarını Yeniden Oluştur";
+$l['rebuild_thread_counters_desc'] = "Bu çalıştırıldığında, her bir konunun gönderi/gösterim sayaçları ve son gönderisi doğru değerleri yansıtacak şekilde güncellenecektir.";
+$l['rebuild_poll_counters'] = "Anket Sayaçlarını Yeniden Oluştur";
+$l['rebuild_poll_counters_desc'] = "Bu çalıştırıldığında, her bir anketin oy sayaçları ve toplam oy sayısı doğru değerleri yansıtacak şekilde güncellenecektir.";
+$l['recount_user_posts'] = "Kullanıcı Gönderi Sayılarını Yeniden Say";
+$l['recount_user_posts_desc'] = "Bu çalıştırıldığında, her kullanıcı için gönderi sayısı, veritabanındaki gönderilere ve gönderi sayısı devredışı bırakılmış forumlara dayalı olarak mevcut gerçek değerini yansıtacak şekilde güncellenecektir.";
+$l['recount_user_threads'] = "Kullanıcı Konu Sayılarını Yeniden Say";
+$l['recount_user_threads_desc'] = "Bu çalıştırıldığında, her kullanıcı için konu sayısı, veritabanındaki konulara ve konu sayısı devredışı bırakılmış forumlara dayalı olarak mevcut gerçek değerini yansıtacak şekilde güncellenecektir.";
+$l['rebuild_attachment_thumbs'] = "Ek Dosya Küçük Resimlerini Yeniden Oluştur";
+$l['rebuild_attachment_thumbs_desc'] = "Bu, geçerli genişlik ve yükseklik boyutlarını kullandıklarından emin olmak için ek dosya küçük resimlerini yeniden oluşturacak ve ayrıca eksik küçük resimleri yeniden oluşturacaktır.";
 
-$l['confirm_proceed_rebuild'] = "Click \"Proceed\" to continue the recount and rebuild process.";
-$l['automatically_redirecting'] = "Automatically Redirecting&hellip;";
+$l['success_rebuilt_forum_counters'] = "Forum sayaçları başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_thread_counters'] = "Konu sayaçları başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_poll_counters'] = "Anket sayaçları başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_user_post_counters'] = "Kullanıcı gönderi sayısı başarıyla yeniden sayıldı.";
+$l['success_rebuilt_user_thread_counters'] = "Kullanıcı konu sayısı başarıyla yeniden sayıldı.";
+$l['success_rebuilt_attachment_thumbnails'] = "Ek dosya küçük resimleri başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_forum_stats'] = "Forum istatistikleri başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_reputation'] = "Kullanıcı rep puanları başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_warning'] = "Kullanıcı uyarı puanları başarıyla yeniden oluşturuldu.";
+$l['success_rebuilt_private_messages'] = "Kullanıcı özel mesaj sayısı başarıyla yeniden sayıldı.";
+$l['success_rebuilt_referral'] = "Kullanıcı referans sayısı başarıyla yeniden sayıldı.";
+$l['success_rebuilt_thread_ratings'] = "Konu değerlendirme sayacı başarıyla yeniden oluşturuldu.";
+
+$l['confirm_proceed_rebuild'] = "Yeniden sayma ve yeniden yapılandırma işlemine devam etmek için \"Devam Et\" seçeneğine tıklayın.";
+$l['automatically_redirecting'] = "Otomatik olarak yeniden yönlendiriliyorhellip;";
 

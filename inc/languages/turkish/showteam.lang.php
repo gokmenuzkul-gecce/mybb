@@ -1,26 +1,33 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['nav_showteam'] = "Forum Team";
-$l['forum_team'] = "Forum Team";
-$l['moderators'] = "Moderators";
-$l['username'] = "Username";
-$l['lastvisit'] = "Last Visit";
+$l['nav_showteam'] = "Forum Yönetimi";
+$l['forum_team'] = "Forum Yönetimi";
+$l['moderators'] = "Moderatörler";
+$l['username'] = "Kullanıcı Adı";
+$l['lastvisit'] = "Son Ziyaret";
 $l['email'] = "Email";
-$l['pm'] = "PM";
-$l['mod_forums'] = "Forum(s)";
-$l['mod_groups'] = "Group(s)";
-$l['online'] = "Online";
-$l['offline'] = "Offline";
-$l['away'] = "Away";
+$l['pm'] = "ÖM";
+$l['mod_forums'] = "Forum(lar)";
+$l['mod_groups'] = "Grup(lar)";
+$l['online'] = "Çevrimiçi";
+$l['offline'] = "Çevrimdışı";
+$l['away'] = "Uzakta";
 
-$l['group_leaders'] = "Group Leaders";
-$l['group_members'] = "Member(s)";
+$l['group_leaders'] = "Grup Liderleri";
+$l['group_members'] = "Üye(ler)";
 
-$l['no_members'] = "No members in this group";
-$l['showteam_disabled'] = "The forum team listing functionality has been disabled by the Administrator.";
-$l['error_noteamstoshow'] = "There are no forum staff to be shown.";
+$l['no_members'] = "Bu grupta üye yok";
+$l['showteam_disabled'] = "Forum Yönetimi listeleme işlevi Forum Yönetimi tarafından devre dışı bırakıldı.";
+$l['error_noteamstoshow'] = "Gösterilecek forum yönetimi / yöneticisi bulunmamaktadır.";

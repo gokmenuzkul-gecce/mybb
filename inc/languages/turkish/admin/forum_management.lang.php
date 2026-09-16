@@ -1,281 +1,288 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 08.12.2024 (v1.8.38)
  */
 
-$l['forum_management'] = "Forum Management";
-$l['forum_management_desc'] = "This section allows you to manage the categories and forums on your board. You can manage forum permissions and forum-specific moderators as well. If you change the display order for one or more forums or categories, make sure you submit the form at the bottom of the page.";
+$l['forum_management'] = "Forum Yönetimi";
+$l['forum_management_desc'] = "Bu bölüm, forumunuzdaki kategorileri ve forumları yönetmenizi sağlar. Forum izinlerini ve foruma özel moderatörleri de yönetebilirsiniz. Bir veya daha fazla forum veya kategori için görüntüleme sırasını değiştirirseniz, sayfanın altındaki forum sıralamasını kaydet butonuna tıkladığınızdan emin olun.";
 $l['add_forum'] = "Yeni Forum Ekle";
-$l['add_forum_desc'] = "Here you can add a new forum or category to your board. You may also set initial permissions for this forum.";
-$l['copy_forum'] = "Copy Forum";
-$l['copy_forum_desc'] = "Here you can copy forum settings or permissions from an existing forum to another or to a new forum.";
-$l['forum_permissions'] = "Permissions";
-$l['forum_permissions_desc'] = "Here you can modify the full permissions for an individual group for a single forum";
+$l['add_forum_desc'] = "Buradan forumunuza yeni bir forum veya kategori ekleyebilirsiniz. Ayrıca bu forum için üye gruplarının izinlerini de ayarlayabilirsiniz.";
+$l['copy_forum'] = "Forumu Kopyala";
+$l['copy_forum_desc'] = "Burada forum ayarlarını veya izinlerini mevcut bir forumdan diğerine veya yeni bir foruma kopyalayabilirsiniz.";
+$l['forum_permissions'] = "İzinler";
+$l['forum_permissions_desc'] = "Burada tek bir forum için bireysel bir grubun tüm izinlerini değiştirebilirsiniz.";
 $l['view_forum'] = "Forumu Görüntüle";
-$l['view_forum_desc'] = "Here you can view sub forums, quickly edit permissions and add moderators to your forum.";
-$l['add_child_forum'] = "Add Child Forum";
-$l['edit_forum_settings'] = "Edit Forum Settings";
-$l['edit_forum_settings_desc'] = "Here you can edit an existing forums' settings and its permissions.";
-$l['edit_forum'] = "Edit Forum";
-$l['edit_mod'] = "Edit Moderator";
-$l['edit_mod_desc'] = "Here you can modify a particular moderator's settings.";
-$l['forum_moderators'] = "Forum Moderators";
-$l['forum_permissions2'] = "Forum Permissions";
-$l['more_subforums'] = "and {1} more.";
+$l['view_forum_desc'] = "Burada alt forumları görüntüleyebilir, izinleri hızlı bir şekilde düzenleyebilir ve forumunuza moderatör ekleyebilirsiniz.";
+$l['add_child_forum'] = "Alt Forum Ekle";
+$l['edit_forum_settings'] = "Forum Ayarlarını Düzenle";
+$l['edit_forum_settings_desc'] = "Burada mevcut bir forumun ayarlarını ve izinlerini düzenleyebilirsiniz.";
+$l['edit_forum'] = "Forumu Düzenle";
+$l['edit_mod'] = "Moderatör Düzenle";
+$l['edit_mod_desc'] = "Burada belirli bir moderatörün ayarlarını değiştirebilirsiniz.";
+$l['forum_moderators'] = "Forum Moderatörleri";
+$l['forum_permissions2'] = "Forum İzinleri";
+$l['more_subforums'] = "ve {1} tane daha mevcut.";
 
-$l['manage_forums'] = "Manage Forums";
+$l['manage_forums'] = "Forumları Yönet";
 $l['forum'] = "Forum";
-$l['order'] = "Order";
+$l['order'] = "Sıralama";
 
-$l['subforums'] = "Sub Forums";
-$l['moderators'] = "Moderators";
-$l['forum_thread_prefixes'] = "Thread Prefixes";
-$l['permissions'] = "Permissions";
-$l['delete_forum'] = "Sil Forum";
+$l['subforums'] = "Alt Forumlar";
+$l['moderators'] = "Moderatörler";
+$l['forum_thread_prefixes'] = "Konu Ön Ekleri";
+$l['permissions'] = "İzinler";
+$l['delete_forum'] = "Forumu Sil";
 
-$l['sub_forums'] = "Sub Forums";
-$l['update_forum_orders'] = "Kaydet Forum Orders";
-$l['update_forum_permissions'] = "Kaydet Forum Permissions";
-$l['reset'] = "Reset";
-$l['in_forums'] = "Forums in \"{1}\"";
-$l['forum_permissions_in'] = "Forum Permissions in \"{1}\"";
-$l['moderators_assigned_to'] = "Moderators Assigned to \"{1}\"";
-$l['edit_permissions'] = "Edit Permissions";
-$l['set_permissions'] = "Set Permissions";
-$l['using_custom_perms'] = "Using Custom Permissions";
-$l['using_default_perms'] = "Using Default Permissions";
-$l['clear_custom_perms'] = "Clear Custom Permissions";
-$l['set_custom_perms'] = "Set Custom Permissions";
+$l['sub_forums'] = "Alt Forumlar";
+$l['update_forum_orders'] = "Forum Sıralamasını Kaydet";
+$l['update_forum_permissions'] = "Forum İzinlerini Kaydet";
+$l['reset'] = "Sıfırla";
+$l['in_forums'] = "\"{1}\" Ait Alt Forumlar";
+$l['forum_permissions_in'] = "\"{1}\" - Forumuna Ait İzinler";
+$l['moderators_assigned_to'] = "\"{1}\" - Forumu İçin Atanan Moderatörler";
+$l['edit_permissions'] = "İzinleri Düzenle";
+$l['set_permissions'] = "İzinleri Ayarla";
+$l['using_custom_perms'] = "Özel İzinleri Kullan";
+$l['using_default_perms'] = "Varsayılan İzinleri Kullan";
+$l['clear_custom_perms'] = "Özel İzinleri Temizle";
+$l['set_custom_perms'] = "Özel İzinleri Ayarla";
 
-$l['permissions_use_group_default'] = "Use Group Default";
-$l['permissions_group'] = "Group";
-$l['permissions_user'] = "User";
-$l['permissions_canview'] = "Can view?";
-$l['permissions_canpostthreads'] = "Can post threads?";
-$l['permissions_canpostreplys'] = "Can post replies?";
-$l['permissions_canpostpolls'] = "Can post polls?";
-$l['permissions_canuploadattachments'] = "Can upload attachments?";
-$l['permissions_all'] = "All?";
+$l['permissions_use_group_default'] = "Grup Varsayılanını Kullan";
+$l['permissions_group'] = "Grup";
+$l['permissions_user'] = "Kullanıcı";
+$l['permissions_canview'] = "Forumu Görebilir?";
+$l['permissions_canpostthreads'] = "Konu Gönderebilir?";
+$l['permissions_canpostreplys'] = "Yanıt Gönderebilir?";
+$l['permissions_canpostpolls'] = "Anket Ekleyebilir?";
+$l['permissions_canuploadattachments'] = "Ek Dosya Yükleyebilir?";
+$l['permissions_all'] = "Hepsi?";
 
-$l['overview_allowed_actions'] = "Overview: Allowed Actions";
-$l['overview_disallowed_actions'] = "Overview: Disallowed Actions";
-$l['perm_drag_canview'] = "&#149; View";
-$l['perm_drag_canpostthreads'] = "&#149; Post Konular";
-$l['perm_drag_canpostreplys'] = "&#149; Post Replies";
-$l['perm_drag_canpostpolls'] = "&#149; Post Polls";
+$l['overview_allowed_actions'] = "Genel Bakış: İzin Verilen Eylemler";
+$l['overview_disallowed_actions'] = "Genel Bakış: İzin Verilmeyen Eylemler";
+$l['perm_drag_canview'] = "<img src=\"../images/admincp/icons/sag-ok.svg\" style=\"vertical-align: middle;margin-top:-2px;\" width=\"16\" height=\"16\" alt=\"Sağ Ok İcon\"> Forumu Görebilir";
+$l['perm_drag_canpostthreads'] = "<img src=\"../images/admincp/icons/sag-ok.svg\" style=\"vertical-align: middle;margin-top:-2px; \" width=\"16\" height=\"16\" alt=\"Sağ Ok İcon\"> Konu Gönderebilir";
+$l['perm_drag_canpostreplys'] = "<img src=\"../images/admincp/icons/sag-ok.svg\" style=\"vertical-align: middle;margin-top:-2px\" width=\"16\" height=\"16\" alt=\"Sağ Ok İcon\"> Yanıt Gönderebilir";
+$l['perm_drag_canpostpolls'] = "<img src=\"../images/admincp/icons/sag-ok.svg\" style=\"vertical-align: middle;margin-top:-2px;\" width=\"16\" height=\"16\" alt=\"Sağ Ok İcon\"> Anket Açabilir";
 
-$l['moderator_permissions'] = "Moderator Permissions";
-$l['forum_desc'] = "Forum the moderator manages.";
-$l['edit_mod_for'] = "Edit moderator options for \"{1}\"";
-$l['can_edit_posts'] = "Can edit posts?";
-$l['can_soft_delete_posts'] = "Can soft delete posts?";
-$l['can_restore_posts'] = "Can restore soft deleted posts?";
-$l['can_delete_posts'] = "Can delete posts permanently?";
-$l['can_soft_delete_threads'] = "Can soft delete threads?";
-$l['can_restore_threads'] = "Can restore soft deleted threads?";
-$l['can_delete_threads'] = "Can delete threads permanently?";
-$l['can_view_ips'] = "Can view IPs?";
-$l['can_view_unapprove'] = "Can view unapproved threads and posts?";
-$l['can_view_deleted'] = "Can view deleted threads and posts?";
-$l['can_open_close_threads'] = "Can open/close threads?";
-$l['can_stick_unstick_threads'] = "Can stick/unstick threads?";
-$l['can_approve_unapprove_threads'] = "Can approve/unapprove threads?";
-$l['can_approve_unapprove_posts'] = "Can approve/unapprove posts?";
-$l['can_approve_unapprove_attachments'] = "Can approve/unapprove attachments?";
-$l['can_manage_threads'] = "Can manage threads (split, move, copy, merge)?";
-$l['can_manage_polls'] = "Can manage polls?";
-$l['can_post_closed_threads'] = "Can post in closed threads?";
-$l['can_move_to_other_forums'] = "Can move threads to another forum this user doesn't moderate?";
-$l['can_use_custom_tools'] = "Can use custom moderator tools?";
-$l['can_manage_announcements'] = "Can manage announcements in this forum?";
-$l['can_manage_reported_posts'] = "Can manage reported posts in this forum?";
-$l['can_view_mod_log'] = "Can view moderator log entries for this forum?";
-$l['moderator_cp_permissions'] = "Moderator CP Permissions";
-$l['moderator_cp_permissions_desc'] = "This user must be able to access the Mod CP and have usergroup permission to access these functions in order for these permissions to take effect.";
+$l['moderator_permissions'] = "Moderatör İzinleri";
+$l['forum_desc'] = "Moderatörün yönettiği forum.";
+$l['edit_mod_for'] = "\"{1}\" İçin Moderatör Seçeneklerini Düzenleyin";
+$l['can_edit_posts'] = "Gönderileri düzenleyebilir mi?";
+$l['can_soft_delete_posts'] = "Gönderileri geçici olarak silebilir mi?";
+$l['can_restore_posts'] = "Geçici olarak silinen gönderileri geri yükleyebilir mi?";
+$l['can_delete_posts'] = "Gönderileri kalıcı olarak silebilir mi?";
+$l['can_soft_delete_threads'] = "Konuları geçiçi olarak silebilir mi?";
+$l['can_restore_threads'] = "Geçici olarak silinen konuları geri yükleyebilir mi?";
+$l['can_delete_threads'] = "Konuları kalıcı olarak silebilir mi?";
+$l['can_view_ips'] = "IP adreslerini görüntüleyebilir mi?";
+$l['can_view_unapprove'] = "Onaylanmamış konuları ve gönderileri görüntüleyebilir mi?";
+$l['can_view_deleted'] = "Silinen konuları ve gönderileri görüntüleyebilir mi?";
+$l['can_open_close_threads'] = "Konuları açıp/kapatabilir mi?";
+$l['can_stick_unstick_threads'] = "Konuları sabitleyip/sabitlikten kaldırabilir mi?";
+$l['can_approve_unapprove_threads'] = "Konuları onaylayabilir/onaylamayabilir mi?";
+$l['can_approve_unapprove_posts'] = "Gönderileri onaylayabilir/onaylamayabilir mi?";
+$l['can_approve_unapprove_attachments'] = "Ek Dosyaları onaylayabilir/onaylamayabilir mi?";
+$l['can_manage_threads'] = "Konuları yönetebilir mi (ayırma, taşıma, kopyalama, birleştirme)?";
+$l['can_manage_polls'] = "Anketleri yönetebilir mi?";
+$l['can_post_closed_threads'] = "Kapalı konulara mesaj gönderebilir mi?";
+$l['can_move_to_other_forums'] = "Konuları bu kullanıcının yönetmediği başka bir foruma taşıyabilir mi?";
+$l['can_use_custom_tools'] = "Özel moderatör araçlarını kullanabilir mi?";
+$l['can_manage_announcements'] = "Bu forumdaki duyuruları yönetebilir mi?";
+$l['can_manage_reported_posts'] = "Bu forumda rapor edilen gönderileri yönetebilir mi?";
+$l['can_view_mod_log'] = "Bu forum için moderatör kayıtlarını görüntüleyebilir mi?";
+$l['moderator_cp_permissions'] = "Moderatör KP İzinleri";
+$l['moderator_cp_permissions_desc'] = "Bu izinlerin geçerli olabilmesi için bu kullanıcının Mod KP'ye erişebilmesi ve bu işlevlere erişmek için kullanıcı grubu iznine sahip olması gerekir.";
 
-$l['save_mod'] = "Kaydet Moderator";
+$l['save_mod'] = "Moderatörü Kaydet";
 
-$l['no_forums'] = "There are no forums found.";
-$l['no_moderators'] = "There are no moderators found.";
+$l['no_forums'] = "Hiçbir forum bulunamadı.";
+$l['no_moderators'] = "Hiçbir moderatör bulunamadı.";
 
-$l['success_forum_disporder_updated'] = "The forum display orders have been updated successfully.";
-$l['success_forum_deleted'] = "The selected forum has been deleted successfully. Ideally you should now run the <a href=\"index.php?module=tools-recount_rebuild\">Recount &amp; Rebuild</a> tools.";
-$l['success_moderator_deleted'] = "The selected moderator has been deleted successfully.<br />Please remember that this hasn't changed this user's group permission, they may still have moderation powers.";
-$l['success_forum_permissions_updated'] = "The forum permissions have been updated successfully.";
-$l['success_forum_updated'] = "The forum settings have been updated successfully.";
-$l['success_moderator_updated'] = "The selected moderator has been updated successfully.";
-$l['success_custom_permission_cleared'] = "The custom permissions for this forum have been cleared successfully.";
+$l['success_forum_disporder_updated'] = "Forum görüntüleme sırası başarıyla güncellendi.";
+$l['success_forum_deleted'] = "Seçilen forum başarıyla silindi.İdeal olarak şimdi <a href=\"index.php?module=tools-recount_rebuild\">Sayım &amp; Yapılandırma</a> araçlarını çalıştırmalısınız.";
+$l['success_moderator_deleted'] = "Seçilen moderatör başarıyla silindi.<br />Lütfen bu işlemin kullanıcının grup iznini değiştirmediğini, hala moderasyon yetkilerine sahip olabileceğini unutmayın.";
+$l['success_forum_permissions_updated'] = "Forum izinleri başarıyla güncellendi.";
+$l['success_forum_updated'] = "Forum ayarları başarıyla güncellendi.";
+$l['success_moderator_updated'] = "Seçilen moderatör başarıyla güncellendi.";
+$l['success_custom_permission_cleared'] = "Bu forum için özel izinler başarıyla temizlendi.";
 
-$l['error_invalid_forum'] = "Please select a valid forum.";
-$l['error_invalid_moderator'] = "Please select a valid moderator to delete.";
-$l['error_invalid_fid'] = "Invalid Forum ID selected.";
-$l['error_forum_parent_child'] = "You can't set the parent forum of this forum to one of it's children.";
-$l['error_forum_parent_itself'] = "The forum parent cannot be the forum itself.";
-$l['error_incorrect_moderator'] = "Please select a valid moderator.";
+$l['error_invalid_forum'] = "Lütfen geçerli bir forum seçin.";
+$l['error_invalid_moderator'] = "Lütfen silmek için geçerli bir moderatör seçin.";
+$l['error_invalid_fid'] = "Geçersiz bir Forum Kimliği (ID) seçildi.";
+$l['error_forum_parent_child'] = "Bu forumun ana forumunu alt forumlardan biri olarak ayarlayamazsınız.";
+$l['error_forum_parent_itself'] = "Forum kategorisi forumun kendisi olamaz.";
+$l['error_incorrect_moderator'] = "Lütfen geçerli bir moderatör seçin.";
 
-$l['confirm_moderator_deletion'] = "Are you sure you wish to remove this moderator from this forum?";
-$l['confirm_forum_deletion'] = "Are you sure you wish to delete this forum?";
-$l['confirm_clear_custom_permission'] = "Are you sure you wish to clear this custom permission?";
+$l['confirm_moderator_deletion'] = "Bu moderatörü bu forumdan kaldırmak istediğinizden emin misiniz?";
+$l['confirm_forum_deletion'] = "Bu forumu silmek istediğinizden emin misiniz?";
+$l['confirm_clear_custom_permission'] = "Bu özel izni silmek istediğinizden emin misiniz?";
 
-$l['forum_type'] = "Forum Type";
-$l['forum_type_desc'] = "Select the type of forum you are creating - a forum you can post in, or a category, which contains other forums.";
-$l['category'] = "Category";
-$l['title'] = "Title";
-$l['description'] = "Description";
-$l['save_forum'] = "Kaydet Forum";
-$l['parent_forum'] = "Parent Forum";
-$l['parent_forum_desc'] = "The Forum that contains this forum. Categories do not have a parent forum - in this case, select 'None' - however, categories can be specified to have a parent forum.";
-$l['none'] = "None";
-$l['display_order'] = "Display Order";
+$l['forum_type'] = "Forum Türü";
+$l['forum_type_desc'] = "Oluşturacağınız forum türünü seçin - gönderi yapabileceğiniz bir forum veya diğer forumları içeren bir ana kategori.";
+$l['category'] = "Kategori";
+$l['title'] = "Başlık";
+$l['description'] = "Açıklama";
+$l['save_forum'] = "Forumu Kaydet";
+$l['parent_forum'] = "Üst Forum";
+$l['parent_forum_desc'] = "Oluşturduğunuz bu forumu kapsayan bir üst forum seçin. Eğer, oluşturduğunuz forumun bir üst forumu yok ise aşağıdaki seçim kutusundan 'Hiçbiri' seçeneğini seçin.Oluşturduğunuz forumun bir üst forumu yok ise oluşturulan forumlar bir üst forum gibi gözükecektir.<br /> Kategorilerin bir üst kategorisi yoktur. Bu yüzden kategoriler için bir üst kategori seçimi yapamazsınız.";
+$l['none'] = "Hiçbiri";
+$l['display_order'] = "Görüntülenme Sırası";
 
-$l['show_additional_options'] = "Show Additional Options";
-$l['hide_additional_options'] = "Hide Additional Options";
-$l['additional_forum_options'] = "Additional Forum Options";
-$l['forum_link'] = "Forum Link";
-$l['forum_link_desc'] = "To make a forum redirect to another location, enter the URL to the destination you wish to redirect to. Entering a URL in this field will remove the forum functionality; however, permissions can still be set for it.";
-$l['forum_password'] = "Forum Password";
-$l['forum_password_desc'] = "To protect this forum further, you can choose a password that must be entered for access. Note: User groups still need permissions to access this forum.";
-$l['access_options'] = "Access Options";
-$l['forum_is_active'] = "Forum is Active?";
-$l['forum_is_active_desc'] = "If unselected, this forum will not be shown to users and will not \"exist\".";
-$l['forum_is_open'] = "Forum is Open?";
-$l['forum_is_open_desc'] = "If unselected, users will not be able to post in this forum regardless of permissions.";
+$l['show_additional_options'] = "Ek Seçenekleri Göster";
+$l['hide_additional_options'] = "Ek Seçenekleri Gizle";
+$l['additional_forum_options'] = "Ek Forum Seçenekleri";
+$l['forum_link'] = "Forum Bağlantısı";
+$l['forum_link_desc'] = "Bir forumu başka bir konuma yönlendirmek için, yönlendirmek istediğiniz hedefin URL'sini girin. Bu alana bir URL girilmesi forum işlevselliğini kaldıracaktır; ancak forum izinleri yine de ayarlanabilir.";
+$l['forum_password'] = "Forum Şifresi";
+$l['forum_password_desc'] = "Bu forumu daha fazla korumak için, erişim için girilmesi gereken bir şifre seçebilirsiniz. Not: Kullanıcı gruplarının bu foruma erişmek için hala izinlere ihtiyacı vardır.";
+$l['access_options'] = "Erişim Seçenekleri";
+$l['forum_is_active'] = "Forum Aktif mi?";
+$l['forum_is_active_desc'] = "Eğer seçili değilse, bu forum kullanıcılara gösterilmeyecek ve \"mevcut\" olmayacaktır.";
+$l['forum_is_open'] = "Forum Açık mı?";
+$l['forum_is_open_desc'] = "Seçili değilse, kullanıcılar izinlerden bağımsız olarak bu forumda gönderi yapamazlar.";
 
-$l['copy_to_new_forum'] = "Copy to new forum";
-$l['source_forum'] = "Source forum";
-$l['source_forum_desc'] = "Forum to copy settings and/or permissions from.";
-$l['destination_forum'] = "Destination forum";
-$l['destination_forum_desc'] = "Forum to copy settings and/or permissions to.";
-$l['new_forum_settings'] = "New Forum Settings";
-$l['copy_settings_and_properties'] = "Copy Forum Settings and Properties";
-$l['copy_settings_and_properties_desc'] = "Only applies if the destination forum exists.";
-$l['copy_user_group_permissions'] = "Copy User Group Permissions";
-$l['copy_user_group_permissions_desc'] = "Use CTRL to select multiple groups.";
+$l['copy_to_new_forum'] = "Yeni Foruma Kopyala";
+$l['source_forum'] = "Kaynak Forum";
+$l['source_forum_desc'] = "Ayarların ve/veya izinlerin kopyalanacağı forum.";
+$l['destination_forum'] = "Hedef Forum";
+$l['destination_forum_desc'] = "Ayarların ve/veya izinlerin aktarılacağı forum.";
+$l['new_forum_settings'] = "Yeni Forum Ayarları";
+$l['copy_settings_and_properties'] = "Forum Ayarlarını ve Özelliklerini Kopyala";
+$l['copy_settings_and_properties_desc'] = "Yalnızca hedef forum mevcutsa geçerlidir.";
+$l['copy_user_group_permissions'] = "Kullanıcı Grubu İzinlerini Kopyala";
+$l['copy_user_group_permissions_desc'] = "Birden fazla grup seçmek için CTRL tuşunu kullanın.";
 
-$l['override_user_style'] = "Yes, override the user's selected style for this forum";
-$l['style_options'] = "Style Options";
-$l['forum_specific_style'] = "Forum-Specific Style:";
-$l['use_default'] = "Use Default";
-$l['dont_display_rules'] = "Don't display rules for this forum";
-$l['display_rules_inline'] = "Display rules for this forum on the thread listing";
-$l['display_rules_inline_new'] = "Display rules in the thread listing and for new threads/replies";
-$l['display_rules_link'] = "Display a link to the rules for this forum";
-$l['display_method'] = "Display Method:";
-$l['rules'] = "Rules:";
-$l['forum_rules'] = "Forum Rules";
-$l['name'] = "Name";
-$l['username'] = "Username";
-$l['moderator_username_desc'] = "Username of the moderator to be added";
-$l['add_user_as_moderator'] = "Add a user as Moderator";
-$l['usergroup'] = "Usergroup";
-$l['add_usergroup_as_moderator'] = "Add a usergroup as Moderators";
-$l['moderator_usergroup_desc'] = "Select a usergroup to add as a Moderator from the list below.";
-$l['add_usergroup_moderator'] = "Add Usergroup Moderator";
-$l['add_user_moderator'] = "Add User Moderator";
+$l['override_user_style'] = "Evet, bu forum için kullanıcının seçtiği stili geçersiz kıl.";
+$l['style_options'] = "Tema & Stil Seçenekleri";
+$l['forum_specific_style'] = "Foruma Özel Tema & Stil:";
+$l['use_default'] = "Varsayılanı Kullan";
+$l['dont_display_rules'] = "Bu forum için kuralları gösterme.";
+$l['display_rules_inline'] = "Konu listesinde bu forum için kuralları gösterin.";
+$l['display_rules_inline_new'] = "Konu listesinde ve yeni konular/yanıtlar için kuralları göster.";
+$l['display_rules_link'] = "Bu forumun kurallarına bir bağlantı olarak göster.";
+$l['display_method'] = "Görüntüleme Yöntemi:";
+$l['rules'] = "Kurallar:";
+$l['forum_rules'] = "Forum Kuralları";
+$l['name'] = "İsim";
+$l['username'] = "Kullanıcı Adı";
+$l['moderator_username_desc'] = "Eklenecek moderatörün kullanıcı adı.";
+$l['add_user_as_moderator'] = "Bir Kullanıcıyı Moderatör Olarak Ekle";
+$l['usergroup'] = "Kullanıcı Grubu";
+$l['add_usergroup_as_moderator'] = "Moderatör Olarak Bir Kullanıcı Grubunu Ekle";
+$l['moderator_usergroup_desc'] = "Aşağıdaki listeden Moderatör olarak eklemek için bir kullanıcı grubu seçin.";
+$l['add_usergroup_moderator'] = "Kullanıcı Grubunu Moderatör Olarak Ekle";
+$l['add_user_moderator'] = "Kullanıcıyı Moderatör Olarak Ekle";
 
-$l['default_view_options'] = "Default View Options";
-$l['default_date_cut'] = "Default Date Cut:";
-$l['default_sort_by'] = "Default Sort By:";
-$l['default_sort_order'] = "Default Sort Order:";
+$l['default_view_options'] = "Varsayılan Görünüm Seçenekleri";
+$l['default_date_cut'] = "Varsayılan Tarih Kesimi:";
+$l['default_sort_by'] = "Varsayılan Sıralama Ölçütü:";
+$l['default_sort_order'] = "Varsayılan Sıralama Düzeni:";
 
-$l['board_default'] = "Board Default";
+$l['board_default'] = "Forum Varsayılanı";
 
-$l['datelimit_1day'] = "Last day";
-$l['datelimit_5days'] = "Last 5 days";
-$l['datelimit_10days'] = "Last 10 days";
-$l['datelimit_20days'] = "Last 20 days";
-$l['datelimit_50days'] = "Last 50 days";
-$l['datelimit_75days'] = "Last 75 days";
-$l['datelimit_100days'] = "Last 100 days";
-$l['datelimit_lastyear'] = "Last year";
-$l['datelimit_beginning'] = "The beginning";
+$l['datelimit_1day'] = "Son Gün";
+$l['datelimit_5days'] = "Son 5 Gün";
+$l['datelimit_10days'] = "Son 10 Gün";
+$l['datelimit_20days'] = "Son 20 Gün";
+$l['datelimit_50days'] = "Son 50 Gün";
+$l['datelimit_75days'] = "Son 75 Gün";
+$l['datelimit_100days'] = "Son 100 Gün";
+$l['datelimit_lastyear'] = "Geçen Yıl";
+$l['datelimit_beginning'] = "En Başından";
 
-$l['sort_by_subject'] = "Thread subject";
-$l['sort_by_lastpost'] = "Last post time";
-$l['sort_by_starter'] = "Thread starter";
-$l['sort_by_started'] = "Thread creation time";
-$l['sort_by_rating'] = "Thread rating";
-$l['sort_by_replies'] = "Number of replies";
-$l['sort_by_views'] = "Number of views";
+$l['sort_by_subject'] = "Konu Başlığına Göre";
+$l['sort_by_lastpost'] = "Son Gönderi Zamanına Göre";
+$l['sort_by_starter'] = "Konuyu Başlatana Göre";
+$l['sort_by_started'] = "Konu Oluşturma Zamanına Göre";
+$l['sort_by_rating'] = "Konu Değerlendirmesine Göre";
+$l['sort_by_replies'] = "Yanıt Sayısına Göre";
+$l['sort_by_views'] = "Görüntülenme Sayısına Göre";
 
-$l['sort_order_asc'] = "Ascending";
-$l['sort_order_desc'] = "Descending";
+$l['sort_order_asc'] = "Artan";
+$l['sort_order_desc'] = "Azalan";
 
-$l['misc_options'] = "Miscellaneous Options";
-$l['allow_html'] = "Yes, allow HTML in posts";
-$l['allow_mycode'] = "Yes, allow MyCode in posts";
-$l['allow_smilies'] = "Yes, allow smilies in posts";
-$l['allow_img_code'] = "Yes, allow [img] code in posts (requires MyCode to be turned on)";
-$l['allow_video_code'] = "Yes, allow [video] code in posts (requires MyCode to be turned on)";
-$l['allow_post_icons'] = "Yes, allow post icons to be chosen for posts";
-$l['allow_thread_ratings'] = "Yes, allow threads to be rated";
-$l['show_forum_jump'] = "Yes, show this forum in the 'forum jump' menu";
-$l['use_postcounts'] = "Yes, posts in this forum should count towards user post counts";
-$l['use_threadcounts'] = "Yes, threads in this forum should count towards user thread counts";
-$l['require_thread_prefix'] = "Yes, require a thread prefix for all threads";
+$l['misc_options'] = "Çeşitli Seçenekler";
+$l['allow_html'] = "Evet, gönderilerde HTML'ye izin ver.";
+$l['allow_mycode'] = "Evet, gönderilerde MyCode'a izin ver.";
+$l['allow_smilies'] = "Evet, gönderilerde ifadelere izin ver.";
+$l['allow_img_code'] = "Evet, gönderilerde [img] koduna izin ver (MyCode'un açık olmasını gerektirir).";
+$l['allow_video_code'] = "Evet, gönderilerde [video] koduna izin ver (MyCode'un açık olmasını gerektirir).";
+$l['allow_post_icons'] = "Evet, gönderiler için başlık simgelerinin seçilmesine izin ver.";
+$l['allow_thread_ratings'] = "Evet, konuların değerlendirilmesine izin ver.";
+$l['show_forum_jump'] = "Evet, bu forumu 'Foruma Atla' menüsünde göster.";
+$l['use_postcounts'] = "Evet, bu forumdaki gönderileri kullanıcıların gönderi sayısına dahil et (<em>Seçilmez ise yanıtlar forum sayacına eklenir ancak yanıtı gönderen kullanıcın istastistiklerine yansımaz</em>.)";
+$l['use_threadcounts'] = "Evet, bu forumdaki konuları kullanıcıların konu sayısına dahil et (<em>Seçilmez ise konular forum sayacına eklenir ancak konuyu gönderen kullanıcın istastistiklerine yansımaz</em>.)";
+$l['require_thread_prefix'] = "Evet, tüm konular için bir konu ön eki gerekir.";
 
-$l['use_permissions'] = "Use Permissions";
-$l['use_permissions_desc'] = "Select the permissions you would like to use for this user group - inherited permissions (will delete custom permissions) or custom permissions.";
-$l['inherit_permissions'] = "Use user group permissions or inherit permissions from parent forums";
-$l['custom_permissions'] = "Use custom permissions (below)";
-$l['custom_permissions_for'] = "Custom Permissions for";
+$l['use_permissions'] = "Kullanım İzinleri";
+$l['use_permissions_desc'] = "Bu kullanıcı grubu için kullanmak istediğiniz izinleri seçin - devralınan izinler (özel izinleri silecektir) veya özel izinleri ayarlayın.";
+$l['inherit_permissions'] = "Kullanıcı grubu izinlerini kullanın veya üst forumlardan izinleri devralın.";
+$l['custom_permissions'] = "Özel izinleri kullanın (aşağıda)";
+$l['custom_permissions_for'] = "Şunlar için Özel İzinler";
 
-$l['inherited_permission'] = "inherited";
-$l['custom_permission'] = "custom";
+$l['inherited_permission'] = "devralınan";
+$l['custom_permission'] = "özel";
 
-$l['save_permissions'] = "Kaydet Forum Permissions";
+$l['save_permissions'] = "Forum İzinlerini Kaydet";
 
-$l['error_missing_title'] = "You must enter in a title.";
-$l['error_no_parent'] = "You must select a parent forum.";
-$l['error_not_empty'] = "Forums with threads cannot be converted to categories.";
-$l['error_forum_link_not_empty'] = "Forums with threads cannot be redirected to another webpage.";
+$l['error_missing_title'] = "Bir başlık girmelisiniz.";
+$l['error_no_parent'] = "Bir üst forumu seçmelisiniz.";
+$l['error_not_empty'] = "Konu içeren forumlar kategorilere dönüştürülemez.";
+$l['error_forum_link_not_empty'] = "Konuları olan forumlar başka bir web sayfasına yönlendirilemez.";
 
-$l['success_forum_added'] = "The forum has been created successfully.";
-$l['success_moderator_added'] = "The moderator has been added to this forum successfully.";
-$l['success_forum_permissions_saved'] = "The forum permissions have been saved successfully.";
-$l['success_forum_copied'] = "The selected forum has been copied successfully.";
+$l['success_forum_added'] = "Forum başarıyla oluşturuldu.";
+$l['success_moderator_added'] = "Bu foruma belirlediğiniz moderatör başarıyla eklendi.";
+$l['success_forum_permissions_saved'] = "Forum izinleri başarıyla kaydedildi.";
+$l['success_forum_copied'] = "Seçilen forum başarıyla kopyalandı.";
 
-$l['error_moderator_already_added'] = "The selected user/group is already a moderator of this forum.";
-$l['error_moderator_not_found'] = "The specified username/group was not found.";
-$l['error_new_forum_needs_name'] = "You need to give your new forum a name.";
-$l['error_invalid_source_forum'] = "Invalid source forum.";
-$l['error_invalid_destination_forum'] = "Invalid destination forum.";
+$l['error_moderator_already_added'] = "Seçilen kullanıcı/grup zaten bu forumun moderatörüdür.";
+$l['error_moderator_not_found'] = "Belirtilen kullanıcı adı/grup bulunamadı.";
+$l['error_new_forum_needs_name'] = "Yeni forumunuza bir isim vermeniz gerekiyor.";
+$l['error_invalid_source_forum'] = "Geçersiz kaynak forumu.";
+$l['error_invalid_destination_forum'] = "Geçersiz hedef forum.";
 
-$l['group_viewing'] = "Viewing";
-$l['group_posting_rating'] = "Posting / Rating";
-$l['group_editing'] = "Editing";
-$l['group_moderate'] = "Moderation";
-$l['group_polls'] = "Polls";
-$l['group_misc'] = "Miscellaneous";
+$l['group_viewing'] = "Görüntüleme";
+$l['group_posting_rating'] = "Konu/Değerlendirme";
+$l['group_editing'] = "Düzenleme";
+$l['group_moderate'] = "Moderasyon";
+$l['group_polls'] = "Anket";
+$l['group_misc'] = "Diğer";
 
-$l['viewing_field_canview'] = "Can view forum?";
-$l['viewing_field_canviewthreads'] = "Can view threads within forum?";
-$l['viewing_field_canonlyviewownthreads'] = "Can only view own threads?";
-$l['viewing_field_candlattachments'] = "Can download attachments?";
+$l['viewing_field_canview'] = "Forumu görüntüleyebilir mi?";
+$l['viewing_field_canviewthreads'] = "Forum içindeki konuları görüntüleyebilir mi?";
+$l['viewing_field_canonlyviewownthreads'] = "Sadece kendi konularını görüntüleyebilir mi?";
+$l['viewing_field_candlattachments'] = "Ek dosyaları indirebilir mi?";
 
-$l['posting_rating_field_canpostthreads'] = "Can post threads?";
-$l['posting_rating_field_canpostreplys'] = "Can post replies?";
-$l['posting_rating_field_canonlyreplyownthreads'] = "Can only reply to own threads?";
-$l['posting_rating_field_canpostattachments'] = "Can post attachments?";
-$l['posting_rating_field_canratethreads'] = "Can rate threads?";
+$l['posting_rating_field_canpostthreads'] = "Konu gönderebilir mi?";
+$l['posting_rating_field_canpostreplys'] = "Yanıt gönderebilir mi?";
+$l['posting_rating_field_canonlyreplyownthreads'] = "Sadece kendi konularına yanıt verebilir mi?";
+$l['posting_rating_field_canpostattachments'] = "Ek dosya yükleyebilir mi?";
+$l['posting_rating_field_canratethreads'] = "Konuları değerlendirebilir mi?";
 
-$l['editing_field_caneditposts'] = "Can edit own posts?";
-$l['editing_field_candeleteposts'] = "Can delete own posts?";
-$l['editing_field_candeletethreads'] = "Can delete own threads?";
-$l['editing_field_caneditattachments'] = "Can update own attachments?";
-$l['editing_field_canviewdeletionnotice'] = "Can view deletion notices?";
+$l['editing_field_caneditposts'] = "Kendi gönderilerini düzenleyebilir mi?";
+$l['editing_field_candeleteposts'] = "Kendi gönderilerini silebilir mi?";
+$l['editing_field_candeletethreads'] = "Kendi konularını silebilir mi?";
+$l['editing_field_caneditattachments'] = "Kendi ek dosyalarını güncelleyebilir mi?";
+$l['editing_field_canviewdeletionnotice'] = "Silme bildirimlerini görüntüleyebilir mi?";
 
-$l['moderate_field_modposts'] = "Moderate new posts?";
-$l['moderate_field_modthreads'] = "Moderate new threads?";
-$l['moderate_field_modattachments'] = "Moderate new attachments?";
-$l['moderate_field_mod_edit_posts'] = "Moderate posts after they've been edited?";
+$l['moderate_field_modposts'] = "Yeni gönderileri denetlensin mi?";
+$l['moderate_field_modthreads'] = "Yeni konuları denetlensin mi?";
+$l['moderate_field_modattachments'] = "Yeni ek dosyalar kontrol edilsin mi?";
+$l['moderate_field_mod_edit_posts'] = "Gönderileri düzenlendikten sonra denetlensin mi?";
 
-$l['polls_field_canpostpolls'] = "Can post polls?";
-$l['polls_field_canvotepolls'] = "Can vote in polls?";
+$l['polls_field_canpostpolls'] = "Anket gönderebilir mi?";
+$l['polls_field_canvotepolls'] = "Anketlerde oy kullanabilir mi?";
 
-$l['misc_field_cansearch'] = "Can search forum?";
+$l['misc_field_cansearch'] = "Forumda arama yapabilir mi?";
 
-$l['confirm_proceed_deletion'] = "Click \"Proceed\" to continue the deletion of the forum.";
-$l['automatically_redirecting'] = "Automatically Redirecting&hellip;";
+$l['confirm_proceed_deletion'] = "Forumun silinmesine devam etmek için \"Devam Et\" seçeneğine tıklayın.";
+$l['automatically_redirecting'] = "Otomatik Olarak Yeniden Yönlendiriliyorsunuz&hellip;";

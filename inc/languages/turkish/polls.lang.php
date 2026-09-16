@@ -1,60 +1,67 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['nav_postpoll'] = "Post Poll";
-$l['nav_editpoll'] = "Edit Poll";
-$l['nav_pollresults'] = "Poll Results";
+$l['nav_postpoll'] = "Anket Gönder";
+$l['nav_editpoll'] = "Anketi Düzenle";
+$l['nav_pollresults'] = "Anket Sonuçları";
 
-$l['edit_poll'] = "Edit Poll";
-$l['delete_poll'] = "Sil Poll";
-$l['delete_q'] = "Sil?";
-$l['delete_note'] = "To delete this poll, check the box to the left and click the button to the right.";
-$l['delete_note2'] = "<b>Note:</b> Once this poll has been deleted there is no way of restoring it.";
-$l['question'] = "Question:";
-$l['num_options'] = "Number of Options:";
-$l['max_options'] = "Maximum:";
-$l['poll_options'] = "Poll Options:";
-$l['update_options'] = "Güncelle Options";
-$l['poll_options_note'] = "Poll options should be short and to the point.";
-$l['options'] = "Options:";
-$l['option_multiple'] = "<b>Allow multiple choice:</b> Users have the ability to vote on more than one option.";
-$l['option_multiple_maxoptions'] = "Maximum number of options per user (0 for no limit):";
-$l['option_public'] = "<b>Public Poll:</b> Give users the ability to see which user voted on which option(s).";
-$l['option_closed'] = "<b>Poll is Closed:</b> If checked the poll will be closed from voting.";
-$l['poll_timeout'] = "Poll Timeout:";
-$l['timeout_note'] = "The number of day(s) which people can vote on this poll.<br />(Set to 0 to if this poll should not timeout.)";
-$l['days_after'] = "days after:";
-$l['update_poll'] = "Güncelle Poll";
-$l['option'] = "Option";
-$l['votes'] = "Votes:";
-$l['post_new_poll'] = "Post New Poll";
-$l['days'] = "days";
-$l['poll_results'] = "Poll Results";
-$l['poll_total'] = "Total:";
-$l['poll_votes'] = "vote(s)";
+$l['edit_poll'] = "Anketi Düzenle";
+$l['delete_poll'] = "Anketi Sil";
+$l['delete_q'] = "Silinsin mi?";
+$l['delete_note'] = "Bu anketi silmek için soldaki kutuyu işaretleyin ve sağdaki Sil butonuna tıklayın.";
+$l['delete_note2'] = "<b>Not:</b> Bu anketi sildikten sonra geri getirmenin bir yolu yoktur.";
+$l['question'] = "Soru:";
+$l['num_options'] = "Seçenek Sayısı:";
+$l['max_options'] = "Maksimum:";
+$l['poll_options'] = "Anket Seçenekleri:";
+$l['update_options'] = "Seçenekleri Güncelle";
+$l['poll_options_note'] = "Anket seçenekleri kısa ve öz olmalıdır.";
+$l['options'] = "Seçenekler:";
+$l['option_multiple'] = "<b>Çoklu Seçime İzin Verin:</b> Kullanıcılar birden fazla seçeneğe oy verebilirler.";
+$l['option_multiple_maxoptions'] = "Kullanıcı başına maksimum seçenek sayısı (Sınırsız Olması İçin <strong>0</strong> Değerini Kullanın):";
+$l['option_public'] = "<b>Açık Anket:</b> Kullanıcılara hangi kullanıcının hangi seçenek(ler)e oy verdiğini görme olanağı tanıyın.";
+$l['option_closed'] = "<b>Anketi Kapat:</b> İşaretlenirse anket oylamaya kapatılacaktır.";
+$l['poll_timeout'] = "Anket Süresi:";
+$l['timeout_note'] = "İnsanların bu ankette oy kullanabileceği gün(ler)in sayısı.<br />(Bu yoklamanın sınırsız sürede aktif kalması için 0 olarak ayarlayın.)";
+$l['days_after'] = "Gün Sonra:";
+$l['update_poll'] = "Anketi Güncelle";
+$l['option'] = "Seçenek";
+$l['votes'] = "Oylar:";
+$l['post_new_poll'] = "Yeni Anketi Gönder";
+$l['days'] = "Gün";
+$l['poll_results'] = "Anket Sonuçları";
+$l['poll_total'] = "Toplam:";
+$l['poll_votes'] = "Oy(lar)";
 
-$l['redirect_pollposted'] = "Your poll has been posted.<br />You will now be returned to the thread.";
-$l['redirect_pollpostedmoderated'] = "Your poll has been posted, but your thread is still pending moderation.<br />You will be returned to the forum.";
-$l['redirect_pollupdated'] = "The poll has been updated.<br />You will now be returned to the thread.";
-$l['redirect_votethanks'] = "Thank you for voting.<br />You will now be returned to the thread.";
-$l['redirect_unvoted'] = "Your vote(s) in this thread have been removed.<br />You will now be returned to the thread.";
-$l['redirect_polldeleted'] = "Thank you, the poll has successfully been removed from the thread.<br />You will now be taken back to the thread.";
+$l['redirect_pollposted'] = "Anketiniz yayınlanmıştır.<br />Şimdi konuya geri yönlendirileceksiniz.";
+$l['redirect_pollpostedmoderated'] = "Anketiniz gönderildi, ancak konunuz hala moderasyon denetimi bekliyor.<br />Şimdi foruma geri yönlendirileceksiniz.";
+$l['redirect_pollupdated'] = "Anket güncellenmiştir.<br />Şimdi konuya geri yönlendirileceksiniz.";
+$l['redirect_votethanks'] = "Oy verdiğiniz için teşekkürler.<br />Şimdi konuya geri yönlendirileceksiniz.";
+$l['redirect_unvoted'] = "Bu konudaki oy(lar)ınız kaldırılmıştır.<br />Şimdi konuya geri yönlendirileceksiniz.";
+$l['redirect_polldeleted'] = "Teşekkürler, anket başarılı bir şekilde konudan kaldırılmıştır.<br />Şimdi konuya geri yönlendirileceksiniz.";
 
-$l['error_polloptiontoolong'] = "One or more poll options you entered are longer than the acceptable limit. Please go back and shorten them.";
-$l['error_polloptionsequence'] = "One or more poll options you entered contain a sequence which should not be used in them: <strong>||~|~||</strong>. Please go back and remove it.";
-$l['error_noquestionoptions'] = "You either did not enter a question for your poll or do not have enough options. The minimum number of options a poll can have is 2.<br />Please go back and correct this error.";
-$l['error_pollalready'] = "Thread already has poll!";
-$l['error_nopolloptions'] = "The specified poll option is invalid or does not exist.";
-$l['error_maxpolloptions'] = "You have voted for too many options. You are only allowed to vote for {1} options.<br />Please go back and try again.";
-$l['error_alreadyvoted'] = "You have already voted in this poll.";
-$l['error_notvoted'] = "You haven't voted in this poll.";
-$l['error_invalidpoll'] = "The specified poll is invalid or does not exist.";
-$l['error_pollclosed'] = "You cannot vote in a poll that has been closed.";
-$l['poll_time_limit'] = "Sorry but you cannot add a poll to your thread. The Administrator has set it so that polls can only be added within {1} hours of posting.";
+$l['error_polloptiontoolong'] = "Girdiğiniz bir veya daha fazla anket seçeneği kabul edilebilir sınırdan daha uzun. Lütfen geri dönün ve seçenekleri kısaltın.";
+$l['error_polloptionsequence'] = "Girdiğiniz bir veya daha fazla anket seçeneği, içlerinde kullanılmaması gereken bir dizi içeriyor: <strong>||~|~||</strong>. Lütfen geri dönün ve bu diziyi kaldırın.";
+$l['error_noquestionoptions'] = "Anketiniz için bir soru girmediniz ya da yeterli seçeneğiniz yok. Bir anketin sahip olabileceği minimum seçenek sayısı 2'dir.<br />Lütfen geri dönün ve bu hatayı düzeltin.";
+$l['error_pollalready'] = "Konuda zaten anket var!";
+$l['error_nopolloptions'] = "Belirtilen anket seçeneği geçersiz veya mevcut değil.";
+$l['error_maxpolloptions'] = "Çok fazla seçenek için oy kullandınız. Sadece <strong>{1}</strong> seçeneğe oy verebilirsiniz.<br />Lütfen geri dönün ve tekrar deneyin.";
+$l['error_alreadyvoted'] = "Bu ankette zaten oy kullandınız.";
+$l['error_notvoted'] = "Bu ankette oy kullanmadınız.";
+$l['error_invalidpoll'] = "Belirtilen anket geçersiz veya mevcut değil.";
+$l['error_pollclosed'] = "Kapatılmış bir ankette oy kullanamazsınız.";
+$l['poll_time_limit'] = "Üzgünüm ama konunuza bir anket ekleyemezsiniz. Forum Yönetimi, anketlerin yalnızca konu gönderildikten sonraki {1} saat içinde konuya anket eklenebileceği şekilde sınırlama getirmiştir.";
 
-$l['poll_deleted'] = "Sild Poll";
-$l['poll_edited'] = "Edited Poll";
+$l['poll_deleted'] = "Silinmiş Anket";
+$l['poll_edited'] = "Düzenlenmiş Anket";

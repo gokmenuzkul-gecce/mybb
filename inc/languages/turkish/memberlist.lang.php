@@ -1,51 +1,57 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
- *
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Çeviri: Simurg
+ * Last Update: 02.06.2025
  */
 
 $l['nav_memberlist'] = "Üye Listesi";
 
-$l['memberlist_disabled'] = "The member list functionality has been disabled by the Administrator.";
+$l['memberlist_disabled'] = "Üye listesi işlevi forum yönetimi tarafından devre dışı bırakıldı.";
 
 $l['member_list'] = "Üye Listesi";
 $l['avatar']  = "Avatar";
-$l['username'] = "Username";
-$l['joined'] = "Joined";
-$l['lastvisit'] = "Last Visit";
-$l['posts'] = "Post Count";
-$l['threads'] = "Thread Count";
-$l['referrals'] = "Referrals";
-$l['search_members'] = "Search Üye Listesi";
+$l['username'] = "Kullanıcı Adı";
+$l['joined'] = "Üyelik Tarihi";
+$l['lastvisit'] = "Son Ziyaret";
+$l['posts'] = "Gönderi Sayısı";
+$l['threads'] = "Konu Sayısı";
+$l['referrals'] = "Referansları";
+$l['search_members'] = "Üye Listesinde Ara";
 $l['website'] = "Website";
-$l['sort_by'] = "Sort by";
-$l['contains'] = "Contains:";
-$l['exactly'] = "Exactly:";
-$l['sort_by_username'] = "Sort by: Username";
-$l['sort_by_regdate'] = "Sort by: Registration date";
-$l['sort_by_lastvisit'] = "Sort by: Last visit";
-$l['sort_by_posts'] = "Sort by: Post count";
-$l['sort_by_threads'] = "Sort by: Thread count";
-$l['sort_by_referrals'] = "Sort by: Members referred";
-$l['order_asc'] = "ascending order";
-$l['order_desc'] = "descending order";
-$l['asc'] = "asc";
-$l['desc'] = "desc";
-$l['forumteam'] = "Show Forum Team";
-$l['advanced_search'] = "Advanced Search";
-$l['nav_memberlist_search'] = "Search";
-$l['search_member_list'] = "Search Üye Listesi";
-$l['search_criteria'] = "Search Criteria";
-$l['begins_with'] = "begins with";
-$l['username_contains'] = "contains";
-$l['username_exact'] = "exactly";
+$l['sort_by'] = "Sıralama Seçenekleri";
+$l['contains'] = "Aranacak Terim:";
+$l['exactly'] = "Tam Olarak:";
+$l['sort_by_username'] = "Kullanıcı Adına Göre Sırala";
+$l['sort_by_regdate'] = "Üyelik Tarihine Göre Sırala";
+$l['sort_by_lastvisit'] = "Son Ziyaretine Göre Sırala";
+$l['sort_by_posts'] = "Gönderi Sayısına Göre Sırala";
+$l['sort_by_threads'] = "Konu Sayısına Göre Sırala";
+$l['sort_by_referrals'] = "Referans Sayısına Göre Sırala";
+$l['order_asc'] = "Artan";
+$l['order_desc'] = "Azalan";
+$l['asc'] = "+";
+$l['desc'] = "-";
+$l['forumteam'] = "Forum Ekibini Göster";
+$l['advanced_search'] = "Gelişmiş Arama";
+$l['nav_memberlist_search'] = "Üye Arama";
+$l['search_member_list'] = "Üye Listesinde Ara";
+$l['search_criteria'] = "Arama Kriterleri";
+$l['begins_with'] = "ile başlayan";
+$l['username_contains'] = "kullanıcı adını içerir";
+$l['username_exact'] = "tam olarak";
 $l['search_website'] = "Website URL";
-$l['search_options'] = "Search Options";
-$l['per_page'] = "Results Per Page";
-$l['search'] = "Search";
+$l['search_skype'] = "Skype Adresi";
+$l['search_google'] = "Google Hangouts Adresi";
+$l['search_options'] = "Arama Seçenekleri";
+$l['per_page'] = "Sayfa Başına Sonuçlar";
+$l['search'] = "Arama";
 
-$l['error_no_members'] = "<p>There were no members found with the search criteria you entered.</p><p>Please enter a different search term and try again.</p>";
+$l['error_no_members'] = "<p>Girdiğiniz arama kriterlerine uygun hiçbir üye bulunamadı.</p><p>Lütfen, farklı bir arama terimi girin ve tekrar deneyin.</p>";
 
 $l['a'] = 'A';
 $l['b'] = 'B';
@@ -73,4 +79,3 @@ $l['w'] = 'W';
 $l['x'] = 'X';
 $l['y'] = 'Y';
 $l['z'] = 'Z';
-

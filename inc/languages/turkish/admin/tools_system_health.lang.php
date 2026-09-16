@@ -1,90 +1,96 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 18.12.2024 (v1.8.38)
  */
 
 $l['system_health'] = "Sistem Sağlığı";
-$l['system_health_desc'] = "Buradan sisteminizin sağlık bilgilerini görüntüleyebilirsiniz.";
-$l['utf8_conversion'] = "UTF-8 Dönüşümü";
-$l['utf8_conversion_desc'] = "You are currently converting a database table to the UTF-8 format. Be aware that this process may take up to several hours depending on the size of your forum and this table. When the process is complete, you will be returned to the UTF-8 Conversion main page.";
-$l['utf8_conversion_desc2'] = "This tool checks the database tables to make sure they are in the UTF-8 format and allows you to convert them if they are not.";
+$l['system_health_desc'] = "Burada sisteminizin sağlığına ilişkin bilgileri görüntüleyebilirsiniz.";
+$l['utf8_conversion'] = "UTF-8 Dönüştürme";
+$l['utf8_conversion_desc'] = "Şu anda bir veritabanı tablosunu UTF-8 biçimine dönüştürüyorsunuz. Forumunuzun ve bu tablonun boyutuna bağlı olarak bu işlemin birkaç saat sürebileceğini unutmayın. İşlem tamamlandığında UTF-8 Dönüştürme sayfasına geri döneceksiniz.";
+$l['utf8_conversion_desc2'] = "Bu araç, UTF-8 formatında olduklarından emin olmak için veritabanı tablolarını kontrol eder ve değillerse bunları dönüştürmenize olanak tanır.";
 
-$l['convert_all'] = "Convert All";
-$l['converting_to_utf8'] = "MyBB is currently converting \"{1}\" table to UTF-8 language encoding from {2} encoding.";
-$l['convert_to_utf8'] = "You are about to convert the \"{1}\" table to UTF-8 language encoding from {2} encoding.";
-$l['convert_all_to_utf'] = "You are about to convert ALL tables to UTF-8 language encoding from {1} encoding.";
-$l['convert_all_to_utf8mb4'] = "You are about to convert ALL tables to 4-Byte UTF-8 Unicode language encoding from {1} encoding.";
-$l['converting_to_utf8mb4'] = "MyBB is currently converting \"{1}\" table to 4-Byte UTF-8 Unicode language encoding from {2} encoding.";
+$l['convert_all'] = "Tümünü Dönüştür";
+$l['converting_to_utf8'] = "MyBB şu anda \"{1}\" tablosunu {2} kodlamasından UTF-8 dil kodlamasına dönüştürüyor.";
+$l['convert_to_utf8'] = "\"{1}\" tablosunu {2} kodlamasından UTF-8 dil kodlamasına dönüştürmek üzeresiniz.";
+$l['convert_all_to_utf'] = "TÜM tabloları {1} kodlamasından UTF-8 dil kodlamasına dönüştürmek üzeresiniz.";
+$l['convert_all_to_utf8mb4'] = "TÜM tabloları {1} kodlamasından 4-Bayt UTF-8 Unicode dil kodlamasına dönüştürmek üzeresiniz.";
+$l['converting_to_utf8mb4'] = "MyBB şu anda \"{1}\" tablosunu {2} kodlamasından 4-Bayt UTF-8 Unicode dil kodlamasına dönüştürüyor.";
 $l['please_wait'] = "Lütfen bekleyin&hellip;";
-$l['converting_table'] = "Converting Table: {1}";
-$l['convert_table'] = "Convert Table";
-$l['convert_tables'] = "Convert All Tables";
-$l['convert_database_table'] = "Convert Database Table";
-$l['convert_database_tables'] = "Convert All Database Tables";
-$l['table'] = "Table";
-$l['status_utf8'] = "UTF-8 Status";
-$l['status_utf8mb4'] = "4-Byte UTF-8 Support<br />(requires MySQL 5.5.3 or above)";
-$l['not_available'] = "Not available";
-$l['all_tables'] = "All Tables";
-$l['convert_now'] = "Convert Now";
-$l['totals'] = "Toplamlar";
-$l['attachments'] = "Ekler";
-$l['total_database_size'] = "Total Database Size";
-$l['attachment_space_used'] = "Kullanılan Ek Alanı";
-$l['total_cache_size'] = "Total Cache Size";
-$l['estimated_attachment_bandwidth_usage'] = "Tahmini Ek Bant Genişliği Kullanımı";
-$l['max_upload_post_size'] = "Max Upload / POST Size";
-$l['average_attachment_size'] = "Ortalama Ek Boyutu";
+$l['converting_table'] = "Dönüştürülen Tablolar: {1}";
+$l['convert_table'] = "Tabloyu Dönüştür";
+$l['convert_tables'] = "Tüm Tabloları Dönüştür";
+$l['convert_database_table'] = "Veritabanı Tablosunu Dönüştür";
+$l['convert_database_tables'] = "Tüm Veritabanı Tablolarını Dönüştür";
+$l['table'] = "Tablo";
+$l['status_utf8'] = "UTF-8 Durumu";
+$l['status_utf8mb4'] = "4-Bayt UTF-8 Desteği<br />(MySQL 5.5.3 veya üzeri gerektirir)";
+$l['not_available'] = "Mevcut Değil";
+$l['all_tables'] = "Tüm Tablolar";
+$l['convert_now'] = "Şimdi Dönüştür";
+$l['totals'] = "Toplam";
+$l['attachments'] = "Ek Dosyalar";
+$l['total_database_size'] = "Toplam Veritabanı Boyutu";
+$l['attachment_space_used'] = "Kullanılan Ek Dosya Alanı";
+$l['total_cache_size'] = "Toplam Önbellek Boyutu";
+$l['estimated_attachment_bandwidth_usage'] = "Tahmini Ek Dosya Bant Genişliği Kullanımı";
+$l['max_upload_post_size'] = "Maksimum Yükleme / POST Boyutu";
+$l['average_attachment_size'] = "Ortalama Ek Dosya Boyutu";
 $l['stats'] = "İstatistikler";
 $l['task'] = "Görev";
-$l['run_time'] = "Çalışma Zamanı";
+$l['run_time'] = "Çalışma Süresi";
 $l['next_3_tasks'] = "Sonraki 3 Görev";
-$l['no_tasks'] = "There are no tasks running at this time.";
-$l['backup_time'] = "Backup Time";
-$l['no_backups'] = "Henüz oluşturulmuş yedek yok.";
+$l['no_tasks'] = "Şu anda çalışan herhangi bir görev bulunmamaktadır.";
+$l['backup_time'] = "Yedekleme Süresi";
+$l['no_backups'] = "Şu anda oluşturulmuş bir yedek bulunmamaktadır.";
 $l['existing_db_backups'] = "Mevcut Veritabanı Yedekleri";
 $l['writable'] = "Yazılabilir";
 $l['not_writable'] = "Yazılabilir Değil";
-$l['please_chmod_777'] = "Please CHMOD to 777.";
-$l['chmod_info'] = "Please change the CHMOD settings to the ones specified with the file below. For more information on CHMODing, see the";
+$l['please_chmod_777'] = "Lütfen CHMOD'u 777 yapın.";
+$l['chmod_info'] = "Lütfen CHMOD ayarlarını aşağıdaki dosyada belirtilenlerle değiştirin. CHMOD hakkında daha fazla bilgi için bkz.";
 $l['file'] = "Dosya";
 $l['location'] = "Konum";
-$l['settings_file'] = "Settings File";
-$l['config_file'] = "Configuration File";
-$l['file_upload_dir'] = "File Uploads Directory";
-$l['avatar_upload_dir'] = "Avatar Uploads Directory";
-$l['language_files'] = "Language Files";
-$l['backup_dir'] = "Backups Directory";
-$l['cache_dir'] = "Cache Directory";
-$l['themes_dir'] = "Themes Directory";
+$l['settings_file'] = "Ayarlar Dosyası";
+$l['config_file'] = "Yapılandırma Dosyası";
+$l['file_upload_dir'] = "Dosya Yükleme Dizini";
+$l['avatar_upload_dir'] = "Avatar Yüklemeleri Dizini";
+$l['language_files'] = "Dil Dosyaları";
+$l['backup_dir'] = "Yedekler Dizini";
+$l['cache_dir'] = "Önbellek Dizini";
+$l['themes_dir'] = "Temalar Dizini";
 $l['chmod_files_and_dirs'] = "CHMOD Dosyaları ve Dizinleri";
 
-$l['notice_process_long_time'] = "This process may take up to several hours depending on the size of your forum and this table. <strong>It is highly recommend to create a database backup as this process can't be undone.</strong>";
-$l['notice_mb4_warning'] = "4-Byte UTF-8 Support requires MySQL 5.5.3 or above. You will not be able to import your database on a MySQL server with another version.";
+$l['notice_process_long_time'] = "Bu işlem, forumunuzun ve bu tablonun boyutuna bağlı olarak birkaç saat sürebilir. <strong>Bu işlem geri alınamayacağı için bir veritabanı yedeği oluşturmanız şiddetle tavsiye edilir</strong>.";
+$l['notice_mb4_warning'] = "4-Byte UTF-8 Desteği için MySQL 5.5.3 veya üzeri gerekir. Veritabanınızı başka bir sürüme sahip bir MySQL sunucusuna aktaramazsınız.";
 
 $l['check_templates'] = "Şablonları Kontrol Et";
-$l['check_templates_desc'] = "Checks all installed templates for known security issues.";
+$l['check_templates_desc'] = "Bilinen güvenlik sorunları için tüm yüklü şablonları kontrol eder.";
 $l['check_templates_title'] = "Şablon Güvenliğini Kontrol Et";
-$l['check_templates_info'] = "This process will check your templates against security issues that could affect your forum and the server it runs on. This might take a while if you've installed many themes.
-<br /><br />To start the process, press the 'Proceed' button below.";
-$l['check_templates_info_desc'] = "The templates below matched known security issues. Please review them.";
-$l['full_edit'] = "Full Edit";
+$l['check_templates_info'] = "Bu işlem, şablonlarınızı forumunuzu ve üzerinde çalıştığı sunucuyu etkileyebilecek güvenlik sorunlarına karşı kontrol edecektir. Çok sayıda tema yüklediyseniz bu işlem biraz zaman alabilir.
+<br /><br />İşlemi başlatmak için aşağıdaki 'Devam Et' düğmesine basın.";
+$l['check_templates_info_desc'] = "Aşağıdaki şablonlar bilinen güvenlik sorunlarıyla eşleşmiştir. Lütfen bunları gözden geçirin.";
+$l['full_edit'] = "Tam Düzenle";
 
-$l['error_chmod'] = "of the required files and directories do not have proper CHMOD settings.";
-$l['error_invalid_table'] = "The specified table does not exist.";
-$l['error_db_encoding_not_set'] = "Your current setup of MyBB is not setup to use this tool yet. Please see the <a href=\"https://docs.mybb.com/1.8/administration/utf-8-setup/\">MyBB Docs</a> for more information on how to set it up.";
-$l['error_not_supported'] = "Your current Database Engine is not supported by the UTF-8 Conversion Tool.";
-$l['error_invalid_input'] = "There was a problem checking the templates. Please try again or contact the MyBB Group for support.";
-$l['error_master_templates_altered'] = "The Master Templates have been altered. Please contact the MyBB Group for support on how to alter these.";
-$l['error_utf8mb4_version'] = "Your MySQL version doesn't support 4-Byte UTF-8 encoding.";
+$l['error_chmod'] = "gerekli dosya ve dizinler uygun CHMOD izinlerine sahip değil.";
+$l['error_invalid_table'] = "Belirtilen tablo mevcut değil.";
+$l['error_db_encoding_not_set'] = "Mevcut MyBB kurulumunuz henüz bu aracı kullanmak için ayarlanmamıştır. Nasıl kurulacağı hakkında daha fazla bilgi için lütfen <a href=\"https://mybb.pro/forum-mybb-yardim-belgeleri\" target=\"_blank\" rel=\"noopener\">MyBB Yardım Belgeri</a>'ne gözatın.";
+$l['error_not_supported'] = "Mevcut Veritabanı Motorunuz UTF-8 Dönüştürme Aracı tarafından desteklenmiyor.";
+$l['error_invalid_input'] = "Şablonları kontrol ederken bir sorun oluştu. Lütfen tekrar deneyin veya destek için <a href=\"https://mybb.pro\" target=\"_blank\" rel=\"noopener\">MyBB Türkçe Destek</a> ile iletişime geçin.";
+$l['error_master_templates_altered'] = "Ana Şablonlar değiştirilmiştir. Bunların nasıl değiştirileceği konusunda destek almak için lütfen <a href=\"https://mybb.pro\" target=\"_blank\" rel=\"noopener\">MyBB Türkçe Destek</a> ile iletişime geçin.";
+$l['error_utf8mb4_version'] = "MySQL sürümünüz 4-Bayt UTF-8 kodlamasını desteklemiyor.";
 
 
-$l['warning_multiple_encodings'] = "It is recommend not to use different encodings in your database. This may cause unexpected behavior or MySQL errors.";
-$l['warning_utf8mb4_config'] = "For full 4-Byte UTF-8 support you need to change <i>\$config['database']['encoding'] = 'utf8';</i> to <i>\$config['database']['encoding'] = 'utf8mb4';</i> in your inc/config.php.";
+$l['warning_multiple_encodings'] = "Veritabanınızda farklı kodlamalar kullanmamanız önerilir. Bu beklenmedik davranışlara veya MySQL hatalarına neden olabilir.";
+$l['warning_utf8mb4_config'] = "4-Bayt UTF-8 desteğini tam olarak kullanabilmek için <strong>/inc/config.php</strong> dosyasında bazı değişiklikler yapmanız gerekiyor.<br />Bunun için ilgili dosyayı bir kod editörü ile açın ve <i>\$config['database']['encoding'] = 'utf8';</i> kod satırını <i>\$config['database']['encoding'] = 'utf8mb4';</i> kod satırıyla değiştirin.";
 
-$l['success_templates_checked'] = "Templates checked successfully - no security issues were found!";
-$l['success_all_tables_already_converted'] = "All tables have already been converted or are already in UTF-8 format.";
-$l['success_table_converted'] = "The selected table \"{1}\" has been converted to UTF-8 successfully.";
-$l['success_chmod'] = "All of the required files and directories have the proper CHMOD settings.";
+$l['success_templates_checked'] = "Şablonlar başarıyla kontrol edildi - hiçbir güvenlik sorunu bulunamadı!";
+$l['success_all_tables_already_converted'] = "Tüm tablolar zaten dönüştürülmüş veya zaten UTF-8 biçiminde.";
+$l['success_table_converted'] = "Seçilen \"{1}\" tablosu UTF-8'e başarıyla dönüştürüldü.";
+$l['success_chmod'] = "Gerekli tüm dosya ve dizinler uygun CHMOD izinlerine sahip.";

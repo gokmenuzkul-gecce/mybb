@@ -1,22 +1,29 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
-$l['cache'] = "Cache:";
-$l['cache_manager'] = "Cache Manager";
-$l['cache_manager_description'] = "Here you can manage caches which are used as a method of optimizing MyBB. Rebuilding a cache will take all the necessary data used to create the cache and re-synchronize it. Reloading a cache will reload it into the selected cache handler (disk, eaccelerator, memcache, etc). Reloading is useful when switching from the database or file system to xcache, eaccelerator, or another cache handler.";
-$l['rebuild_cache'] = "Rebuild Cache";
-$l['reload_cache'] = "Reload Cache";
-$l['rebuild_reload_all'] = "(Rebuild & Reload All)";
 
-$l['error_cannot_rebuild'] = "This cache cannot be rebuilt.";
-$l['error_empty_cache'] = "Cache is empty.";
-$l['error_incorrect_cache'] = "Incorrect cache specified.";
-$l['error_no_cache_specified'] = "You did not specify a cache to view.";
+$l['cache'] = "Önbellek:";
+$l['cache_manager'] = "Önbellek Yöneticisi";
+$l['cache_manager_description'] = "Burada MyBB'yi optimize etmek için bir yöntem olarak kullanılan önbellekleri yönetebilirsiniz. Bir önbelleği yeniden oluşturmak, önbelleği oluşturmak için kullanılan tüm gerekli verileri alacak ve yeniden senkronize edecektir. Bir önbelleği yeniden yüklemek, onu seçilen önbellek işleyicisine (disk, eaccelerator, memcache, vb.) yeniden yükleyecektir. Yeniden yükleme, veritabanı veya dosya sisteminden xcache, eaccelerator veya başka bir önbellek işleyicisine geçerken kullanışlıdır.";
+$l['rebuild_cache'] = "Önbelleği Yeniden Oluştur";
+$l['reload_cache'] = "Önbelleği Yeniden Yükle";
+$l['rebuild_reload_all'] = "(Tümünü Yeniden Oluştur ve Yeniden Yükle)";
 
-$l['success_cache_rebuilt'] = "The cache has been rebuilt successfully.";
-$l['success_cache_reloaded'] = "The cache has been reloaded successfully.";
+$l['error_cannot_rebuild'] = "Bu önbellek yeniden oluşturulamaz.";
+$l['error_empty_cache'] = "Önbellek boş.";
+$l['error_incorrect_cache'] = "Yanlış önbellek belirtildi.";
+$l['error_no_cache_specified'] = "Görüntülemek için bir önbellek belirtmediniz.";
 
+$l['success_cache_rebuilt'] = "Önbellek başarıyla yeniden oluşturuldu.";
+$l['success_cache_reloaded'] = "Önbellek başarıyla yeniden yüklendi.";

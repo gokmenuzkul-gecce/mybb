@@ -1,47 +1,54 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 01.12.2024 (v1.8.38)
  */
 
-$l['banning'] = "Banning";
-$l['banned_ips'] = "Banned IPs";
-$l['banned_ips_desc'] = "Here you can manage IP addresses which are banned from accessing your board.";
-$l['banned_accounts'] = "Banned Accounts";
-$l['disallowed_usernames'] = "Disallowed Usernames";
-$l['disallowed_usernames_desc'] = "Here you manage a list of usernames which cannot be registered or used by users. This feature is also particularly useful for reserving usernames.";
-$l['disallowed_email_addresses'] = "Disallowed Email Addresses";
-$l['disallowed_email_addresses_desc'] = "Here you manage a list of email addresses which cannot be registered or used by users.";
+$l['banning'] = "Yasaklama";
+$l['banned_ips'] = "Yasaklı IP'ler";
+$l['banned_ips_desc'] = "Burada forumunuza erişimi yasaklanan IP adreslerini yönetebilirsiniz.";
+$l['banned_accounts'] = "Yasaklı Hesaplar";
+$l['disallowed_usernames'] = "İzin Verilmeyen Kullanıcı Adları";
+$l['disallowed_usernames_desc'] = "Burada, kullanıcılar tarafından kaydedilemeyen veya kullanılamayan kullanıcı adlarının bir listesini yönetirsiniz. Bu özellik özellikle kullanıcı adlarını rezerve etmek için de kullanışlıdır.";
+$l['disallowed_email_addresses'] = "İzin Verilmeyen E-Posta Adresleri";
+$l['disallowed_email_addresses_desc'] = "Burada, kullanıcılar tarafından kaydedilemeyen veya kullanılamayan e-posta adreslerinin bir listesini yönetirsiniz.";
 
-$l['banned_ip_addresses'] = "Banned IP Addresses";
-$l['username'] = "Username";
-$l['date_disallowed'] = "Date Disallowed";
-$l['last_attempted_use'] = "Last Attempted Use";
-$l['email_address'] = "Email Address";
-$l['ip_address'] = "IP Address";
-$l['ban_date'] = "Ban Date";
-$l['last_access'] = "Last Access";
-$l['no_bans'] = "There are no bans currently set at this time.";
-$l['add_disallowed_username'] = "Add a Disallowed Username";
-$l['username_desc'] = "Note: To indicate a wild card match, use *";
-$l['disallow_username'] = "Disallow Username";
-$l['add_disallowed_email_address'] = "Add a Disallowed Email Address";
-$l['email_address_desc'] = "Note: To indicate a wild card match, use *";
-$l['disallow_email_address'] = "Disallow Email Address";
-$l['ban_an_ip_address'] = "Ban an IP Address";
-$l['ip_address_desc'] = "Note: To ban a range of IP addresses use * (Ex: 127.0.0.*) or CIDR notation (Ex: 127.0.0.0/8)";
-$l['ban_ip_address'] = "Ban IP Address";
+$l['banned_ip_addresses'] = "Yasaklı IP Adresleri";
+$l['username'] = "Kullanıcı Adı";
+$l['date_disallowed'] = "Yasaklandığı Tarih";
+$l['last_attempted_use'] = "Son Kullanım Denemesi";
+$l['email_address'] = "E-Posta Adresi";
+$l['ip_address'] = "IP Adresi";
+$l['ban_date'] = "Yasak Tarihi";
+$l['last_access'] = "En Son Erişim";
+$l['no_bans'] = "Şu anda belirlenmiş herhangi bir yasak bulunmamaktadır.";
+$l['add_disallowed_username'] = "İzin Verilmeyen Kullanıcı Adı Ekleme";
+$l['username_desc'] = "<strong>Not:</strong>Yasaklanmasını istediğiniz kullanıcı adını belirtin. <br />Kullanıcı adının tüm varyasyonlarının yasaklanmasını istiyorsanız <strong>*</strong> işaretini en başa ekleyin. Böylelikle belirttiğiniz kullanıcı adının diğer varyasyonları da yasaklanmış olacaktır.";
+$l['disallow_username'] = "Kullanıcı Adına İzin Verme";
+$l['add_disallowed_email_address'] = "İzin Verilmeyen E-Posta Adresi Ekleme";
+$l['email_address_desc'] = "<strong>Not:</strong> Yasaklanmasını istediğiniz e-posta adresini belirtin.<br/> Yasaklanmasını istediğiniz e-posta adresinin tüm varyasyonlarını engellemek için <strong>*</strong> işaretini en başa ekleyin.Böylelikle belirttiğiniz e-posta adresinin tüm varyasyonları da yasaklanmış olacaktır. ";
+$l['disallow_email_address'] = "E-Posta Adresine İzin Verme";
+$l['ban_an_ip_address'] = "Bir IP Adresini Yasaklama";
+$l['ip_address_desc'] = "<strong>Not:</strong> Bir IP adresi aralığını yasaklamak için <em>*</em> işaretini kullanabilirsiniz.<br/>(Örnek: 127.0.0.*) veya CIDR gösterimini (Örn: 127.0.0.0/8) kullanın";
+$l['ban_ip_address'] = "IP Adresini Yasakla";
 
-$l['error_missing_ban_input'] = "You did not enter a value to ban.";
-$l['error_invalid_filter'] = "The specified filter is not valid.";
-$l['error_filter_not_found'] = "The specified filter does not exist.";
-$l['error_filter_already_banned'] = "The filter you entered is already banned.";
+$l['error_missing_ban_input'] = "Yasaklamak için bir değer girmediniz.";
+$l['error_invalid_filter'] = "Belirtilen filtre mevcut değil.";
+$l['error_filter_already_banned'] = "Girdiğiniz filtre zaten yasaklı.";
 
-$l['success_ip_banned'] = "The IP address has been banned successfully.";
-$l['success_username_disallowed'] = "The username has been disallowed successfully.";
-$l['success_email_disallowed'] = "The email address has been disallowed successfully.";
-$l['success_ban_deleted'] = "The specified ban has been deleted successfully.";
+$l['success_ip_banned'] = "IP adresi başarıyla yasaklandı.";
+$l['success_username_disallowed'] = "Belirtilen Kullanıcı Adının kullanımı başarılı bir şekilde yasaklandı.";
+$l['success_email_disallowed'] = "Belirtilen E-Posta Adresinin kullanımı başarılı bir şekilde yasaklandı.";
+$l['success_ban_deleted'] = "Belirtilen yasak başarıyla silindi.";
 
-$l['confirm_ban_deletion'] = "Are you sure you wish to delete this ban?";
+$l['confirm_ban_deletion'] = "Bu yasağı silmek istediğinizden emin misiniz?";
 
+$l['error_filter_not_found'] = "Belirtilen filtre mevcut değil.";

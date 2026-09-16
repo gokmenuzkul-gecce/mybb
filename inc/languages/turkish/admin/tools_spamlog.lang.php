@@ -1,34 +1,42 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
+ *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
 
-$l['spam_logs'] = 'Spam Logs';
-$l['spam_logs_desc'] = 'This section allows you to view a history of users blocked by the spam filters.';
-$l['prune_spam_logs'] = 'Prune Spam Logs';
-$l['prune_spam_logs_desc'] = 'Here you can prune the spam logs matching a specified criteria.';
-$l['spam_username'] = 'Username';
-$l['spam_email'] = 'Email Address';
-$l['spam_ip'] = 'IP Address';
-$l['spam_date'] = 'Date';
-$l['spam_confidence'] = 'Confidence';
-$l['no_spam_logs'] = 'No users have been blocked by the spam filters yet.';
-$l['success_pruned_spam_logs'] = 'The spam logs have been pruned successfully.';
-$l['note_logs_locked'] = 'For security reasons, logs less than 24 hours old cannot be pruned.';
-$l['all_usernames'] = 'All usernames';
-$l['all_emails'] = ' All Email Addresses';
-$l['date_range'] = "Date range:";
-$l['older_than'] = "Older than ";
-$l['days'] = "days";
-$l['filter_spam_logs'] = 'Filter Spam Logs';
-$l['asc'] = "Ascending";
-$l['desc'] = "Descending";
-$l['search_ip_on_sfs'] = "Search this IP on Stop Forum Spam";
-$l['search'] = "Search";
+$l['spam_logs'] = 'Spam Kayıtları';
+$l['spam_logs_desc'] = 'Bu bölüm, spam filtreleri tarafından engellenen kullanıcıların geçmişini görüntülemenizi sağlar.';
+$l['prune_spam_logs'] = 'Spam Kayıtlarını Temizle';
+$l['prune_spam_logs_desc'] = 'Burada, belirli bir kriterle eşleşen spam kayıtlarını temizleyebilirsiniz.';
+$l['spam_username'] = 'Kullanıcı Adı';
+$l['spam_email'] = 'E-Posta Adresi';
+$l['spam_ip'] = 'IP Adresi';
+$l['spam_date'] = 'Tarih';
+$l['spam_confidence'] = 'Güven';
+$l['no_spam_logs'] = 'Henüz hiçbir kullanıcı spam filtreleri tarafından engellenmedi.';
+$l['success_pruned_spam_logs'] = 'Spam kayıtları başarıyla temizlendi.';
+$l['note_logs_locked'] = 'Güvenlik nedeniyle, 24 saatten daha eski kayıtlar temizlenemez.';
+$l['all_usernames'] = 'Tüm kullanıcı adları';
+$l['all_emails'] = ' Tüm E-Posta Adresleri';
+$l['date_range'] = "Tarih aralığı:";
+$l['older_than'] = "Daha eski ";
+$l['days'] = "gün";
+$l['filter_spam_logs'] = 'Spam Kayıtlarını Filtrele';
+$l['asc'] = "Artan";
+$l['desc'] = "Azalan";
+$l['search_ip_on_sfs'] = "Bu IP Adresini Stop Forum Spam'da Ara";
+$l['search'] = "Arama";
 
-$l['in'] = "in";
-$l['order'] = "order";
-$l['sort_by'] = "Sort By";
-$l['results_per_page'] = "Results Per Page";
+$l['in'] = "-";
+$l['order'] = "";
+$l['sort_by'] = "Sırala";
+$l['results_per_page'] = "Sayfa Başına Sonuçlar";

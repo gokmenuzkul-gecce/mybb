@@ -1,13 +1,19 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['all_forums'] = "All Forums";
+$l['all_forums'] = "Tüm Forumlar";
 $l['forum'] = "Forum:";
-$l['posted_by'] = "Posted By:";
-$l['on'] = "on";
+$l['posted_by'] = "Gönderen:";
+$l['on'] = "Açık";
 $l['portal'] = "Portal";
 

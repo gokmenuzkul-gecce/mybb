@@ -1,14 +1,21 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 18.12.2024 (v1.8.38)
  */
 
-$l['today_rel'] = "<span title=\"{1}\">Today</span>";
-$l['yesterday_rel'] = "<span title=\"{1}\">Yesterday</span>";
-$l['today'] = "Today";
-$l['yesterday'] = "Yesterday";
+$l['today_rel'] = "<span title=\"{1}\">Bügün</span>";
+$l['yesterday_rel'] = "<span title=\"{1}\">Dün</span>";
+$l['today'] = "Bugün";
+$l['yesterday'] = "Dün";
 
 $l['size_yb'] = "YB";
 $l['size_zb'] = "ZB";
@@ -18,172 +25,172 @@ $l['size_tb'] = "TB";
 $l['size_gb'] = "GB";
 $l['size_mb'] = "MB";
 $l['size_kb'] = "KB";
-$l['size_bytes'] = "bytes";
+$l['size_bytes'] = "bayt";
 $l['na'] = "N/A";
 
-// Header language strings
-$l['mybb_admin_panel'] = "MyBB Yönetim Paneli";
-$l['mybb_admin_cp'] = "MyBB Admin CP";
-$l['logged_in_as'] = "Giriş yapan kullanıcı:";
+// Header dil satırları
+$l['mybb_admin_panel'] = "MyBB Yönetim Kontrol Paneli";
+$l['mybb_admin_cp'] = "MyBB Admin KP";
+$l['logged_in_as'] = "Merhaba,";
 $l['view_board'] = "Forumu Görüntüle";
 $l['logout'] = "Çıkış Yap";
 
-// Footer language strings
-$l['generated_in'] = "Generated in {1} with <a href=\"{2}\" target=\"_blank\">{3} queries</a>. Memory Usage: {4}";
+// Footer dil satırları
+$l['generated_in'] = "Sayfa: {1} oluşturuldu. <a href=\"{2}\" target=\"_blank\">{3} Sorgu</a>. Bellek Kullanımı: {4}";
 
-// Login page
-$l['enter_username_and_password'] = "Devam etmek için {1} ve şifrenizi girin.";
+// Giriş sayfası
+$l['enter_username_and_password'] = "Devam etmek için lütfen {1} ve şifrenizi girin.";
 $l['login_username'] = 'kullanıcı adı';
 $l['login_email'] = 'e-posta';
 $l['login_username_and_password'] = 'kullanıcı adı/e-posta';
-$l['mybb_admin_login'] = "MyBB Yönetim Paneli - Giriş";
-$l['return_to_forum'] = "Foruma dön";
-$l['please_login'] = "Lütfen giriş yapın";
-$l['username'] = "Kullanıcı adı:";
-$l['username1'] = "E-posta:";
-$l['username2'] = "Kullanıcı adı/E-posta:";
+$l['mybb_admin_login'] = "MyBB Yönetim Kontrol Paneli - Giriş";
+$l['return_to_forum'] = "Foruma Geri Dön";
+$l['please_login'] = "Lütfen Giriş Yapın";
+$l['username'] = "Kullanıcı Adı:";
+$l['username1'] = "E-Posta:";
+$l['username2'] = "Kullanıcı Adı/E-Posta:";
 $l['password'] = "Şifre:";
-$l['secret_pin'] = "Secret PIN:";
-$l['login'] = "Giriş yap";
+$l['secret_pin'] = "Gizli PIN:";
+$l['login'] = "Giriş";
 $l['lost_password'] = "Şifrenizi mi unuttunuz?";
 
-$l['error_invalid_admin_session'] = "Invalid administration session.";
-$l['error_admin_session_expired'] = "Your administration session has expired.";
-$l['error_invalid_ip'] = "Your IP address is not valid for this session.";
-$l['error_mybb_admin_lockedout'] = "This account has been locked out.";
-$l['error_mybb_admin_lockedout_message'] = "Your account is currently locked out after failing to login {1} times. You have been sent an email with instructions on how to unlock your account.";
-$l['error_mybb_not_admin_account'] = "You do not have permission to access the administration control panel.";
+$l['error_invalid_admin_session'] = "Geçersiz yönetici oturumu.";
+$l['error_admin_session_expired'] = "Yönetim oturumunuzun süresi doldu.";
+$l['error_invalid_ip'] = "IP adresiniz bu oturum için geçerli değil.";
+$l['error_mybb_admin_lockedout'] = "Bu hesap kilitlendi.";
+$l['error_mybb_admin_lockedout_message'] = "Hesabınız {1} kez giriş yapamadığınız için şu anda kilitli. Hesabınızın kilidini nasıl açacağınıza ilişkin talimatları içeren bir e-posta gönderilmiştir.";
+$l['error_mybb_not_admin_account'] = "Yönetim kontrol paneline erişim izniniz yok.";
 
-$l['error_invalid_username'] = "The username you entered is invalid.";
-$l['error_invalid_uid'] = "The user id you entered is invalid.";
-$l['error_invalid_token'] = "The activation code you entered is invalid.";
+$l['error_invalid_username'] = "Girdiğiniz kullanıcı adı geçersiz.";
+$l['error_invalid_uid'] = "Girdiğiniz kullanıcı kimliği (id) geçersiz.";
+$l['error_invalid_token'] = "Girdiğiniz aktivasyon kodu geçersiz.";
 
-$l['success_logged_out'] = "You have been logged out successfully.";
-$l['error_invalid_username_password'] = "The {1} and password combination you entered is invalid.";
+$l['success_logged_out'] = "Başarılı bir şekilde çıkış yaptınız.";
+$l['error_invalid_username_password'] = "Girdiğiniz {1} ve şifre kombinasyonu geçersiz.";
 
-// Action Confirmation
-$l['confirm_action'] = "Are you sure you wish to perform this action?";
+// Eylem Onayı
+$l['confirm_action'] = "Bu işlemi gerçekleştirmek istediğinizden emin misiniz?";
 
-// Common words and phrases
+// Yaygın kelimeler ve ifadeler
 $l['home'] = "Ana Sayfa";
-$l['name'] = "Name";
-$l['size'] = "Size";
-$l['controls'] = "Controls";
-$l['view'] = "View";
-$l['yes'] = "Yes";
-$l['no'] = "No";
+$l['name'] = "İsim";
+$l['size'] = "Boyut";
+$l['controls'] = "Kontroller";
+$l['view'] = "Göster";
+$l['yes'] = "Evet";
+$l['no'] = "Hayır";
 $l['cancel'] = "İptal";
-$l['options'] = "Options";
-$l['proceed'] = "Proceed";
-$l['ok'] = "OK";
-$l['error'] = "Error";
-$l['edit'] = "Edit";
-$l['never'] = "Never";
-$l['legend'] = "Legend";
-$l['version'] = "Version";
-$l['languagevar'] = "Language";
-$l['use_default'] = "Use Default";
-$l['file'] = "File";
-$l['go'] = "Go";
-$l['clear'] = "Clear";
-$l['unknown'] = "Unknown";
-$l['year'] = "Year";
+$l['options'] = "Seçenekler";
+$l['proceed'] = "Devam Et";
+$l['ok'] = "Tamam";
+$l['error'] = "Hata";
+$l['edit'] = "Düzenle";
+$l['never'] = "Asla";
+$l['legend'] = "Bilgi";
+$l['version'] = "Versiyon";
+$l['languagevar'] = "Dil";
+$l['use_default'] = "Varsayılanı Kullan";
+$l['file'] = "Dosya";
+$l['go'] = "Git";
+$l['clear'] = "Temizle";
+$l['unknown'] = "Bilinmiyor";
+$l['year'] = "Yıl";
 $l['year_short'] = "y";
-$l['years'] = "Years";
+$l['years'] = "Yıl";
 $l['years_short'] = "y";
-$l['month'] = "Month";
-$l['month_short'] = "m";
-$l['months'] = "Months";
-$l['months_short'] = "m";
-$l['week'] = "Week";
-$l['week_short'] = "w";
-$l['weeks'] = "Weeks";
-$l['weeks_short'] = "w";
-$l['day'] = "Day";
-$l['day_short'] = "d";
-$l['days'] = "Days";
-$l['days_short'] = "d";
-$l['hour'] = "Hour";
-$l['hour_short'] = "h";
-$l['hours'] = "Hours";
-$l['hours_short'] = "h";
-$l['minute'] = "Minute";
-$l['minute_short'] = "m";
-$l['minutes'] = "Minutes";
-$l['minutes_short'] = "m";
-$l['second'] = "Second";
-$l['second_short'] = "s";
-$l['seconds'] = "Seconds";
-$l['seconds_short'] = "s";
-$l['permanent'] = "Permanent";
-$l['all_forums'] = "All Forums";
-$l['all_groups'] = "All groups";
-$l['all_prefix'] = "All prefixes";
-$l['select_forums'] = "Select forums";
-$l['select_groups'] = "Select groups";
-$l['select_prefix'] = "Select prefixes";
-$l['forums_colon'] = "Forums:";
-$l['groups_colon'] = "Groups:";
-$l['prefix_colon'] = "Prefixes:";
-$l['none'] = "None";
-$l['mybb_acp'] = "MyBB ACP";
-$l['pages'] = "Pages";
-$l['previous'] = "Previous";
-$l['page'] = "Page";
-$l['next'] = "Next";
+$l['month'] = "Ay";
+$l['month_short'] = "a";
+$l['months'] = "Ay";
+$l['months_short'] = "a";
+$l['week'] = "Hafta";
+$l['week_short'] = "h";
+$l['weeks'] = "Hafta";
+$l['weeks_short'] = "h";
+$l['day'] = "Gün";
+$l['day_short'] = "g";
+$l['days'] = "Gün";
+$l['days_short'] = "g";
+$l['hour'] = "Saat";
+$l['hour_short'] = "s";
+$l['hours'] = "Saat";
+$l['hours_short'] = "s";
+$l['minute'] = "Dakika";
+$l['minute_short'] = "dk";
+$l['minutes'] = "Dakika";
+$l['minutes_short'] = "dk";
+$l['second'] = "Saniye";
+$l['second_short'] = "sn";
+$l['seconds'] = "Saniye";
+$l['seconds_short'] = "sn";
+$l['permanent'] = "Kalıcı";
+$l['all_forums'] = "Tüm Forumlar";
+$l['all_groups'] = "Tüm Gruplar";
+$l['all_prefix'] = "Tüm Ön Ekler";
+$l['select_forums'] = "Forumları Seç";
+$l['select_groups'] = "Grupları Seç";
+$l['select_prefix'] = "Ön Ekleri Seç";
+$l['forums_colon'] = "Forumlar:";
+$l['groups_colon'] = "Gruplar:";
+$l['prefix_colon'] = "Ön Ekler:";
+$l['none'] = "Hiçbiri";
+$l['mybb_acp'] = "MyBB Yönetim Kontrol Paneli";
+$l['pages'] = "Sayfalar";
+$l['previous'] = "Önceki";
+$l['page'] = "Sayfa";
+$l['next'] = "Sonraki";
 $l['delete'] = "Sil";
-$l['reset'] = "Reset";
-$l['and'] = "and";
-$l['on'] = "On";
-$l['off'] = "Off";
-$l['alt_enabled'] = "Enabled";
-$l['alt_disabled'] = "Disabled";
-$l['enable'] = "Enable";
-$l['disable'] = "Disable";
-$l['saved'] = 'Kaydedildi';
-$l['guest'] = 'Guest';
+$l['reset'] = "Sıfırla";
+$l['and'] = "ve";
+$l['on'] = "Açık";
+$l['off'] = "Kapalı";
+$l['alt_enabled'] = "Etkin";
+$l['alt_disabled'] = "Etkin Değil";
+$l['enable'] = "Etkinleştir";
+$l['disable'] = "Devredışı Bırak";
+$l['saved'] = 'Kayıtlı';
+$l['guest'] = 'Ziyaretçi';
 
-$l['rel_in'] = "In ";
-$l['rel_ago'] = "ago";
-$l['rel_less_than'] = "Less than ";
+$l['rel_in'] = "İçinde ";
+$l['rel_ago'] = "önce";
+$l['rel_less_than'] = "Daha az ";
 $l['rel_time'] = "<span title=\"{5}{6}\">{1}{2} {3} {4}</span>";
-$l['rel_minutes_single'] = "minute";
-$l['rel_minutes_plural'] = "minutes";
-$l['rel_hours_single'] = "hour";
-$l['rel_hours_plural'] = "hours";
+$l['rel_minutes_single'] = "dakika";
+$l['rel_minutes_plural'] = "dakika";
+$l['rel_hours_single'] = "saat";
+$l['rel_hours_plural'] = "saat";
 
-// Parser bits
-$l['quote'] = "Quote:";
-$l['wrote'] = "Wrote:";
-$l['code'] = "Code:";
-$l['php_code'] = "PHP Code:";
-$l['linkback'] = "Original Post";
+// Ayrıştırıcılar
+$l['quote'] = "Alıntı:";
+$l['wrote'] = "Yazan:";
+$l['code'] = "Kod:";
+$l['php_code'] = "PHP Kodu:";
+$l['linkback'] = "Orijinal Gönderi";
 
-// The months of the year
-$l['january'] = "January";
-$l['february'] = "February";
-$l['march'] = "March";
-$l['april'] = "April";
-$l['may'] = "May";
-$l['june'] = "June";
-$l['july'] = "July";
-$l['august'] = "August";
-$l['september'] = "September";
-$l['october'] = "October";
-$l['november'] = "November";
-$l['december'] = "December";
+// Yılın ayları
+$l['january'] = "Ocak";
+$l['february'] = "Şubat";
+$l['march'] = "Mart";
+$l['april'] = "Nisan";
+$l['may'] = "Mayıs";
+$l['june'] = "Haziran";
+$l['july'] = "Temmuz";
+$l['august'] = "Ağustos";
+$l['september'] = "Eylül";
+$l['october'] = "Ekim";
+$l['november'] = "Kasım";
+$l['december'] = "Aralık";
 
-// Access Denied
-$l['access_denied'] = "Access Denied";
-$l['access_denied_desc'] = "You do not have permission to access this part of the administration control panel.";
+// Erişim Reddedildi
+$l['access_denied'] = "Erişim Reddedildi";
+$l['access_denied_desc'] = "Yönetim kontrol panelinin bu bölümüne erişim izniniz yok.";
 
-// Super Administrator required
-$l['cannot_perform_action_super_admin_general'] = "Sorry, but you cannot perform this action because you are not a super administrator.<br /><br />To be able to perform this action, you need to add your user ID to the list of super administrators in inc/config.php.";
+// Süper Yönetici gerekli
+$l['cannot_perform_action_super_admin_general'] = "Üzgünüz, ancak süper admin olmadığınız için bu işlemi gerçekleştiremezsiniz.<br /><br />Bu eylemi gerçekleştirebilmek için kullanıcı kimliğinizi (ID) <strong>inc/config.php</strong> dosyasındaki süper adminler listesine eklemeniz gerekir.";
 
 // AJAX
-$l['loading_text'] = "Yükleniyor<br />Lütfen bekleyin&hellip;";
+$l['loading_text'] = "Yükleniyor<br />Lütfen bekleyiniz&hellip;";
 
-// Time zone selection boxes
+// Saat dilimi seçim kutuları
 $l['timezone_gmt_minus_1200'] = "(GMT -12:00) Howland and Baker Islands";
 $l['timezone_gmt_minus_1100'] = "(GMT -11:00) Nome, Midway Island";
 $l['timezone_gmt_minus_1000'] = "(GMT -10:00) Hawaii, Papeete";
@@ -227,79 +234,79 @@ $l['timezone_gmt_1300'] = "(GMT +13:00) Samoa, Tonga, Tokelau";
 $l['timezone_gmt_1400'] = "(GMT +14:00) Line Islands";
 $l['timezone_gmt_short'] = "GMT {1}({2})";
 
-// Global language strings used for log deletion pages
-$l['confirm_delete_logs'] = "Prune the selected log entries?";
-$l['confirm_delete_all_logs'] = "Prune all log entries?";
-$l['selected_logs_deleted'] = "The selected log entries have been deleted.";
-$l['all_logs_deleted'] = "All log entries have been deleted.";
-$l['delete_selected'] = "Sil Selected";
-$l['delete_all'] = "Sil All Filtered";
+// Kayıt (log) silme sayfaları için kullanılan global dil satırları
+$l['confirm_delete_logs'] = "Seçilen günlük kayıtları temizlensin mi?";
+$l['confirm_delete_all_logs'] = "Tüm günlük kayıtları temizlensin mi?";
+$l['selected_logs_deleted'] = "Seçilen günlük kayıtları başarıyla silindi.";
+$l['all_logs_deleted'] = "Tüm günlük kayıtları başarıyla silindi.";
+$l['delete_selected'] = "Seçileni Sil";
+$l['delete_all'] = "Filtrelenmişlerin Tümünü Sil";
 
-// Misc
-$l['encountered_errors'] = "The following errors were encountered:";
-$l['invalid_post_verify_key'] = "An authorization code mismatch occurred. Please confirm that you wish to perform the action below.";
-$l['invalid_post_verify_key2'] = "An authorization code mismatch occurred. Please double check that you are accessing this page correctly.";
-$l['unknown_error'] = "An unknown error has occurred.";
+// Diğer
+$l['encountered_errors'] = "Aşağıdaki hatalarla karşılaşıldı:";
+$l['invalid_post_verify_key'] = "Bir yetkilendirme kodu uyuşmazlığı meydana geldi. Lütfen aşağıdaki işlemi gerçekleştirmek istediğinizi onaylayın.";
+$l['invalid_post_verify_key2'] = "Bir yetkilendirme kodu uyuşmazlığı meydana geldi. Lütfen bu sayfaya doğru şekilde eriştiğinizi iki kez kontrol edin.";
+$l['unknown_error'] = "Bilinmeyen bir hata oluştu.";
 
-// Code buttons editor language strings
-$l['editor_bold'] = "Bold";
-$l['editor_italic'] = "Italic";
-$l['editor_underline'] = "Underline";
-$l['editor_strikethrough'] = "Strikethrough";
-$l['editor_subscript'] = "Subscript";
-$l['editor_superscript'] = "Superscript";
-$l['editor_alignleft'] = "Align left";
-$l['editor_center'] = "Center";
-$l['editor_alignright'] = "Align right";
-$l['editor_justify'] = "Justify";
-$l['editor_fontname'] = "Font Name";
-$l['editor_fontsize'] = "Font Size";
-$l['editor_fontcolor'] = "Font Color";
-$l['editor_removeformatting'] = "Remove Formatting";
-$l['editor_cut'] = "Cut";
-$l['editor_copy'] = "Copy";
-$l['editor_paste'] = "Paste";
-$l['editor_cutnosupport'] = "Your browser does not allow the cut command. Please use the keyboard shortcut Ctrl/Cmd-X";
-$l['editor_copynosupport'] = "Your browser does not allow the copy command. Please use the keyboard shortcut Ctrl/Cmd-C";
-$l['editor_pastenosupport'] = "Your browser does not allow the paste command. Please use the keyboard shortcut Ctrl/Cmd-V";
-$l['editor_pasteentertext'] = "Paste your text inside the following box:";
-$l['editor_pastetext'] = "Paste Text";
-$l['editor_numlist'] = "Numbered list";
-$l['editor_bullist'] = "Bullet list";
-$l['editor_undo'] = "Undo";
-$l['editor_redo'] = "Redo";
-$l['editor_rows'] = "Rows:";
-$l['editor_cols'] = "Cols:";
-$l['editor_inserttable'] = "Insert a table";
-$l['editor_inserthr'] = "Insert a horizontal rule";
-$l['editor_code'] = "Code";
+// Yazı editörü butonlarının dil satırları
+$l['editor_bold'] = "Kalın";
+$l['editor_italic'] = "Eğik";
+$l['editor_underline'] = "Altı Çizili";
+$l['editor_strikethrough'] = "Üstü Çizili";
+$l['editor_subscript'] = "Alt Simge";
+$l['editor_superscript'] = "Üst Simge";
+$l['editor_alignleft'] = "Sola Hizala";
+$l['editor_center'] = "Merkez";
+$l['editor_alignright'] = "Sağa Hizala";
+$l['editor_justify'] = "Ortala";
+$l['editor_fontname'] = "Yazı Tipi Adı";
+$l['editor_fontsize'] = "Yazı Boyutu";
+$l['editor_fontcolor'] = "Yazı Rengi";
+$l['editor_removeformatting'] = "Biçimlendirmeyi Kaldır";
+$l['editor_cut'] = "Kes";
+$l['editor_copy'] = "Kopyala";
+$l['editor_paste'] = "Yapıştır";
+$l['editor_cutnosupport'] = "Tarayıcınız kes komutuna izin vermiyor. Lütfen Ctrl/Cmd-X klavye kısayolunu kullanın";
+$l['editor_copynosupport'] = "Tarayıcınız kopyala komutuna izin vermiyor. Lütfen Ctrl/Cmd-C klavye kısayolunu kullanın";
+$l['editor_pastenosupport'] = "Tarayıcınız yapıştır komutuna izin vermiyor. Lütfen Ctrl/Cmd-V klavye kısayolunu kullanın";
+$l['editor_pasteentertext'] = "Metninizi aşağıdaki kutunun içine yapıştırın:";
+$l['editor_pastetext'] = "Metin Yapıştır";
+$l['editor_numlist'] = "Numaralandırılmış Liste";
+$l['editor_bullist'] = "Noktalı Listes";
+$l['editor_undo'] = "Geri Al";
+$l['editor_redo'] = "Yeniden Yap";
+$l['editor_rows'] = "Satırlar:";
+$l['editor_cols'] = "Sütunlar:";
+$l['editor_inserttable'] = "Tabloyu Ekle";
+$l['editor_inserthr'] = "Yatay Bir Ayırıcı Çizgi Ekle";
+$l['editor_code'] = "Kod";
 $l['editor_php'] = "PHP";
-$l['editor_width'] = "Width (optional):";
-$l['editor_height'] = "Height (optional):";
-$l['editor_insertimg'] = "Insert an image";
-$l['editor_email'] = "E-mail:";
-$l['editor_insertemail'] = "Insert an email";
+$l['editor_width'] = "Genişlik (isteğe bağlı):";
+$l['editor_height'] = "Yükseklik (isteğe bağlı):";
+$l['editor_insertimg'] = "Görsel Ekle";
+$l['editor_email'] = "E-Posta:";
+$l['editor_insertemail'] = "Bir E-Posta Ekle";
 $l['editor_url'] = "URL:";
-$l['editor_insertlink'] = "Insert a link";
-$l['editor_unlink'] = "Unlink";
-$l['editor_more'] = "More";
-$l['editor_insertemoticon'] = "Insert an emoticon";
+$l['editor_insertlink'] = "Bağlantı Ekle";
+$l['editor_unlink'] = "Bağlantıyı Kaldır";
+$l['editor_more'] = "Daha Fazla";
+$l['editor_insertemoticon'] = "Bir İfade Ekle";
 $l['editor_videourl'] = "Video URL:";
-$l['editor_videotype'] = "Video Type:";
-$l['editor_insert'] = "Insert";
-$l['editor_insertyoutubevideo'] = "Insert a YouTube video";
-$l['editor_currentdate'] = "Insert current date";
-$l['editor_currenttime'] = "Insert current time";
-$l['editor_print'] = "Print";
-$l['editor_viewsource'] = "View source";
-$l['editor_description'] = "Description (optional):";
-$l['editor_enterimgurl'] = "Enter the image URL:";
-$l['editor_enteremail'] = "Enter the e-mail address:";
-$l['editor_enterdisplayedtext'] = "Enter the displayed text:";
-$l['editor_enterurl'] = "Enter URL:";
-$l['editor_enteryoutubeurl'] = "Enter the YouTube video URL or ID:";
-$l['editor_insertquote'] = "Insert a Quote";
-$l['editor_invalidyoutube'] = "Invalid YouTube video";
+$l['editor_videotype'] = "Video Türü:";
+$l['editor_insert'] = "Ekle";
+$l['editor_insertyoutubevideo'] = "Bir YouTube Videosu Ekle";
+$l['editor_currentdate'] = "Şu Anki Tarihi Ekle";
+$l['editor_currenttime'] = "Şu Anki Zamanı Ekle";
+$l['editor_print'] = "Yazdır";
+$l['editor_viewsource'] = "Kaynağı Görüntüle";
+$l['editor_description'] = "Açıklama (isteğe bağlı):";
+$l['editor_enterimgurl'] = "Görsel URL'sini Girin:";
+$l['editor_enteremail'] = "E-Posta Adresini Girin:";
+$l['editor_enterdisplayedtext'] = "Görüntülenecek Metni Girin:";
+$l['editor_enterurl'] = "URL'yi Girin:";
+$l['editor_enteryoutubeurl'] = "YouTube Video URL'sini veya ID'sini Girin:";
+$l['editor_insertquote'] = "Bir Alıntı Ekle";
+$l['editor_invalidyoutube'] = "Geçersiz YouTube Videosu";
 $l['editor_dailymotion'] = "Dailymotion";
 $l['editor_metacafe'] = "MetaCafe";
 $l['editor_mixer'] = "Mixer";
@@ -307,74 +314,73 @@ $l['editor_vimeo'] = "Vimeo";
 $l['editor_youtube'] = "Youtube";
 $l['editor_facebook'] = "Facebook";
 $l['editor_liveleak'] = "LiveLeak";
-$l['editor_insertvideo'] = "Insert a video";
-$l['editor_maximize'] = "Maximize";
+$l['editor_insertvideo'] = "Video Ekle";
+$l['editor_maximize'] = "Tam Ekran";
 
-$l['missing_task'] = "Error: Task file does not exist";
-$l['task_backup_cannot_write_backup'] = "Error: The database backup task cannot write to backups directory.";
-$l['task_backup_ran'] = "The database backup task successfully ran.";
-$l['task_checktables_ran'] = "The check tables task successfully ran with no corrupted tables found.";
-$l['task_checktables_ran_found'] = "Notice: The check tables task successfully ran and repaired the {1} table(s).";
-$l['task_dailycleanup_ran'] = "The daily cleanup task successfully ran.";
-$l['task_hourlycleanup_ran'] = "The hourly cleanup task successfully ran.";
-$l['task_logcleanup_ran'] = "The log cleanup task successfully ran and pruned any old logs.";
-$l['task_promotions_ran'] = "The promotions task successfully ran.";
-$l['task_threadviews_ran'] = "The thread views task successfully ran.";
-$l['task_usercleanup_ran'] = "The user cleanup task successfully ran.";
-$l['task_massmail_ran'] = "The mass mail task successfully ran.";
-$l['task_userpruning_ran'] = "The user pruning task successfully ran.";
-$l['task_delayedmoderation_ran'] = "The delayed moderation task successfully ran.";
-$l['task_massmail_ran_errors'] = "One or more problems occurred sending to \"{1}\":
-{2}";
-$l['task_versioncheck_ran'] = "The version check task successfully ran.";
-$l['task_versioncheck_ran_errors'] = "Could not connect to MyBB for a version check.";
-$l['task_recachestylesheets_ran'] = 'Re-cached {1} stylesheets.';
-$l['task_sendmailqueue_ran'] = 'The send mail queue task sent up to {1} messages.';
+$l['missing_task'] = "Hata: Görev dosyası mevcut değil";
+$l['task_backup_cannot_write_backup'] = "Hata: Veritabanı yedekleme görevi yedekler (./admin/backups) dizinine yedek dosyasını yükleyemiyor. <br />Lütfen, <strong>(./admin/backups)</strong> dizinin CHMOD değerlerinin 777 olduğundan emin olun.";
+$l['task_backup_ran'] = "Veritabanı yedekleme görevi başarıyla çalıştırıldı.";
+$l['task_checktables_ran'] = "Tabloları kontrol et görevi, hiçbir bozuk tablo bulunmadan başarıyla çalıştırıldı.";
+$l['task_checktables_ran_found'] = "<strong>Bilgilendirme:</strong> Tabloları denetleme görevi başarıyla çalıştırıldı ve <strong>{1}</strong> tablo(lar)ını onardı.";
+$l['task_dailycleanup_ran'] = "Günlük temizlik görevi başarıyla çalıştırıldı.";
+$l['task_hourlycleanup_ran'] = "Saatlik temizleme görevi başarıyla çalıştırıldı.";
+$l['task_logcleanup_ran'] = "Günlük kayıt temizleme görevi başarıyla çalıştırıldı ve eski kayıtlar temizlendi.";
+$l['task_promotions_ran'] = "Terfi görevi başarıyla çalıştırıldı.";
+$l['task_threadviews_ran'] = "Konu görüntüleme görevi başarıyla çalıştırıldı.";
+$l['task_usercleanup_ran'] = "Kullanıcı temizleme görevi başarıyla çalıştırıldı.";
+$l['task_massmail_ran'] = "Toplu e-posta görevi başarıyla çalıştırıldı.";
+$l['task_userpruning_ran'] = "Kullanıcı temizleme görevi başarıyla çalıştırıldı.";
+$l['task_delayedmoderation_ran'] = "Bekleyen moderasyon görevi başarıyla yürütülmüştür.";
+$l['task_massmail_ran_errors'] = "\"{1}\" adresine gönderirken bir veya daha fazla sorun oluştu: {2}";
+$l['task_versioncheck_ran'] = "Sürüm kontrolü görevi başarıyla çalıştırıldı.";
+$l['task_versioncheck_ran_errors'] = "Sürüm kontrolü için MyBB'ye bağlanılamadı.";
+$l['task_recachestylesheets_ran'] = 'Yeniden önbelleğe alınmış {1} stil sayfaları. (Re-Cached)';
+$l['task_sendmailqueue_ran'] = 'E-Posta gönderme sırası görevi en fazla {1} ileti gönderdi.';
 
-$l['massmail_username'] = "Username";
-$l['email_addr'] = "Email Address";
-$l['board_name'] = "Board Name";
-$l['board_url'] = "Board URL";
+$l['massmail_username'] = "Kullanıcı Adı";
+$l['email_addr'] = "E-Posta Adresi";
+$l['board_name'] = "Forum Adı";
+$l['board_url'] = "Forum URL";
 
-// Unlock ACP
-$l['lockout_unlock'] = "Unlock Admin Yönetim Paneli";
-$l['enter_username_and_token'] = "Please enter your username and the activation code to continue.";
-$l['unlock_token'] = "Activation code:";
-$l['unlock_account'] = "Unlock Account";
+// Admin Panelinin Kilidini Aç
+$l['lockout_unlock'] = "Yönetici Kontrol Panelinin Kilidini Aç";
+$l['enter_username_and_token'] = "Devam etmek için lütfen kullanıcı adınızı ve aktivasyon kodunuzu girin.";
+$l['unlock_token'] = "Aktivasyon Kodu:";
+$l['unlock_account'] = "Hesap Kilidini Aç";
 
-// Email message for if an admin account has been locked out
-$l['locked_out_subject'] = "Administrator Account Locked Out at {1}";
-$l['locked_out_message'] = "{1},
+// Bir yönetici hesabı kilitlendiğinde kullanılacak e-posta mesajı
+$l['locked_out_subject'] = "{1}, Yönetici Hesabınız Kilitlendi!";
+$l['locked_out_message'] = "{1}, 
 
-Your administrator account at {2} has been locked after {3} failed login attempts.
+{2} adresindeki yönetici hesabınız {3} başarısız giriş denemesinden sonra kilitlendi.
 
-To unlock your account, please go to the URL below in your web browser.
+Hesabınızın kilidini açmak için lütfen web tarayıcınızda aşağıdaki URL'ye gidin.
 
 {4}/{5}/index.php?action=unlock&uid={7}&token={6}
 
-If the above link does not work correctly, go to
+Yukarıdaki bağlantı düzgün çalışmazsa, şu adrese gidin
 
 {4}/{5}/index.php?action=unlock
 
-You will need to enter the following:
-Kullanıcı adı: {1}
-Activation Code: {6}
+Aşağıdakileri girmeniz gerekecektir:
+Kullanıcı Adı: {1}
+Aktivasyon Kodu: {6}
 
-Thank you,
-{2} Staff";
+Teşekkürler,
+{2} » Forum Yönetimi";
 
 $l['comma'] = ", ";
 
-$l['search_for_a_user'] = "Search for a user";
+$l['search_for_a_user'] = "Kullanıcı Ara";
 
-$l['mybb_engine'] = "MyBB Engine";
+$l['mybb_engine'] = "MyBB ÖM/E-Posta Sistemi";
 
 // If the language string for "Username" is too cramped in the ACP Login box
 // then use this to define how much larger you want the gap to be (in px)
 // $l['login_field_width'] = "0";
 
-$l['my2fa'] = "Two-Factor Authentication";
-$l['my2fa_failed'] = "The code was incorrect, you're logged out now";
-$l['my2fa_code'] = "Please enter the authentication code";
-$l['my2fa_label'] = "Authentication code:";
-$l['my2fa_no_codes'] = "Note: you've used all of your recovery codes. Please visit the <a href=\"index.php?module=home-preferences&amp;action=recovery_codes\">recovery codes page</a> to generate a new set.";
+$l['my2fa'] = "İki Faktörlü Kimlik Doğrulama";
+$l['my2fa_failed'] = "İki faktörlü kimlik doğrulama kodunuz yanlıştı ve oturumunuz sonlandırıldı.";
+$l['my2fa_code'] = "Lütfen kimlik doğrulama kodunu giriniz.";
+$l['my2fa_label'] = "Kimlik Doğrulama Kodu:";
+$l['my2fa_no_codes'] = "Not: Tüm kurtarma kodlarınızı kullandıysanız eğer, yeni kurtarma kodları oluşturmak için lütfen <a href=\"index.php?module=home-preferences&amp;action=recovery_codes\">kurtarma kodları sayfası</a>na giderek yeni bir kurtama kodu seti oluşturun.";

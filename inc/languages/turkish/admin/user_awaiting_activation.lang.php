@@ -1,50 +1,56 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 18.12.2024 (v1.8.38)
  */
 
 $l['awaiting_activation'] = "Aktivasyon Bekleyenler";
-$l['awaiting_activation_desc'] = "Here you can manage users who are awaiting activation. Please note any user who is awaiting email activation will not need to confirm their email if they are activated here.";
+$l['awaiting_activation_desc'] = "Burada aktivasyon bekleyen kullanıcıları yönetebilirsiniz. E-posta aktivasyonunu bekleyen herhangi bir kullanıcının burada aktif edilmesi halinde e-postasını onaylaması gerekmeyeceğini lütfen unutmayın.";
 
-$l['manage_awaiting_activation'] = "Manage Awaiting Activation";
+$l['manage_awaiting_activation'] = "Aktivasyon Bekleyenleri Yönet";
 
-$l['no_users_awaiting_activation'] = "There are currently no users awaiting activation.";
+$l['no_users_awaiting_activation'] = "Şu anda aktivasyon bekleyen kullanıcı bulunmamaktadır.";
 
-$l['username'] = "Username";
-$l['registered'] = "Kayıtlı";
-$l['last_active'] = "Last Active";
-$l['email'] = "Email";
-$l['ipaddress'] = "IP Address";
-$l['type'] = "Type";
+$l['username'] = "Kullanıcı Adı";
+$l['registered'] = "Kayıt Olma Tarihi";
+$l['last_active'] = "Son Aktiflik";
+$l['email'] = "E-Posta";
+$l['ipaddress'] = "IP Adresi";
+$l['type'] = "Aktivasyon Türü";
 
-$l['email_activation'] = "Awaiting Email Activation";
-$l['administrator_activation'] = "Awaiting Administrator Activation";
-$l['admin_activation_coppa'] = "Awaiting Administrator Activation (COPPA)";
+$l['email_activation'] = "E-Posta Aktivasyonu Bekleniyor";
+$l['administrator_activation'] = "Yönetici Aktivasyonu Bekleniyor";
+$l['admin_activation_coppa'] = "Yönetici Aktivasyonu Bekleniyor (COPPA)";
 
-$l['activate_users'] = "Activate Users";
-$l['delete_users'] = "Sil Users";
+$l['activate_users'] = "Kullanıcıları Aktif Et";
+$l['delete_users'] = "Kullanıcıları Sil";
 
-$l['confirm_activate_users'] = "Are you sure you want to activate the selected users?";
-$l['confirm_delete_users'] = "Are you sure you want to delete the selected users?";
+$l['confirm_activate_users'] = "Seçilen kullanıcıları aktif etmek istediğinizden emin misiniz?";
+$l['confirm_delete_users'] = "Seçili kullanıcıları silmek istediğinizden emin misiniz?";
 
-$l['no_users_selected'] = "You did not select any users.";
+$l['no_users_selected'] = "Herhangi bir kullanıcı seçmediniz.";
 
-$l['success_users_deleted'] = "The selected user(s) have been deleted.";
-$l['success_users_activated'] = "The selected user(s) have been activated.";
+$l['success_users_deleted'] = "Seçilen kullanıcı(lar) silindi.";
+$l['success_users_activated'] = "Seçilen kullanıcı(lar) aktifleştirildi.";
 
-$l['emailsubject_activateaccount'] = "Account Activation at {1}";
+$l['emailsubject_activateaccount'] = "Hesap Aktivasyonu: {1}";
 $l['email_adminactivateaccount'] = "{1},
 
-The administrator has activated your forum account on {2}.
+Forum yönetimi, {2} tarihinde forum hesabınızı aktif hale getirmiştir.
 
-To proceed, please go to
+Devam etmek için lütfen şu adrese gidin;
 
 {3}
 
-You will be able to login with the credentials you registered with.
+Kayıt olduğunuz hesap bilgileri ile giriş yapabileceksiniz.
 
-Thank you,
-{2} Staff";
+Teşekkürler,
+{2} » Forum Yönetimi";
 

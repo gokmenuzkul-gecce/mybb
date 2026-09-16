@@ -1,42 +1,48 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 07.12.2024 (v1.8.38)
  */
 
-$l['spiders_bots'] = "Spiders / Bots";
-$l['spiders_bots_desc'] = "This section allows you to manage the search engine spiders &amp; bots automatically detected by your forum. You're also able to see when a particular bot last visited.";
-$l['add_new_bot'] = "Add New Bot";
-$l['add_new_bot_desc'] = "Here you can add a new bot that you would like to be detected by your forum.";
+$l['spiders_bots'] = "Örümcekler / Botlar";
+$l['spiders_bots_desc'] = "Bu bölüm, forumunuz tarafından otomatik olarak algılanan arama motoru örümceklerini ve botlarını yönetmenizi sağlar. Ayrıca belirli bir botun en son ne zaman ziyaret ettiğini de görebilirsiniz.";
+$l['add_new_bot'] = "Yeni Bot Ekle";
+$l['add_new_bot_desc'] = "Burada, forumunuz tarafından algılanmasını istediğiniz yeni bir bot ekleyebilirsiniz.";
 
-$l['edit_bot'] = "Edit Bot";
-$l['edit_bot_desc'] = "Here you can edit an existing bot.";
+$l['edit_bot'] = "Botu Düzenle";
+$l['edit_bot_desc'] = "Burada mevcut bir botu düzenleyebilirsiniz.";
 
-$l['bot'] = "Bot";
-$l['last_visit'] = "Last Visit";
-$l['no_bots'] = "There are no search engine spiders or web crawlers being tracked by this forum.";
+$l['bot'] = "Bot Adı";
+$l['last_visit'] = "Son Ziyaret";
+$l['no_bots'] = "Bu forum tarafından takip edilen herhangi bir arama motoru örümceği veya web tarayıcısı yoktur.";
 
-$l['name'] = "Name";
-$l['name_desc'] = "Enter the name of this bot which you want to identify it by";
-$l['user_agent'] = "User Agent String";
-$l['user_agent_desc'] = "Enter the string which will be matched against the bots user agent (partial matches are accepted)";
-$l['language_str'] = "Language";
-$l['language_desc'] = "Select the language pack the bot will use when viewing the board.";
-$l['theme'] = "Theme";
-$l['theme_desc'] = "Select the theme the bot will use when viewing the board.";
-$l['user_group'] = "User Group";
-$l['user_group_desc'] = "Select the user group permissions will be applied from for this board (Note: It is not recommended you change this from the default Guests group)";
-$l['save_bot'] = "Kaydet Bot";
-$l['use_board_default'] = "Use Board Default";
+$l['name'] = "Bot Adı";
+$l['name_desc'] = "Bu botu tanımlamak istediğiniz adı girin.";
+$l['user_agent'] = "Kullanıcı Aracısı Dizesi";
+$l['user_agent_desc'] = "Bot kullanıcı aracısı ile eşleştirilecek dizeyi girin (kısmi eşleşmeler kabul edilir)";
+$l['language_str'] = "Dil Seçenekleri";
+$l['language_desc'] = "Botun forumu görüntülerken kullanacağı dil paketini seçin.";
+$l['theme'] = "Tema Seçenekleri";
+$l['theme_desc'] = "Botun forumu görüntülerken kullanacağı temayı seçin.";
+$l['user_group'] = "Kullanıcı Grubu";
+$l['user_group_desc'] = "Bu bot için izinlerin uygulanacağı kullanıcı grubunu seçin (Not: Bunu varsayılan Ziyaretçiler grubundan değiştirmeniz önerilmez)";
+$l['save_bot'] = "Botu Kaydet";
+$l['use_board_default'] = "Forum Varsayılanını Kullan";
 
-$l['error_invalid_bot'] = "The specified bot does not exist.";
-$l['error_missing_name'] = "You did not enter a name for this bot";
-$l['error_missing_agent'] = "You did not enter a user agent string for this bot";
+$l['error_invalid_bot'] = "Belirtilen bot mevcut değil.";
+$l['error_missing_name'] = "Bu bot için bir ad girmediniz.";
+$l['error_missing_agent'] = "Bu bot için bir kullanıcı aracısı dizesi girmediniz.";
 
-$l['success_bot_created'] = "The bot has been created successfully.";
-$l['success_bot_updated'] = "The bot has been updated successfully.";
-$l['success_bot_deleted'] = "The selected bot has been deleted successfully.";
+$l['success_bot_created'] = "Bot başarıyla oluşturuldu.";
+$l['success_bot_updated'] = "Bot başarıyla güncellendi.";
+$l['success_bot_deleted'] = "Seçilen bot başarıyla silindi.";
 
-$l['confirm_bot_deletion'] = "Are you sure you wish to delete this bot?";
+$l['confirm_bot_deletion'] = "Bu botu silmek istediğinizden emin misiniz?";
 

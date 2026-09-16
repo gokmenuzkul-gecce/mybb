@@ -1,135 +1,141 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 06.12.2024 (v1.8.38)
  */
 
-$l['mod_tools'] = "Moderator Tools";
+$l['mod_tools'] = "Moderatör Araçları";
 
-$l['thread_tools'] = "Thread Tools";
-$l['thread_tools_desc'] = "Custom moderator tools allows you to create combinations of moderator actions that can be used on both threads and posts. These can then be used like the default tools when managing your forum. Here you can manage your custom thread tools.";
+$l['thread_tools'] = "Konu Araçları";
+$l['thread_tools_desc'] = "Özel moderatör araçları, hem konu başlıklarında hem de gönderilerde kullanılabilecek moderatör eylemleri kombinasyonları oluşturmanıza olanak tanır. Bunlar daha sonra forumunuzu yönetirken varsayılan araçlar gibi kullanılabilir. Burada özel konu araçlarınızı yönetebilirsiniz.";
 
-$l['add_thread_tool'] = "Add Thread Tool";
-$l['add_new_thread_tool'] = "Add New Thread Tool";
-$l['add_thread_tool_desc'] = "Here you can add a new custom thread moderation tool. This tool will be accessible from both inline thread moderation and from within threads themselves, listed with the default moderation tools.";
+$l['add_thread_tool'] = "Konu Aracı Ekle";
+$l['add_new_thread_tool'] = "Yeni Konu Aracı Ekle";
+$l['add_thread_tool_desc'] = "Burada yeni bir özel konu moderasyon aracı ekleyebilirsiniz. Bu araca hem satır içi konu/gönderi moderasyonundan hem de varsayılan moderasyon araçlarıyla birlikte listelenen gönderilerin içinden erişilebilecektir.";
 
-$l['post_tools'] = "Post Tools";
-$l['post_tools_desc'] = "Custom moderator tools allows you to create combinations of moderator actions that can be used on both threads and posts. These can then be used like the default tools when managing your forum. Here you can manage your custom post tools.";
+$l['post_tools'] = "Gönderi Araçları";
+$l['post_tools_desc'] = "Özel moderatör araçları, hem konu başlıklarında hem de gönderilerde kullanılabilecek moderatör eylemleri kombinasyonları oluşturmanıza olanak tanır. Bunlar daha sonra forumunuzu yönetirken varsayılan araçlar gibi kullanılabilir. Buradan özel gönderi araçlarınızı yönetebilirsiniz.";
 
-$l['add_post_tool'] = "Add Post Tool";
-$l['add_new_post_tool'] = "Add New Post Tool";
-$l['add_post_tool_desc'] = "Here you can add a new custom post moderation tool. This tool will be accessible from within threads themselves, listed with the default moderation tools.";
+$l['add_post_tool'] = "Gönderi Aracı Ekle";
+$l['add_new_post_tool'] = "Yeni Gönderi Aracı Ekle";
+$l['add_post_tool_desc'] = "Burada yeni bir özel gönderi moderasyon aracı ekleyebilirsiniz. Bu araca, varsayılan moderasyon araçlarıyla birlikte listelenen konuların içinden de erişilebilecektir.";
 
-$l['edit_post_tool'] = "Edit Post Tool";
-$l['edit_post_tool_desc'] = "Here you can edit the post tool's settings and actions.";
-$l['edit_thread_tool'] = "Edit Thread Tool";
-$l['edit_thread_tool_desc'] = "Here you can edit the thread tool's settings and actions.";
+$l['edit_post_tool'] = "Gönderi Aracını Düzenle";
+$l['edit_post_tool_desc'] = "Burada gönderi aracının ayarlarını ve eylemlerini düzenleyebilirsiniz.";
+$l['edit_thread_tool'] = "Konu Aracını Düzenle";
+$l['edit_thread_tool_desc'] = "Burada konu aracının ayarlarını ve eylemlerini düzenleyebilirsiniz.";
 
-$l['no_thread_tools'] = "There are no thread tools setup on your forum.";
-$l['no_post_tools'] = "There are no post tools setup on your forum.";
+$l['no_thread_tools'] = "Forumunuzda ayarlanmış herhangi bir konu aracı bulunmamakta.";
+$l['no_post_tools'] = "Forumunuzda ayarlanmış herhangi bir gönderi aracı bulunmamakta.";
 
-$l['confirm_thread_tool_deletion'] = "Are you sure you want to delete this thread tool?";
-$l['confirm_post_tool_deletion'] = "Are you sure you want to delete this post tool?";
+$l['confirm_thread_tool_deletion'] = "Bu konu aracını silmek istediğinizden emin misiniz?";
+$l['confirm_post_tool_deletion'] = "Bu gönderi aracını silmek istediğinizden emin misiniz?";
 
-$l['success_post_tool_deleted'] = "The selected post moderation tool has been deleted successfully.";
-$l['success_thread_tool_deleted'] = "The selected thread moderation tool has been deleted successfully.";
+$l['success_post_tool_deleted'] = "Seçilen gönderi moderasyon aracı başarıyla silindi.";
+$l['success_thread_tool_deleted'] = "Seçilen konu moderasyon aracı başarıyla silindi.";
 
-$l['error_invalid_post_tool'] = "The specified post tool does not exist.";
-$l['error_invalid_thread_tool'] = "The specified thread tool does not exist.";
+$l['error_invalid_post_tool'] = "Belirtilen gönderi aracı mevcut değil.";
+$l['error_invalid_thread_tool'] = "Belirtilen konu aracı mevcut değil.";
 
-$l['general_options'] = "General Options";
-$l['short_description'] = "Short Description";
-$l['available_in_forums'] = "Available in forums";
-$l['available_to_groups'] = "Available to groups";
-$l['show_confirmation'] = "Show Confirmation Page";
-$l['save_thread_tool'] = "Kaydet Thread Tool";
+$l['general_options'] = "Genel Seçenekler";
+$l['short_description'] = "Kısa Açıklama";
+$l['available_in_forums'] = "Kullanılacak Forumlar";
+$l['available_to_groups'] = "Kullanabilecek Kullanıcı Grupları";
+$l['show_confirmation'] = "Onay Sayfasını Göster";
+$l['save_thread_tool'] = "Konu Aracını Kaydet";
 
-$l['title'] = "Title";
+$l['title'] = "Başlık";
 
-$l['thread_moderation'] = "Thread Moderation";
-$l['approve_unapprove'] = "Approve/Unapprove thread?";
+$l['thread_moderation'] = "Konu Moderasyonu";
+$l['approve_unapprove'] = "Konuyu Onayla/Onaylama?";
 
-$l['no_change'] = "No Change";
-$l['approve'] = "Approve";
-$l['unapprove'] = "Unapprove";
-$l['stick'] = "Stick";
-$l['unstick'] = "Unstick";
-$l['open'] = "Open";
-$l['close'] = "Close";
-$l['stick'] = "Stick";
-$l['unstick'] = "Unstick";
-$l['toggle'] = "Toggle";
-$l['days'] = "Days";
-$l['no_prefix'] = "No Prefix";
-$l['restore'] = "Restore";
-$l['softdelete'] = "Soft delete";
+$l['no_change'] = "Değişiklik Yok";
+$l['approve'] = "Onayla";
+$l['unapprove'] = "Onaylama";
+$l['stick'] = "Sabitle";
+$l['unstick'] = "Sabitlikten Kaldır";
+$l['open'] = "Konuyu Aç";
+$l['close'] = "Konuyu Kapat";
+$l['stick'] = "Sabitle";
+$l['unstick'] = "Sabitlikten Kaldır";
+$l['toggle'] = "Değişken (Toggle)";
+$l['days'] = "Gün";
+$l['no_prefix'] = "Önek Yok";
+$l['restore'] = "Geri Yükle";
+$l['softdelete'] = "Geçici Sil";
 
-$l['forum_to_move_to'] = "Forum to move to:";
-$l['leave_redirect'] = "Leave redirect?";
-$l['delete_redirect_after'] = "Sil redirect after";
-$l['do_not_move_thread'] = "Do not move thread";
-$l['do_not_copy_thread'] = "Do not copy thread";
-$l['move_thread'] = "Move thread?";
-$l['move_thread_desc'] = "If moving the thread(s), the \"delete redirect after&hellip; days\" is only to be filled in if a redirect will be left.";
-$l['forum_to_copy_to'] = "Forum to copy to:";
-$l['copy_thread'] = "Copy thread?";
-$l['open_close_thread'] = "Open/close thread?";
-$l['stick_unstick_thread'] = "Stick/unstick thread?";
-$l['softdelete_restore_thread'] = "Soft delete/restore thread?";
-$l['delete_thread'] = "Sil thread permanently?";
-$l['merge_thread'] = "Merge thread?";
-$l['merge_thread_desc'] = "Only if used in inline moderation.";
-$l['delete_poll'] = "Sil poll?";
-$l['delete_redirects'] = "Sil redirects?";
-$l['remove_subscriptions'] = "Remove thread subscriptions?";
-$l['recount_rebuild'] = "Recount & Rebuild?";
-$l['apply_thread_prefix'] = "Apply thread prefix?";
-$l['new_subject'] = "New subject?";
-$l['new_subject_desc'] = "Enter the new subject for the thread.";
+$l['forum_to_move_to'] = "Taşınacak forum:";
+$l['leave_redirect'] = "Yönlendirme Bırakılsın mı?";
+$l['delete_redirect_after'] = "Şu Gün Sonra Yönlendirmeyi Sil";
+$l['do_not_move_thread'] = "Konuyu Taşıma";
+$l['do_not_copy_thread'] = "Konuyu Kopyalama";
+$l['move_thread'] = "Konu Taşınsın Mı?";
+$l['move_thread_desc'] = "Eğer konu(lar) taşınıyorsa, \"Şu &hellip; Gün Sonra Yönlendirmeyi Sil \" Sadece yönlendirme bırakılacaksa doldurulmalıdır. <br />Yönlendirme bırakmak eski bağlantının belirlediğiniz süre boyunca kullanılabilir olmasını sağlar bu sayede kullanıcılarınız eski bağlantı üzerinden belirlediğiniz süre boyunca konuya erişim sağlayabilirler.";
+$l['forum_to_copy_to'] = "Kopyalanacak Forum:";
+$l['copy_thread'] = "Konu Kopyalansın Mı?";
+$l['open_close_thread'] = "Konuyu Aç/Kapat?";
+$l['stick_unstick_thread'] = "Konuyu Sabitle/Sabitlikten Kaldır?";
+$l['softdelete_restore_thread'] = "Geçici Olarak Sil/Geri Yükle?";
+$l['delete_thread'] = "Konu Kalıcı Olarak Silinsin Mi?";
+$l['merge_thread'] = "Konuyu Birleştir?";
+$l['merge_thread_desc'] = "Yalnızca satır içi moderasyonda kullanılırsa.";
+$l['delete_poll'] = "Anketi Sil?";
+$l['delete_redirects'] = "Yönlendirmeleri Sil?";
+$l['remove_subscriptions'] = "Konu Abonelikleri Kaldırılsın Mı?";
+$l['recount_rebuild'] = "Yeniden Sayım & Yapılandırma?";
+$l['apply_thread_prefix'] = "Konu Öneki Uygulansın Mı?";
+$l['new_subject'] = "Yeni Konu Başlığı?";
+$l['new_subject_desc'] = "Konu için yeni bir konu başlığı girin. Değişiklik istemiyorsanız varsayılan değerde bırakabilirsiniz.";
 
-$l['subject_message_replacements'] = "Available replacements";
-$l['subject_message_replacements_desc'] = "{subject} represents the original subject. {username} represents the moderator's username. {author} represents the thread author's username.";
+$l['subject_message_replacements'] = "Kullanılabilir Değiştirmeler";
+$l['subject_message_replacements_desc'] = "<em>{subject}</em> orijinal konu başlığını temsil eder. <em>{username}</em> Moderatörün kullanıcı adını temsil eder. <em>{author}</em> Konu yazarının kullanıcı adını temsil eder.";
 
-$l['add_new_reply'] = "Add New Reply";
-$l['add_new_reply_desc'] = "Leave blank for no reply.";
-$l['reply_subject'] = "Reply subject.";
-$l['reply_subject_desc'] = "Only used if a reply was made.";
+$l['add_new_reply'] = "Yeni Yanıt Ekle";
+$l['add_new_reply_desc'] = "Yeni yanıt bırakmak istemiyorsanız boş bırakın. Yeni bir yanıt göndermek istiyorsanız eğer aşağıda ki alanları doldurun.";
+$l['reply_subject'] = "Cevap konusu.";
+$l['reply_subject_desc'] = "Yalnızca bir yanıt verilmişse kullanılır.";
 
-$l['success_mod_tool_created'] = "The moderation tool has been created successfully.";
-$l['success_mod_tool_updated'] = "The moderation tool has been updated successfully.";
+$l['success_mod_tool_created'] = "Moderasyon aracı başarıyla oluşturuldu.";
+$l['success_mod_tool_updated'] = "Moderasyon aracı başarıyla güncellendi.";
 
-$l['inline_post_moderation'] = "Inline Post Moderation";
-$l['delete_posts'] = "Sil posts permanently?";
-$l['merge_posts'] = "Merge posts?";
-$l['merge_posts_desc'] = "Only if used from inline moderation.";
-$l['approve_unapprove_posts'] = "Approve/unapprove posts?";
-$l['softdelete_restore_posts'] = "Soft delete/restore posts?";
+$l['inline_post_moderation'] = "Satır İçi Gönderi Moderasyonu";
+$l['delete_posts'] = "Gönderileri Kalıcı Olarak Sil?";
+$l['merge_posts'] = "Gönderileri Birleştir?";
+$l['merge_posts_desc'] = "Yalnızca satır içi moderasyondan kullanılırsa.";
+$l['approve_unapprove_posts'] = "Gönderileri Onayla/Onaylama?";
+$l['softdelete_restore_posts'] = "Gönderileri Geçici Sil/Geri Yükle?";
 
-$l['split_posts'] = "Split Gönderiler";
-$l['split_posts2'] = "Split posts?";
-$l['do_not_split'] = "Do not split posts";
-$l['split_to_same_forum'] = "Split to same forum";
-$l['close_split_thread'] = "Close split thread?";
-$l['stick_split_thread'] = "Stick split thread?";
-$l['unapprove_split_thread'] = "Unapprove split thread?";
-$l['split_thread_prefix'] = "Split thread prefix";
-$l['split_thread_subject'] = "Split thread subject";
-$l['split_thread_subject_desc'] = "Only required if splitting posts.";
-$l['add_new_split_reply'] = "Add reply to split thread";
-$l['add_new_split_reply_desc'] = "Leave blank for no reply.";
-$l['split_reply_subject'] = "Reply subject";
-$l['split_reply_subject_desc'] = "Only used if a reply is made";
-$l['save_post_tool'] = "Kaydet Post Tool";
+$l['split_posts'] = "Gönderileri Ayır";
+$l['split_posts2'] = "Gönderileri Ayrılsın Mı?";
+$l['do_not_split'] = "Gönderileri Ayırma";
+$l['split_to_same_forum'] = "Aynı Forumda Ayır";
+$l['close_split_thread'] = "Ayrılmış Konu Kapatılsın Mı?";
+$l['stick_split_thread'] = "Ayrılmış Konu Sabitlensin Mi?";
+$l['unapprove_split_thread'] = "Ayrılmış Konu Onaylansın Mı?";
+$l['split_thread_prefix'] = "Ayrılmış Konu Önekleri";
+$l['split_thread_subject'] = "Konu Başlıklarını Ayır";
+$l['split_thread_subject_desc'] = "Sadece konuları ayırırken gereklidir.";
+$l['add_new_split_reply'] = "Ayrılmış Konuya Yanıt Ekle";
+$l['add_new_split_reply_desc'] = "Yanıt bırakmak istemiyorsanız boş bırakın.";
+$l['split_reply_subject'] = "Cevap Konusu";
+$l['split_reply_subject_desc'] = "Yalnızca bir yanıt verilirse kullanılır.";
+$l['save_post_tool'] = "Gönderi Aracını Kaydet";
 
-$l['send_private_message'] = 'Send Private Message';
-$l['private_message_message'] = 'Message';
-$l['private_message_message_desc'] = 'Message to send to the author of the thread. Leave empty to disable this feature.';
-$l['private_message_subject'] = 'Subject';
-$l['private_message_subject_desc'] = 'Enter the subject of the Private Message.';
+$l['send_private_message'] = 'Özel Mesaj Gönder';
+$l['private_message_message'] = 'Mesaj';
+$l['private_message_message_desc'] = 'Konu/Gönderi yazarına gönderilecek özel mesaj. Bu özelliği devre dışı bırakmak için boş bırakın.';
+$l['private_message_subject'] = 'Konu';
+$l['private_message_subject_desc'] = 'Özel Mesajın konusunu girin.';
 
-$l['error_missing_title'] = "Please enter a name for this tool.";
-$l['error_missing_description'] = "Please enter a short description for this tool.";
-$l['error_no_forums_selected'] = "Please select the forums in which this tool will be available.";
-$l['error_no_groups_selected'] = "Please select the groups to which this tool will be available.";
-$l['error_forum_is_category'] = "You can't pick a category-type forum as a destination forum.";
+$l['error_missing_title'] = "Lütfen bu araç için bir başlık girin.";
+$l['error_missing_description'] = "Lütfen bu araç için kısa bir açıklama girin.";
+$l['error_no_forums_selected'] = "Lütfen bu aracın kullanılabileceği forumları seçin.";
+$l['error_no_groups_selected'] = "Lütfen bu aracın kullanılabileceği kullanıcı gruplarını seçin.";
+$l['error_forum_is_category'] = "Hedef forum olarak kategori türünde bir forum seçemezsiniz.";

@@ -1,55 +1,61 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 01.12.2024 (v1.8.38)
  */
+$l['attachment_types'] = "Ek Dosya Türleri";
+$l['attachment_types_desc'] = "Burada, kullanıcıların gönderilere hangi tür dosyaları ekleyebileceğini tanımlayan ek dosya türleri oluşturabilir ve yönetebilirsiniz. <strong>Not:</strong> Bir ek dosya türünün devre dışı bırakılması, bu türdeki mevcut ekleri erişilemez hale getirecektir.";
+$l['add_new_attachment_type'] = "Yeni Ek Dosya Türü Ekle";
+$l['add_attachment_type'] = "Ek Dosya Türünü Ekle";
+$l['add_attachment_type_desc'] = "Yeni bir ek dosya türü eklemek, üyelerinizin bu türdeki dosyaları gönderilerine eklemelerine olanak tanıyacaktır. Uzantıyı, MIME türünü, maksimum dosya boyutunu kontrol etme ve her ek dosya türü için küçük bir simge gösterme olanağına sahipsiniz.";
+$l['edit_attachment_type'] = "Ek Dosya Türünü Düzenle";
+$l['edit_attachment_type_desc'] = "Uzantıyı, MIME türünü, maksimum dosya boyutunu kontrol etme ve bu ek dosya türü için küçük bir simge gösterme olanağına sahipsiniz.";
 
-$l['attachment_types'] = "Attachment Types";
-$l['attachment_types_desc'] = "Here you can create and manage attachment types which define which types of files users can attach to posts. Note: Disabling an attachment type will make existing attachments of this type inaccessible.";
-$l['add_new_attachment_type'] = "Add New Attachment Type";
-$l['add_attachment_type'] = "Add Attachment Type";
-$l['add_attachment_type_desc'] = "Adding a new attachment type will allow members to attach files of this type to their posts. You have the ability to control the extension, MIME type, maximum size and show a small icon for each attachment type.";
-$l['edit_attachment_type'] = "Edit Attachment Type";
-$l['edit_attachment_type_desc'] = "You have the ability to control the extension, MIME type, maximum size and show a small MIME type for this attachment type.";
+$l['extension'] = "Uzantı";
+$l['maximum_size'] = "Maksimum Boyut";
+$l['no_attachment_types'] = "Şu anda forumunuzda herhangi bir ek dosya türü bulunmamaktadır.";
 
-$l['extension'] = "Extension";
-$l['maximum_size'] = "Maximum Size";
-$l['no_attachment_types'] = "There are no attachment types on your forum at this time.";
+$l['name'] = "Adı";
+$l['name_desc'] = "Ek dosya türünün adını girin.";
+$l['file_extension'] = "Dosya Uzantısı";
+$l['file_extension_desc'] = "Yüklemelere izin vermek istediğiniz dosya uzantısını buraya girin (Uzantıdan önceki noktayı eklemeyin) (Örnek: txt ya da rar)";
+$l['mime_type'] = "MIME Türü";
+$l['mime_type_desc'] = "Bu türdeki dosyaları indirirken sunucu tarafından istenen MIME türünü girin. MIME türlerini bilmiyorsanız (<a href=\"http://www.freeformatter.com/mime-types-list.html\">Tam MIME Listesi</a>'ne bakabilirsiniz.)";
+$l['maximum_file_size'] = "Maksimum Dosya Boyutu (Kilobayt)";
+$l['maximum_file_size_desc'] = "Bu ek dosya türündeki yüklemeler için Kilobayt cinsinden maksimum dosya boyutunu belirtin. (Örnek: 1 MB = 1024 KB)";
+$l['limit_intro'] = "Lütfen maksimum dosya boyutunun aşağıdaki PHP limitlerinin altında olduğundan emin olun:";
+$l['limit_post_max_size'] = "Maksimum Gönderi Boyutu: <strong>{1}</strong>";
+$l['limit_upload_max_filesize'] = "Yüklenebilir Maksimum Dosya Boyutu: <strong>{1}</strong>";
+$l['attachment_icon'] = "Ek Dosya Simgesi";
+$l['attachment_icon_desc'] = "Bu tür ekler için küçük bir ek dosya simgesi göstermek istiyorsanız, buraya simgenin tam yolunu girin. Ayrıca, {theme} kodu ile aktif olan temaya göre ek dosya simgeleri belirleyebilirsiniz. Temanızın görsel dizini nere ise oraya ek dosya simgelerini yüklemeniz gerekir.";
+$l['save_attachment_type'] = "Ek Dosya Türünü Kaydet";
 
-$l['name'] = "Name";
-$l['name_desc'] = "Enter the name of the attachment type.";
-$l['file_extension'] = "File Extension";
-$l['file_extension_desc'] = "Enter the file extension you wish to allow uploads for here (Do not include the period before the extension) (Example: txt)";
-$l['mime_type'] = "MIME Type";
-$l['mime_type_desc'] = "Enter the MIME type sent by the server when downloading files of this type (<a href=\"http://www.freeformatter.com/mime-types-list.html\">See a list here</a>)";
-$l['maximum_file_size'] = "Maximum File Size (Kilobytes)";
-$l['maximum_file_size_desc'] = "The maximum file size for uploads of this attachment type in Kilobytes (1 MB = 1024 KB)";
-$l['limit_intro'] = "Please ensure the maximum file size is below the smallest of the following PHP limits:";
-$l['limit_post_max_size'] = "Max Post Size: {1}";
-$l['limit_upload_max_filesize'] = "Upload Max File Size: {1}";
-$l['attachment_icon'] = "Attachment Icon";
-$l['attachment_icon_desc'] = "If you wish to show a small attachment icon for attachments of this type then enter the path to it here. {theme} will be replaced by the image directory for the viewers theme allowing you to specify per-theme attachment icons.";
-$l['save_attachment_type'] = "Kaydet Attachment Type";
+$l['error_invalid_attachment_type'] = "Geçersiz bir ek dosya türü seçtiniz.";
+$l['error_missing_mime_type'] = "Bu ek dosya türü için bir MIME türü girmediniz.";
+$l['error_missing_extension'] = "Bu ek dosya türü için bir dosya uzantısı girmediniz.";
 
-$l['error_invalid_attachment_type'] = "You have selected an invalid attachment type.";
-$l['error_missing_mime_type'] = "You did not enter a MIME type for this attachment type";
-$l['error_missing_extension'] = "You did not enter a file extension for this attachment type";
+$l['success_attachment_type_created'] = "Ek dosya türü başarıyla oluşturuldu.";
+$l['success_attachment_type_updated'] = "Ek dosya türü başarıyla güncellendi.";
+$l['success_attachment_type_deleted'] = "Ek dosya türü başarıyla silindi.";
 
-$l['success_attachment_type_created'] = "The attachment type has been created successfully.";
-$l['success_attachment_type_updated'] = "The attachment type has been updated successfully.";
-$l['success_attachment_type_deleted'] = "The attachment type has been deleted successfully.";
+$l['confirm_attachment_type_deletion'] = "Bu ek dosya türünü silmek istediğinizden emin misiniz?";
 
-$l['confirm_attachment_type_deletion'] = "Are you sure you wish to delete this attachment type?";
+$l['success_activated_attachment_type'] = 'Seçilen ek dosya türü başarıyla etkinleştirildi.';
+$l['success_deactivated_attachment_type'] = 'Seçilen ek dosya türü başarıyla devre dışı bırakıldı.';
 
-$l['success_activated_attachment_type'] = 'The selected attachment type has been activated successfully.';
-$l['success_deactivated_attachment_type'] = 'The selected attachment type has been deactivated successfully.';
+$l['enabled'] = "Etkin mi?";
+$l['forcedownload'] = "İndirmeye Zorla";
+$l['forcedownload_desc'] = "Bunu etkinleştirmek, ek dosyanın her zaman bir dosya olarak indirilmesini zorlayacaktır.";
+$l['avatar_file'] = 'Avatar Dosyası';
+$l['avatar_file_desc'] = 'Bu ek dosya türünün avatarlar için kullanılmasına izin vermek istiyor musunuz?';
 
-$l['enabled'] = "Enabled?";
-$l['forcedownload'] = "Force Download";
-$l['forcedownload_desc'] = "Enabling this will always force the attachment to be downloaded as a file.";
-$l['avatar_file'] = 'Avatar File';
-$l['avatar_file_desc'] = 'Do you want to allow this attachment type to be used for avatars?';
-
-$l['available_to_groups'] = 'Available to groups';
-$l['available_in_forums'] = 'Available in forums';
+$l['available_to_groups'] = 'İzin Verilen Gruplar';
+$l['available_in_forums'] = 'İzin Verilen Forumlar';

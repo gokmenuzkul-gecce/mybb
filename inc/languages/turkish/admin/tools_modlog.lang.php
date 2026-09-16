@@ -1,51 +1,57 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
 
-$l['mod_logs'] = "Moderator Logs";
-$l['mod_logs_desc'] = "Here you can view, prune, and search the moderator logs. These logs contain the actions any user may take (deletion of their own posts/threads) and all other actions by moderators.";
-$l['prune_mod_logs'] = "Prune Moderator Logs";
-$l['prune_mod_logs_desc'] = "Here you can prune the moderator logs matching a specified criteria.";
+$l['mod_logs'] = "Moderatör Kayıtları";
+$l['mod_logs_desc'] = "Burada moderatör kayıtlarını görüntüleyebilir, temizleyebilir ve arayabilirsiniz. Bu kayıtlar, herhangi bir kullanıcının gerçekleştirebileceği eylemleri (kendi gönderilerini/konularını silme) ve moderatörler tarafından gerçekleştirilen diğer tüm eylemleri içerir.";
+$l['prune_mod_logs'] = "Moderatör Kayıtlarını Temizle";
+$l['prune_mod_logs_desc'] = "Burada, belirli bir kriterle eşleşen moderatör kayıtlarını temizleyebilirsiniz.";
 
-$l['no_modlogs'] = "There are no log entries with the selected criteria.";
+$l['no_modlogs'] = "Seçilen kriterlere sahip hiçbir kayıt yok.";
 
-$l['username'] = "Username";
-$l['na_deleted'] = "N/A - Been Sild";
-$l['date'] = "Date";
-$l['action'] = "Action";
-$l['information'] = "Information";
-$l['ipaddress'] = "IP Address";
+$l['username'] = "Kullanıcı Adı";
+$l['na_deleted'] = "N/A - Silindi";
+$l['date'] = "Tarih";
+$l['action'] = "Eylem";
+$l['information'] = "Bilgi";
+$l['ipaddress'] = "IP Adresi";
 
 $l['forum'] = "Forum:";
-$l['thread'] = "Thread:";
-$l['post'] = "Post:";
-$l['user_info'] = "User:";
-$l['announcement'] = "Announcement:";
+$l['thread'] = "Konu:";
+$l['post'] = "Gönderi:";
+$l['user_info'] = "Kullanıcı:";
+$l['announcement'] = "Duyuru:";
 
-$l['filter_moderator_logs'] = "Filter Moderator Logs";
-$l['forum_moderator'] = "Forum Moderator:";
-$l['sort_by'] = "Sort By:";
-$l['results_per_page'] = "Results Per Page:";
-$l['all_moderators'] = "All Moderators";
-$l['older_than'] = "Older than ";
+$l['filter_moderator_logs'] = "Moderatör Kayıtlarını Filtrele";
+$l['forum_moderator'] = "Forum Moderatörü:";
+$l['sort_by'] = "Sırala:";
+$l['results_per_page'] = "Sayfa Başına Sonuçlar:";
+$l['all_moderators'] = "Tüm Moderatörler";
+$l['older_than'] = "Daha eski ";
 
-$l['forum_name'] = "Forum Name";
-$l['thread_subject'] = "Thread Subject";
+$l['forum_name'] = "Forum Adı";
+$l['thread_subject'] = "Konu Başlığı";
 
-$l['asc'] = "Ascending";
-$l['desc'] = "Descending";
+$l['asc'] = "Artan";
+$l['desc'] = "Azalan";
 
-$l['in'] = "in";
-$l['order'] = "order";
-$l['days'] = "days";
+$l['in'] = "-";
+$l['order'] = "sırala";
+$l['days'] = "gün";
 
-$l['prune_moderator_logs'] = "Prune Moderator Logs";
-$l['date_range'] = "Date range:";
+$l['prune_moderator_logs'] = "Moderatör Kayıtlarını Temizle";
+$l['date_range'] = "Tarih Aralığı:";
 
-$l['success_pruned_mod_logs'] = "The moderator logs have been pruned successfully.";
-$l['note_logs_locked'] = "For security reasons, logs less than 24 hours old cannot be pruned.";
+$l['success_pruned_mod_logs'] = "Moderatör kayıtları başarıyla temizlendi.";
+$l['note_logs_locked'] = "Güvenlik nedeniyle, 24 saatten daha eski moderatör kayıtlarını temizlenemez.";
 

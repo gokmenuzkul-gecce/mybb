@@ -1,179 +1,186 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 11.12.2024 (v1.8.38)
  */
 
-$l['template_sets'] = "Template Sets";
-$l['template_set'] = "Template Set";
-$l['templates'] = "{1} Templates";
+$l['template_sets'] = "Şablon Setleri";
+$l['template_set'] = "Şablon Setleri";
+$l['templates'] = "{1} Şablonları";
 
-$l['manage_template_sets'] = "Manage Template Sets";
-$l['manage_template_sets_desc'] = "Here you can manage template sets, view the templates using these sets, and begin customizing your board's layout.";
-$l['add_set'] = "Add Set";
-$l['add_set_desc'] = "Here you can create a new template set. A new template set creates a copy of the master MyBB templates and allows you to edit them without interfering with changes in any other template sets you may already have";
-$l['add_template'] = "Add Template";
-$l['add_template_desc'] = "Here you can create a new template.";
-$l['add_template_group'] = "Add Template Group";
-$l['add_template_group_desc'] = "Add a template group to collate templates together.";
-$l['search_replace'] = "Search/Replace";
-$l['search_replace_desc'] = "This tool will allow you to search for template titles or templates that contain certain text, and optionally replace it with another text automatically.";
-$l['find_updated'] = "Find Güncelled Templates";
-$l['find_updated_desc'] = "Allows you to find changed templates in new versions of MyBB so you can properly apply the changes.";
-$l['edit_template'] = "Edit Template";
-$l['editing_template'] = "Editing Template: {1}";
-$l['edit_template_desc'] = "Here you can edit the template's code, title or set.";
-$l['edit_set'] = "Edit Set";
-$l['edit_set_desc'] = "Here you can edit the properties for this template set.";
-$l['manage_templates'] = "Manage Templates";
-$l['manage_templates_desc'] = "Here you can manage the templates for this template set. To edit a template click on it's link or select \"Full Edit\" to edit all properties on a separate page.";
-$l['diff_report'] = "Diff Report";
-$l['diff_report_desc'] = "Performs a difference analysis between the templates and shows you exactly what changes have been made between your customized copy and the latest master copy.";
+$l['manage_template_sets'] = "Şablon Setlerini Yönet";
+$l['manage_template_sets_desc'] = "Burada şablon setlerini yönetebilir, bu setleri kullanan şablonları görüntüleyebilir ve forumunuzun görünüşünü özelleştirmeye başlayabilirsiniz.";
+$l['add_set'] = "Set Ekle";
+$l['add_set_desc'] = "Burada yeni bir şablon seti oluşturabilirsiniz. Yeni bir şablon seti, ana MyBB şablonlarının bir kopyasını oluşturur ve halihazırda sahip olabileceğiniz diğer şablon setlerindeki değişikliklere müdahale etmeden bunları düzenlemenize olanak tanır.";
+$l['add_template'] = "Şablon Ekle";
+$l['add_template_desc'] = "Burada yeni bir şablon oluşturabilirsiniz.";
+$l['add_template_group'] = "Şablon Grubu Ekle";
+$l['add_template_group_desc'] = "Şablonları bir araya getirmek için bir şablon grubu ekleyin. Böylelikle tek bir grup içerisinde birden fazla şabonu görebilir ve yönetebilirsiniz.";
+$l['search_replace'] = "Bul/Değiştir";
+$l['search_replace_desc'] = "Bu araç, belirli bir metin içeren şablon başlıklarını veya şablonları aramanıza ve isteğe bağlı olarak başka bir metinle değiştirmenize olanak tanır.";
+$l['find_updated'] = "Güncellenmiş Şablonları Bul";
+$l['find_updated_desc'] = "MyBB'nin yeni sürümlerinde değiştirilen şablonları bulmanızı sağlar, böylece temanıza ait şablonlarda ilgili değişiklikleri düzgün bir şekilde uygulayabilirsiniz.";
+$l['edit_template'] = "Şablonu Düzenle";
+$l['editing_template'] = "Düzenlenen Şablon: {1}";
+$l['edit_template_desc'] = "Burada şablonun kodunu, başlığını veya setini düzenleyebilirsiniz.";
+$l['edit_set'] = "Seti Düzenle";
+$l['edit_set_desc'] = "Burada bu şablon setinin özelliklerini düzenleyebilirsiniz.";
+$l['manage_templates'] = "Şablonları Yönet";
+$l['manage_templates_desc'] = "Burada bu şablon seti için şablonları yönetebilirsiniz. Bir şablonu düzenlemek için bağlantısına tıklayın veya tüm özellikleri ayrı bir sayfada düzenlemek için \"Tam Düzenle\" seçeneğini seçin.";
+$l['diff_report'] = "Farkları Göster";
+$l['diff_report_desc'] = "Şablonlar arasında bir fark analizi gerçekleştirir ve özelleştirilmiş kopyanız ile en son ana kopya arasında tam olarak hangi değişikliklerin yapıldığını gösterir.";
 
-$l['title'] = "Title";
+$l['title'] = "Başlık";
 $l['save'] = "Kaydet";
-$l['search_for'] = "Search For";
-$l['replace_with'] = "Replace With (Optional)";
-$l['reset'] = "Reset";
-$l['find_templates'] = "Find Templates";
-$l['find_and_replace'] = "Find and Replace";
-$l['search_template_names'] = "Search Template Titles";
-$l['ungrouped_templates'] = "Ungrouped Templates";
+$l['search_for'] = "Ara & Bul";
+$l['replace_with'] = "Şununla Değiştir (İsteğe Bağlı)";
+$l['reset'] = "Sıfırla";
+$l['find_templates'] = "Şablonları Bul";
+$l['find_and_replace'] = "Bul ve Değiştir";
+$l['search_template_names'] = "Şablon Başlıklarını Ara";
+$l['ungrouped_templates'] = "<span style=\"color:#AF1740;font-weight:bold;\">[Gruplandırılmamış] » </span>Şablonlar";
 
-$l['search_noneset'] = "You did not enter a search string.";
-$l['search_results'] = "Template Search Results";
-$l['search_header'] = "Searching For \"{1}\" in {2}";
-$l['search_updated'] = "Güncelled {1}";
-$l['search_found'] = "Found in {1}";
-$l['search_created_custom'] = "Created custom template for {1}";
-$l['search_edit'] = "edit";
-$l['search_change_original'] = "change original";
-$l['search_noresults'] = "No templates were found containing the string '<strong>{1}</strong>'";
-$l['search_noresults_title'] = "No templates were found with the title '<strong>{1}</strong>'";
-$l['default_templates'] = "Default Templates";
+$l['search_noneset'] = "Bir arama terimi girmediniz.";
+$l['search_results'] = "Şablon Arama Sonuçları";
+$l['search_header'] = "{2} içinde \"{1}\" aranıyor...";
+$l['search_updated'] = "{1} Güncellendi";
+$l['search_found'] = "{1} İçinde  Bulundu.";
+$l['search_created_custom'] = "{1} için özel şablon oluşturuldu.";
+$l['search_edit'] = "Düzenle";
+$l['search_change_original'] = "Orijinali ile Değiştir";
+$l['search_noresults'] = "'<strong>{1}</strong>' dizesini içeren herhangi bir şablon bulunamadı.";
+$l['search_noresults_title'] = "'<strong>{1}</strong>' başlığına sahip herhangi bir şablon bulunamadı";
+$l['default_templates'] = "Varsayılan Şablonlar";
 
-$l['edit_template_breadcrumb'] = "Edit Template: ";
+$l['edit_template_breadcrumb'] = "Şablonu Düzenle: ";
 
-$l['global_templates'] = "Global Templates";
-$l['master_templates'] = "Master Templates";
+$l['global_templates'] = "Genel Şablonlar";
+$l['master_templates'] = "Ana Şablonlar";
 
-$l['not_used_by_any_themes'] = "Not used by any themes";
-$l['used_by'] = "Used by: ";
-$l['used_by_all_themes'] = "Used by all themes";
+$l['not_used_by_any_themes'] = "Herhangi bir tema tarafından kullanılmıyor.";
+$l['used_by'] = "Kullanan Tema: ";
+$l['used_by_all_themes'] = "Tüm Temalar Tarafından Kullanılıyor";
 
-$l['expand_templates'] = "Expand Templates";
-$l['edit_template_set'] = "Edit Template Set";
-$l['delete_template_set'] = "Sil Template Set";
-$l['empty_template_set'] = "<em>There are no templates in this set.</em>";
+$l['expand_templates'] = "Şablonları Genişlet";
+$l['edit_template_set'] = "Şablon Setini Düzenle";
+$l['delete_template_set'] = "Şablon Setini Sil";
+$l['empty_template_set'] = "<em>Bu sette şablon bulunmamaktadır.</em>";
 
-$l['inline_edit'] = "Inline Edit";
-$l['full_edit'] = "Full Edit";
-$l['revert_to_orig'] = "Revert to Original";
-$l['delete_template'] = "Sil Template";
-$l['edit_in'] = "Edit in";
+$l['inline_edit'] = "Satır İçi Düzenle";
+$l['full_edit'] = "Tam Düzenle";
+$l['revert_to_orig'] = "Orijinaline Geri Dön";
+$l['delete_template'] = "Şablonu Sil";
+$l['edit_in'] = "Düzenle";
 
-$l['group_calendar'] = "Calendar";
-$l['group_forumdisplay'] = "Forum Display";
-$l['group_index'] = "Index Page";
-$l['group_error'] = "Error Message";
+$l['group_calendar'] = "Takvim";
+$l['group_forumdisplay'] = "[4] » Forum Görüntüleme [forumdisplay]";
+$l['group_index'] = "[0] » Ana Sayfa [İndex]";
+$l['group_error'] = "Hata Mesajları";
 $l['group_memberlist'] = "Üye Listesi";
-$l['group_multipage'] = "Multipage Pagination";
-$l['group_private'] = "Private Messaging";
-$l['group_portal'] = "Portal";
-$l['group_postbit'] = "Post Bit";
-$l['group_posticons'] = "Post Icon";
-$l['group_showthread'] = "Show Thread";
-$l['group_usercp'] = "User Yönetim Paneli";
-$l['group_online'] = "Who's Online";
-$l['group_forumbit'] = "Forum Bit";
-$l['group_editpost'] = "Edit Post";
-$l['group_forumjump'] = "Forum Jump";
-$l['group_moderation'] = "Moderation";
-$l['group_nav'] = "Navigation";
-$l['group_search'] = "Search";
-$l['group_showteam'] = "Show Forum Team";
-$l['group_reputation'] = "Reputation";
-$l['group_newthread'] = "New Thread";
-$l['group_newreply'] = "New Reply";
-$l['group_member'] = "Member";
-$l['group_warning'] = "Warning System";
-$l['group_global'] = "Global";
-$l['group_header'] = "Header";
-$l['group_managegroup'] = "Manage Group";
-$l['group_misc'] = "Miscellaneous";
-$l['group_modcp'] = "Moderator Yönetim Paneli";
-$l['group_announcement'] = "Announcement";
-$l['group_polls'] = "Poll";
-$l['group_post'] = "Post";
-$l['group_printthread'] = "Print Thread";
-$l['group_report'] = "Report";
-$l['group_smilieinsert'] = "Smilie Inserter";
-$l['group_stats'] = "Statistics";
+$l['group_multipage'] = "Sayfalandırma [multipages]";
+$l['group_private'] = "Özel Mesajlaşma";
+$l['group_portal'] = "[3] » Portal";
+$l['group_postbit'] = "[6] » Post Bit";
+$l['group_posticons'] = "Başlık Simgesi [posticon]";
+$l['group_showthread'] = "[7] » Konu Gösterimi [showthread]";
+$l['group_usercp'] = "Kullanıcı Kontrol Paneli";
+$l['group_online'] = "Kimler Çevrimiçi";
+$l['group_forumbit'] = "[5] » Forum Bit";
+$l['group_editpost'] = "Gönderi Düzenleme";
+$l['group_forumjump'] = "Forum Atlama";
+$l['group_moderation'] = "Moderasyon";
+$l['group_nav'] = "Navigasyon";
+$l['group_search'] = "Arama";
+$l['group_showteam'] = "Forum Yöneticileri [showteam]";
+$l['group_reputation'] = "Rep Puanı";
+$l['group_newthread'] = "Yeni Konu";
+$l['group_newreply'] = "Yeni Yanıt";
+$l['group_member'] = "[8] » Üye Profili";
+$l['group_warning'] = "Uyarı Sistemi";
+$l['group_global'] = "[9] » Global";
+$l['group_header'] = "[1] » Üst Kısım [Header]";
+$l['group_managegroup'] = "Grub Yönetimi";
+$l['group_misc'] = "Çeşitli [miscs]";
+$l['group_modcp'] = "Moderatör Kontrol Paneli";
+$l['group_announcement'] = "Duyuru";
+$l['group_polls'] = "Anket";
+$l['group_post'] = "Ek Dosya & Konu Ön Ek";
+$l['group_printthread'] = "Konu Yazdırma";
+$l['group_report'] = "Rapor Et";
+$l['group_smilieinsert'] = "İfade Ekleme";
+$l['group_stats'] = "İstatistikler";
 $l['group_xmlhttp'] = "XMLHTTP";
-$l['group_footer'] = "Footer";
+$l['group_footer'] = "[2] » Alt Kısım [Footer]";
 $l['group_video'] = "Video MyCode";
-$l['group_sendthread'] = "Send Thread";
+$l['group_sendthread'] = "Konuyu Arkadaşa Gönder";
 $l['group_mycode'] = "MyCode";
 
-$l['expand'] = "Expand";
-$l['collapse'] = "Collapse";
+$l['expand'] = "Genişlet";
+$l['collapse'] = "Daralt";
 
-$l['save_continue'] = "Kaydet and Continue Editing";
-$l['save_close'] = "Kaydet and Return to Listing";
+$l['save_continue'] = "Kaydet ve Düzenlemeye Devam Et";
+$l['save_close'] = "Kaydet ve Şablon Listesine Dön";
 
-$l['template_name'] = "Template Name";
-$l['template_name_desc'] = "Name of the template. If you change this on the default template, it will save the template as a custom template under the new name.";
-$l['template_set_desc'] = "Which template set should this template be in?";
+$l['template_name'] = "Şablon Adı";
+$l['template_name_desc'] = "Şablonun adı. Varsayılan şablonda bunu değiştirirseniz, şablon yeni ad altında özel bir şablon olarak kaydedilir.";
+$l['template_set_desc'] = "Bu şablon hangi şablon setine bağlı olmalı?";
 
-$l['template_group_prefix'] = "Template Group Prefix";
-$l['template_group_prefix_desc'] = "The prefix name to group templates. This must not already exist. For example, to group templates <em>hello_world</em>, <em>hello_foobar</em> and <em>hello_foo</em>, enter <strong>hello</strong> here.";
-$l['template_group_title'] = "Template Group Title";
-$l['template_group_title_desc'] = "The title of the prefix group. This will be shown in the templates list. For example, for our <em>hello</em> templates, enter <strong>Hello</strong> here.";
+$l['template_group_prefix'] = "Şablon Grubu Ön Eki";
+$l['template_group_prefix_desc'] = "Şablonları gruplamak için gereken ön ek. Bu grup ön eki daha önce kullanılmamış olmalıdır. Örneğin, mybbpro_yenişablon, mybbpro_ikincisablon, mybbpro_testşablonu gibi birden fazla şablonunuz var hepsi \"mybbpro\" ön ekiyle başlıyor. Bu şablonları tek bir şablon grubu olarak bir araya getirmek için aşağıda ki alana \"mybbpro\" yazmanız yeterli.<br /> Böylelikle \"mybbpro\" grubu altında kendinize özel tema şablonları oluşturabilir ve tek bir yerden yönetebilirsiniz. <strong>Özel karakterler ve rakamlar haricinde</strong> Büyük/Küçük, Türkçe karakterler kullanabilirsiniz.";
+$l['template_group_title'] = "Şablon Grubu Başlığı";
+$l['template_group_title_desc'] = "Şablon Grubunun başlığını buraya giriniz. Bu, şablonlar listesinde gösterilecektir. Örneğin, <em>MyBB Pro Şablonları</em> olarak şablon listesine gözükmesi için bu kısma <em>MyBB Pro</em> şeklinde bir isim girebiliriz.<br /> Bu kısımda gireceğiniz başlık benzersiz ve daha önce kullanılmamış olmalıdır.<strong>Özel karakterler ve rakamlar haricinde</strong> Büyük/Küçük, Türkçe karakterler kullanabilirsiniz.";
 
-$l['edit_template_group'] = "Edit Template Group";
-$l['editing_template_group'] = "Editing Template Group {1}";
-$l['delete_template_group'] = "Sil Template Group";
-$l['save_template_group'] = "Kaydet Template Group";
+$l['edit_template_group'] = "Şablon Grubunu Düzenle";
+$l['editing_template_group'] = "{1} Şablon Grubu Düzenleniyor";
+$l['delete_template_group'] = "Şablon Grubunu Sil";
+$l['save_template_group'] = "Şablon Grubunu Kaydet";
 
-$l['templates_the_same'] = "The two templates you've selected are both the same and cannot be compared.";
-$l['master_updated_ins'] = "Changes that have been made between your previous version and this one are highlighted like this.";
-$l['master_updated_del'] = "Any customizations you've made to your templates (the old ones) are highlighted like this.";
-$l['template_diff_analysis'] = "Template Difference Analysis";
-$l['search_names_header'] = "Searching template names containing \"{1}\"";
+$l['templates_the_same'] = "Seçtiğiniz iki şablonun ikisi de aynıdır ve karşılaştırılamaz.";
+$l['master_updated_ins'] = "Önceki sürümünüz ile bu sürüm arasında yapılan değişiklikler şu şekilde vurgulanır.";
+$l['master_updated_del'] = "Şablonlarınızda yaptığınız tüm özelleştirmeler (eski olanlar) bu şekilde vurgulanır.";
+$l['template_diff_analysis'] = "Şablon Fark Analizi";
+$l['search_names_header'] = "\"{1}\" içeren şablon adları aranıyor";
 
-$l['updated_template_welcome1'] = "Edit - Allows you to edit the current template for this template set to incorporate updates made between the versions.";
-$l['updated_template_welcome2'] = "Revert - Will revert the customized template back to the master revision, however you'll lose any custom changes you have made.";
-$l['updated_template_welcome3'] = "Diff - Performs a difference analysis between the templates and shows you exactly what changes have been made between your customized copy and the latest master copy.";
+$l['updated_template_welcome1'] = "Düzenle - Sürümler arasında yapılan güncellemeleri dahil etmek için bu şablon seti için geçerli şablonu düzenlemenizi sağlar.";
+$l['updated_template_welcome2'] = "Orijinaline Geri Dön - Özelleştirilmiş şablonu ilk haline, varsayılan haline geri döndürür, ancak yaptığınız tüm özel değişiklikleri kaybedersiniz.";
+$l['updated_template_welcome3'] = "Farkları Göster - Şablonlar arasında bir fark analizi gerçekleştirir ve özelleştirilmiş kopyanız ile en son ana kopya arasında tam olarak hangi değişikliklerin yapıldığını gösterir.";
 
-$l['no_global_templates'] = "There are currently no global templates.";
-$l['no_updated_templates'] = "There are currently no templates which have been updated since you last upgraded.";
+$l['no_global_templates'] = "Şu anda genel şablon bulunmamaktadır.";
+$l['no_updated_templates'] = "Son yükseltmenizden bu yana güncellenmiş herhangi bir şablon bulunmamaktadır.";
 
-$l['confirm_template_set_deletion'] = "Are you sure you want to delete this template set?";
-$l['confirm_template_group_delete'] = "Are you sure you want to delete this template group? This action does not remove the templates in the group.";
-$l['confirm_template_deletion'] = "Are you sure you want to delete this template?";
-$l['confirm_template_revertion'] = "Are you sure you want to revert this template?";
+$l['confirm_template_set_deletion'] = "Bu şablon setini silmek istediğinizden emin misiniz?";
+$l['confirm_template_group_delete'] = "Bu şablon grubunu silmek istediğinizden emin misiniz? Bu eylem gruptaki tema şablonlarını kaldırmaz.";
+$l['confirm_template_deletion'] = "Bu şablonu silmek istediğinizden emin misiniz?";
+$l['confirm_template_revertion'] = "Bu şablonu orijinaline geri döndürmek istediğinizden emin misiniz?";
 
-$l['error_security_problem'] = "A potential security issue was found in the template. Please review your changes or contact the MyBB Group for support.";
-$l['error_missing_input'] = "Please make sure you have all the input required to edit this template (tid and sid)";
-$l['error_already_exists'] = "The template title is already in use. Please use a different title.";
-$l['error_invalid_template'] = "Please select a valid template.";
-$l['error_missing_set_title'] = "Please select a template set title.";
-$l['error_invalid_input'] = "Please make sure you have the correct template set ID.";
-$l['error_invalid_set'] = "Please select a valid template set.";
-$l['error_invalid_template_set'] = "Invalid template set selected.";
-$l['error_themes_attached_template_set'] = "This template set cannot be deleted as there are themes attached to this template set.";
-$l['error_missing_group_prefix'] = "Please enter a prefix for the template group.";
-$l['error_invalid_group_title'] = "As underscores (_) are used as delimiter those are forbidden in template group prefixes. Please select another prefix.";
-$l['error_missing_group_title'] = "Please enter a title for the template group.";
-$l['error_duplicate_group_prefix'] = "A template group already exists with this prefix. Please enter another prefix.";
-$l['error_missing_template_group'] = "The template group could not be found.";
-$l['error_default_template_group'] = "You cannot edit or remove a default template group.";
+$l['error_security_problem'] = "Şablonda potansiyel bir güvenlik sorunu bulundu. Lütfen değişikliklerinizi gözden geçirin veya destek için <a href=\"https://mybb.pro\" target=\"_blank\" rel=\"noopener\">MyBB.Pro Türkçe Destek Forumu</a> ile iletişime geçin.";
+$l['error_missing_input'] = "Lütfen bu şablonu düzenlemek için gereken tüm girdilere sahip olduğunuzdan emin olun (tid ve sid)";
+$l['error_already_exists'] = "Şablon başlığı zaten kullanımda. Lütfen farklı bir başlık kullanın.";
+$l['error_invalid_template'] = "Lütfen geçerli bir şablon seçin.";
+$l['error_missing_set_title'] = "Lütfen bir şablon seti başlığı seçin.";
+$l['error_invalid_input'] = "Lütfen doğru şablon seti kimliğine (ID) sahip olduğunuzdan emin olun.";
+$l['error_invalid_set'] = "Lütfen geçerli bir şablon seti seçin.";
+$l['error_invalid_template_set'] = "Geçersiz şablon seti seçildi.";
+$l['error_themes_attached_template_set'] = "Bu şablon setine bağlı temalar olduğu için bu şablon seti silinemez.";
+$l['error_missing_group_prefix'] = "Lütfen şablon grubu için bir önek girin.";
+$l['error_invalid_group_title'] = "Ayırıcı olarak alt çizgi (_) kullanıldığından, şablon grubu ön eklerinde bu tarz özel karakterler yasaktır. Lütfen başka bir ön ek seçin.";
+$l['error_missing_group_title'] = "Lütfen şablon grubu için bir başlık girin.";
+$l['error_duplicate_group_prefix'] = "Bu ön eke sahip bir şablon grubu zaten mevcuttur. Lütfen başka bir ön ek girin.";
+$l['error_missing_template_group'] = "Şablon grubu bulunamadı.";
+$l['error_default_template_group'] = "Varsayılan bir şablon grubunu düzenleyemez veya kaldıramazsınız.";
 
-$l['success_template_saved'] = "The selected template has successfully been saved.";
-$l['success_template_deleted'] = "The selected template has successfully been deleted.";
-$l['success_template_reverted'] = "The selected template has successfully been reverted.";
-$l['success_template_set_saved'] = "The selected template set has successfully been saved.";
-$l['success_template_set_deleted'] = "The selected template set has successfully been deleted.";
-$l['success_template_group_saved'] = "The selected template group has successfully been saved.";
-$l['success_template_group_deleted'] = "The selected template group has successfully been deleted.";
+$l['success_template_saved'] = "Seçilen şablon başarıyla kaydedildi.";
+$l['success_template_deleted'] = "Seçilen şablon başarıyla silindi.";
+$l['success_template_reverted'] = "Seçilen şablon başarıyla orijinaline geri döndürüldü.";
+$l['success_template_set_saved'] = "Seçilen şablon seti başarıyla kaydedildi.";
+$l['success_template_set_deleted'] = "Seçilen şablon seti başarıyla silindi.";
+$l['success_template_group_saved'] = "Seçilen şablon grubu başarıyla kaydedildi.";
+$l['success_template_group_deleted'] = "Seçilen şablon grubu başarıyla silindi.";

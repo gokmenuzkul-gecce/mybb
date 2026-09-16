@@ -1,64 +1,70 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['nav_group_management'] = "{1} Group Management";
-$l['nav_join_requests'] = "Join Requests";
-$l['nav_group_memberships'] = "Group Memberships";
+$l['nav_group_management'] = "{1} Grup Yönetimi";
+$l['nav_join_requests'] = "Katılma Talepleri";
+$l['nav_group_memberships'] = "Grup Üyelikleri";
 
-$l['not_leader_of_this_group'] = "Sorry, but you are not a leader of this user group.";
-$l['invalid_group'] = "This user group does not exist.";
-$l['pending_requests'] = "Pending Join Requests";
-$l['num_requests_pending'] = "There are currently <strong>{1}</strong> pending join requests for this user group.";
-$l['group_management'] = "Group Management";
-$l['members_of'] = "Members in \"{1}\"";
-$l['user_name'] = "Username";
-$l['contact'] = "Contact";
-$l['reg_date'] = "Registered";
-$l['post_count'] = "Gönderiler";
-$l['remove_selected'] = "Remove Selected Users from Group";
-$l['add_member'] = "Add Member to \"{1}\"";
-$l['add_member_submit'] = "Add Member to Group";
-$l['invite_member'] = "Invite Member to \"{1}\"";
-$l['invite_member_submit'] = "Invite Member to Group";
-$l['join_requests'] = "Join Requests";
-$l['join_requests_title'] = "Join Requests for \"{1}\"";
-$l['leader'] = "(Leader)";
-$l['reason'] = "Reason";
-$l['accept'] = "Accept";
-$l['ignore'] = "Ignore";
-$l['decline'] = "Decline";
-$l['action_requests'] = "Perform Actions";
-$l['join_requests_moderated'] = "The join requests have been moderated.<br />You will now be taken to the request listing.";
-$l['no_requests'] = "There are currently no pending join requests for this group.";
-$l['no_users'] = "There are no users in this group.";
-$l['user_added'] = "The user has been added to the user group.";
-$l['users_removed'] = "The selected users have been removed from the user group.";
-$l['group_no_members'] = "There are currently no members in this group.<br />To return to the group management page, click <a href=\"usercp.php?action=usergroups\">here</a>.";
-$l['group_public_moderated'] = "This user group is a public user group that anyone can join.  All join requests must be moderated by a group leader.";
-$l['group_public_not_moderated'] = "This user group is a public user group that anyone can join freely.";
-$l['group_public_invite'] = "This user group is a public user group that requires an invitation from a group leader in order to join.";
-$l['group_private'] = "This user group is a private user group.  Only users added by the group leader can be part of this group.";
-$l['group_default'] = "This user group is a core user group.";
-$l['group_leaders'] = "Group Leaders";
-$l['no_users_selected'] = "Sorry, but no users seemed to be selected for removal.<br />Please go back and select the users you want to remove from this group.";
+$l['not_leader_of_this_group'] = "Üzgünüm ama siz bu kullanıcı grubunun lideri değilsiniz.";
+$l['invalid_group'] = "Bu kullanıcı grubu mevcut değil.";
+$l['pending_requests'] = "Bekleyen Katılma Talepleri";
+$l['num_requests_pending'] = "Şu anda bu kullanıcı grubu için bekleyen <strong>{1}</strong> katılım isteği var.";
+$l['group_management'] = "Grup Yönetimi";
+$l['members_of'] = "\"{1}\" Grup Üyeleri";
+$l['user_name'] = "Kullanıcı Adı";
+$l['contact'] = "İletişim";
+$l['reg_date'] = "Kayıtlı";
+$l['post_count'] = "Mesajlar";
+$l['remove_selected'] = "Seçili Kullanıcıları Gruptan Çıkar";
+$l['add_member'] = "\"{1}\" Üye Ekle";
+$l['add_member_submit'] = "Gruba Üye Ekle";
+$l['invite_member'] = "\"{1}\" Davet Et";
+$l['invite_member_submit'] = "Gruba Davet Et";
+$l['join_requests'] = "Katılma Talepleri";
+$l['join_requests_title'] = "\"{1}\" için Katılma Talepleri";
+$l['leader'] = "(Lider)";
+$l['reason'] = "Sebep";
+$l['accept'] = "Kabul Et";
+$l['ignore'] = "Yoksay";
+$l['decline'] = "Kabul Etme";
+$l['action_requests'] = "Eylemleri Gerçekleştir";
+$l['join_requests_moderated'] = "Katılma talepleri denetlendi.<br />Şimdi talep listesine yönlendirileceksiniz.";
+$l['no_requests'] = "Şu anda bu grup için bekleyen bir katılma talebi bulunmamaktadır.";
+$l['no_users'] = "Bu grupta hiç kullanıcı yok.";
+$l['user_added'] = "Kullanıcı, kullanıcı grubuna eklendi.";
+$l['users_removed'] = "Seçilen kullanıcılar kullanıcı grubundan kaldırılmıştır.";
+$l['group_no_members'] = "Şu anda bu grupta üye bulunmamaktadır.<br />Grup yönetimi sayfasına dönmek için <a href=\"usercp.php?action=usergroups\">buraya</a> tıklayın.";
+$l['group_public_moderated'] = "Bu kullanıcı grubu, herkesin katılabileceği genel bir kullanıcı grubudur. Tüm katılma talepleri bir grup lideri tarafından yönetilmelidir.";
+$l['group_public_not_moderated'] = "Bu kullanıcı grubu, herkesin serbestçe katılabileceği genel bir kullanıcı grubudur.";
+$l['group_public_invite'] = "Bu kullanıcı grubu, katılmak için bir grup liderinden davetiye gerektiren genel bir kullanıcı grubudur.";
+$l['group_private'] = "Bu kullanıcı grubu özel bir kullanıcı grubudur. Yalnızca grup lideri tarafından eklenen kullanıcılar bu grubun bir parçası olabilir.";
+$l['group_default'] = "Bu kullanıcı grubu bir ana kullanıcı grubudur.";
+$l['group_leaders'] = "Grup Liderleri";
+$l['no_users_selected'] = "Üzgünüz, ancak hiçbir kullanıcı kaldırılmak üzere seçilmemiş görünüyor.<br />Lütfen, geri dönün ve bu gruptan kaldırmak istediğiniz kullanıcıları seçin.";
 
-$l['error_alreadyingroup'] = "The user specified is already part of the user group.";
-$l['error_alreadyinvited'] = "The user specified has already been invited.";
+$l['error_alreadyingroup'] = "Belirtilen kullanıcı zaten bu kullanıcı grubunun bir parçasıdır.";
+$l['error_alreadyinvited'] = "Belirtilen kullanıcı zaten davet edilmiş.";
 
-$l['user_invited'] = "The user has been invited to join the user group.";
-$l['invite_pm_subject'] = "You have been invited to join \"{1}\"";
-$l['invite_pm_message'] = "You have received an invitation to join the user group \"{1}\".
+$l['user_invited'] = "Kullanıcı, bu kullanıcı grubuna katılması için davet edilmiştir.";
+$l['invite_pm_subject'] = "\"{1}\"e katılmaya davet edildiniz.";
+$l['invite_pm_message'] = "\"{1}\" kullanıcı grubuna katılmak için bir davetiye aldınız.
 
-To join, please proceed to your [url={2}/usercp.php?action=usergroups]Group Memberships[/url] page and click 'Accept Invite'.
+Katılmak için lütfen [url={2}/usercp.php?action=usergroups]Grup Üyelikleri[/url] sayfanıza gidin ve 'Daveti Kabul Et' seçeneğine tıklayın.
 
-This invitation does not expire.";
-$l['invite_pm_message_expires'] = "You have received an invitation to join the user group \"{1}\".
+<strong>Bu davetiyenin geçerlilik süresi yoktur.</strong> İstediğiniz zaman talebi yanıtlayabilirsiniz.";
+$l['invite_pm_message_expires'] = "\"{1}\" kullanıcı grubuna katılmak için bir davetiye aldınız.
 
-To join, please proceed to your [url={2}/usercp.php?action=usergroups]Group Memberships[/url] page and click 'Accept Invite'.
+Katılmak için lütfen [url={2}/usercp.php?action=usergroups]Grup Üyelikleri[/url] sayfanıza gidin ve 'Daveti Kabul Et' seçeneğine tıklayın.
 
-This invite will expire {3} days from now.";
-
+<strong>Bu davetiyenin süresi {3} gün sonra dolacaktır.</strong>Lütfen, bu süre dolmadan davetiyeye yanıt gönderin.";

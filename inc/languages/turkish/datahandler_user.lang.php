@@ -1,50 +1,54 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
- *
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro 
+ * Çeviri: Simurg
+ * Last Update: 02.06.2025
  */
 
-$l['userdata_missing_username'] = 'You did not enter a username. Please enter one.';
-$l['userdata_banned_username'] = 'The username you entered may not be registered. Please enter a different username.';
-$l['userdata_bad_characters_username'] = 'The username you entered contains bad characters. Please enter a different username.';
-$l['userdata_invalid_username_length'] = 'The username you entered is of invalid length. Please enter a username between {1} and {2} characters.';
-$l['userdata_invalid_usertitle_length'] = 'The custom user title you entered is of invalid length. Please enter a title no longer than {1} characters.';
-$l['userdata_username_exists'] = 'The username you entered already exists. Please enter a different username.';
+$l['userdata_missing_username'] = 'Bir kullanıcı adı girmediniz. Lütfen, bir tane kullanıcı adı girin.';
+$l['userdata_banned_username'] = 'Girdiğiniz kullanıcı adı kayıtlı olmayabilir veya engellenmiş olabilir. Lütfen, farklı bir kullanıcı adı girin.';
+$l['userdata_bad_characters_username'] = 'Girdiğiniz kullanıcı adı hatalı karakterler içeriyor. Lütfen, farklı bir kullanıcı adı girin.';
+$l['userdata_invalid_username_length'] = 'Girdiğiniz kullanıcı adı geçersiz uzunlukta. Lütfen, {1} ile {2} karakter arasında bir kullanıcı adı girin.';
+$l['userdata_invalid_usertitle_length'] = 'Girdiğiniz özel kullanıcı başlığı geçersiz uzunlukta. Lütfen, {1} karakterden uzun olmayan bir başlık girin.';
+$l['userdata_username_exists'] = 'Girdiğiniz kullanıcı adı zaten mevcut. Lütfen, farklı bir kullanıcı adı girin.';
 
-$l['userdata_invalid_password_length'] = 'The password you entered is of invalid length. Please enter a password between {1} and {2} characters.';
-$l['userdata_no_complex_characters'] = 'The password you entered is not complex enough. Please enter a password that is at least {1} characters long, and contains an upper case letter, lower case letter and a number.';
-$l['userdata_passwords_dont_match'] = 'The password you entered as confirmation does not match the original one. Please confirm your password correctly.';
-$l['userdata_bad_password_security'] = 'The password you entered is similar to either your username or email address. Please enter a stronger password.';
+$l['userdata_invalid_password_length'] = 'Girdiğiniz şifre geçersiz uzunlukta. Lütfen, {1} ile {2} karakter arasında bir şifre girin.';
+$l['userdata_no_complex_characters'] = 'Girdiğiniz şifre yeterince karmaşık ve güvenli değil. Lütfen, en az {1} karakter uzunluğunda ve büyük harf, küçük harf ve sayı içeren bir güvenli ve güçlü bir şifre girin.';
+$l['userdata_passwords_dont_match'] = 'Girmiş olduğunuz şifreler birbirleriyle eşleşmiyor. Lütfen, şifrenizi doğru şekilde girdiğinizden emin olun.';
+$l['userdata_bad_password_security'] = 'Girdiğiniz şifre, kullanıcı adınıza veya e-posta adresinize çok benziyor.Lütfen, daha farklı güçlü ve güvenli bir şifre seçin.';
 
-$l['userdata_missing_email'] = 'You did not enter an email address. Please enter one.';
-$l['userdata_invalid_email_format'] = 'The email address you entered is invalid. Please enter a valid email address.';
-$l['userdata_emails_dont_match'] = 'The email address you entered as confirmation does not match the original one. Please confirm your email address correctly.';
-$l['userdata_banned_email'] = "The email address you have entered is currently disallowed from being used. Please enter a different email address.";
-$l['userdata_email_already_in_use'] = "You have entered an email address that is already in use by another member. Please enter a different email address.";
+$l['userdata_missing_email'] = 'Bir e-posta adresi girmediniz. Lütfen, bir tane girin.';
+$l['userdata_invalid_email_format'] = 'Girdiğiniz e-posta adresi geçersiz. Lütfen, geçerli bir e-posta adresi girin.';
+$l['userdata_emails_dont_match'] = 'Girmiş olduğunu e-posta adresleri birbirleriyle eşleşmiyor. Lütfen, e-posta adresinizi doğru şekilde girdiğinizden emin olun.';
+$l['userdata_banned_email'] = "Girmiş olduğunuz e-posta adresinin kullanılmasına şu anda izin verilmemektedir. Lütfen, farklı bir e-posta adresi girin.";
+$l['userdata_email_already_in_use'] = "Başka bir üye tarafından zaten kullanılmakta olan bir e-posta adresi girdiniz. Lütfen, farklı bir e-posta adresi girin.";
 
-$l['userdata_dob_required'] = "You did not select your date of birth. Please select your date of birth to continue - you can hide your birthday and age from other users, however.";
-$l['userdata_invalid_website'] = 'The website address you entered is invalid. Please enter a valid website address or leave the field empty.';
-$l['userdata_invalid_birthday'] = 'The birthday you entered is invalid. Please enter a valid birthday or leave the field empty.';
-$l['userdata_invalid_birthday_coppa'] = 'To verify your age, please enter the year you were born. You may hide your Age and Date of Birth in your profile options.';
-$l['userdata_invalid_birthday_coppa2'] = 'You must be at least 13 years of age to be a member of this message board. Please contact an Administrator.';
-$l['userdata_invalid_birthday_privacy'] = 'Please choose a valid birthday privacy option.';
-$l['userdata_conflicted_birthday_privacy'] = 'You must specify your birth year if you choose to display age only as your birthday privacy.';
-$l['userdata_invalid_referrer'] = 'The referrer you entered does not exist. Please enter an existing referrer or leave the field empty.';
-$l['userdata_invalid_language'] = 'The language you selected does not exist. Please select an existing language.';
-$l['userdata_invalid_style'] = 'The style you selected is invalid. Please select a valid style.';
-$l['userdata_away_too_long'] = 'The Away Reason you specified is too long. A maximum of 200 characters is allowed for this field. Please remove {1} character(s) from this field.';
-$l['userdata_missing_returndate'] = 'The Return Date you specified is missing one or more fields. Please make sure you have filled in the day, month, and year fields.';
-$l['userdata_missing_required_profile_field'] = 'You did not enter an option for the "{1}" field. Please fill in or select a value for this field.';
-$l['userdata_bad_profile_field_value'] = 'You did not enter a valid value for the "{1}" field. Please enter a valid value before continuing.';
-$l['userdata_bad_profile_field_values'] = 'You did not select a valid option for the "{1}" field. Please select a value from the presented choices.';
-$l['userdata_max_limit_reached'] = 'You entered an invalid number of characters for the "{1}" field. Please fill in this field with no more than {2} characters.';
-$l['userdata_invalid_checkfield'] = "It has been detected that this form has been submitted by a spam bot. If this is in error, please contact the administrator.";
-$l['userdata_invalid_postnum'] = "The post count you entered is invalid. Please enter a valid post count, or leave the field empty.";
-$l['userdata_invalid_threadnum'] = "The thread count you entered is invalid. Please enter a valid thread count, or leave the field empty.";
+$l['userdata_dob_required'] = "Doğum tarihinizi seçmediniz. Devam etmek için lütfen doğum tarihinizi seçin - Doğum tarihinizi ve yaşınızı profil seçeneklerinizden diğer kullanıcılardan gizleyebilirsiniz.";
+$l['userdata_invalid_website'] = 'Girdiğiniz web sitesi adresi geçersiz. Lütfen, geçerli bir web sitesi adresi girin veya alanı boş bırakın.';
+$l['userdata_invalid_birthday'] = 'Girdiğiniz doğum günü tarihi geçersiz. Lütfen, geçerli bir doğum günü tarihi girin veya alanı boş bırakın.';
+$l['userdata_invalid_birthday_coppa'] = 'Yaşınızı doğrulamak için lütfen doğduğunuz yılı girin. Profil seçeneklerinizden Yaşınızı ve Doğum Tarihinizi gizleyebilirsiniz.';
+$l['userdata_invalid_birthday_coppa2'] = 'Bu foruma üye olmak için en az <strong>13 Yaşında</strong> olmalısınız. Lütfen, bir <strong>Site Yöneticisi</strong> ile iletişime geçin.';
+$l['userdata_invalid_birthday_privacy'] = 'Lütfen, geçerli bir doğum günü gizlilik seçeneği seçin.';
+$l['userdata_conflicted_birthday_privacy'] = 'Yaşı yalnızca doğum günü gizliliğiniz olarak görüntülemeyi seçerseniz doğum yılınızı belirtmeniz gerekir.';
+$l['userdata_invalid_referrer'] = 'Girdiğiniz referans kullanıcı adı sistemimizde mevcut değil. Lütfen, sistemimizde kayıtlı olduğundan emin olduğunuz bir referans kullanıcısının adını girin veya alanı boş bırakın.';
+$l['userdata_invalid_language'] = 'Seçtiğiniz dil mevcut değil. Lütfen, mevcut bir dil seçin.';
+$l['userdata_invalid_style'] = 'Seçtiğiniz stil geçersiz. Lütfen, geçerli bir stil seçin.';
+$l['userdata_away_too_long'] = 'Belirttiğiniz Uzaklaşma Nedeni çok uzun. Bu alan için en fazla 200 karaktere izin verilir. Lütfen, bu alandan fazla olan {1} karakter(ler)i kaldırın.';
+$l['userdata_missing_returndate'] = 'Belirttiğiniz Geri Dönüş Tarihinde bir veya daha fazla alan eksik. Lütfen, gün, ay ve yıl alanlarını doğru doldurduğunuzdan emin olun.';
+$l['userdata_missing_required_profile_field'] = '"{1}" alanı için bir seçenek girmediniz. Lütfen, bu alan için bir değer girin veya seçin.';
+$l['userdata_bad_profile_field_value'] = '"{1}" alanı için geçerli bir değer girmediniz. Lütfen, devam etmeden önce geçerli bir değer girin.';
+$l['userdata_bad_profile_field_values'] = '"{1}" alanı için geçerli bir seçenek seçmediniz. Lütfen, sunulan seçenekler arasından bir değer seçin.';
+$l['userdata_max_limit_reached'] = '"{1}" alanı için geçersiz sayıda karakter girdiniz. Lütfen, bu alanı en fazla {2} karakterle doldurun.';
+$l['userdata_invalid_checkfield'] = "Bu formun bir <strong>spam bot</strong> tarafından gönderildiği tespit edildi. Eğer, bunun bir hata olduğunu düşünüyorsanız, lütfen bir yöneticiyle iletişime geçin.";
+$l['userdata_invalid_postnum'] = "Girdiğiniz yorum sayısı geçersiz. Lütfen, geçerli bir yorum sayısı girin veya alanı boş bırakın.";
+$l['userdata_invalid_threadnum'] = "Girdiğiniz konu sayısı geçersiz. Lütfen, geçerli bir konu sayısı girin veya alanı boş bırakın.";
 
-$l['userdata_too_many_sig_images'] = "We are sorry, but we cannot update your signature because it contains too many images. Please remove some images from your signature to continue.";
-$l['userdata_too_many_sig_images2'] = "<strong>Note:</strong> The maximum amount of images for signatures is {1}.";
-$l['userdata_sig_too_long'] = "You cannot update your signature because it is too long. The maximum length for signatures is {1} characters. ";
-$l['userdata_sig_remove_chars_plural'] = "Please remove {1} characters and try again.";
-$l['userdata_sig_remove_chars_singular'] = "Please remove 1 character and try again.";
+$l['userdata_too_many_sig_images'] = "Üzgünüz, ancak çok fazla resim içerdiği için imzanızı güncelleyemiyoruz. Devam etmek için lütfen imzanızdan bazı görselleri kaldırın.";
+$l['userdata_too_many_sig_images2'] = "<strong>Not:</strong> İmzalar için maksimum resim miktarı {1}'dir.";
+$l['userdata_sig_too_long'] = "Çok uzun olduğu için imzanızı güncelleyemiyorsunuz. İmzalar için maksimum uzunluk {1} karakterdir.";
+$l['userdata_sig_remove_chars_plural'] = "Lütfen, {1} karakterlerini kaldırın ve tekrar deneyin.";
+$l['userdata_sig_remove_chars_singular'] = "Lütfen, 1 karakteri kaldırın ve tekrar deneyin.";

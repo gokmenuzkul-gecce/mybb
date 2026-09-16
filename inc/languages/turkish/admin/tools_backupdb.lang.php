@@ -1,58 +1,64 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
 
 $l['database_backups'] = "Veritabanı Yedekleri";
-$l['database_backups_desc'] = "Here you find a listing of the database backups that are currently stored on your web server in the MyBB Backups directory.";
-$l['new_database_backup'] = "Yeni Veritabanı Yedeği";
+$l['database_backups_desc'] = "Burada, şu anda web sunucunuzda <em>./admin/backups</em> dizininde depolanan veritabanı yedeklerinin bir listesini bulabilirsiniz.";
+$l['new_database_backup'] = "Yeni Veritabanı Yedeği Oluşturma";
 $l['new_backup'] = "Yeni Yedek";
-$l['new_backup_desc'] = "Here you can backup a copy of your database.";
-$l['backups'] = "Backups";
-$l['existing_database_backups'] = "Existing Database Backups";
+$l['new_backup_desc'] = "Burada veritabanınızın bir kopyasını yedekleyebilirsiniz.";
+$l['backups'] = "Yedekler";
+$l['existing_database_backups'] = "Mevcut Veritabanı Yedekleri";
 
-$l['backup_saved_to'] = "The backup was saved to:";
-$l['download'] = "Download";
-$l['table_selection'] = "Table Selection";
-$l['backup_options'] = "Backup Options";
-$l['table_select_desc'] = "You may select the database tables you wish to perform this action on here. Hold down CTRL to select multiple tables.";
-$l['select_all'] = "Select All";
-$l['deselect_all'] = "Deselect All";
-$l['select_forum_tables'] = "Select Forum Tables";
-$l['file_type'] = "File Type";
-$l['file_type_desc'] = "Select the file type you would like the database backup saved as.";
-$l['gzip_compressed'] = "GZIP Compressed";
-$l['plain_text'] = "Plain Text";
-$l['save_method'] = "Kaydet Method";
-$l['save_method_desc'] = "Select the method you would like to use to save the backup.";
-$l['backup_directory'] = "Backup Directory";
-$l['backup_contents'] = "Backup Contents";
-$l['backup_contents_desc'] = "Select the information that you would like included in the backup.";
-$l['structure_and_data'] = "Structure and Data";
-$l['structure_only'] = "Structure Only";
-$l['data_only'] = "Data only";
-$l['analyze_and_optimize'] = "Analyze and Optimize Selected Tables";
-$l['analyze_and_optimize_desc'] = "Would you like the selected tables to be analyzed and optimized during the backup?";
-$l['perform_backup'] = "Perform Backup";
-$l['backup_filename'] = "Backup Filename";
-$l['file_size'] = "File Size";
-$l['creation_date'] = "Creation Date";
-$l['no_backups'] = "There are currently no backups made yet.";
+$l['backup_saved_to'] = "Yedek şuraya kaydedildi:";
+$l['download'] = "İndir";
+$l['table_selection'] = "Tablo Seçimi";
+$l['backup_options'] = "Yedekleme Seçenekleri";
+$l['table_select_desc'] = "Bu eylemi gerçekleştirmek istediğiniz veritabanı tablolarını buradan seçebilirsiniz. Birden fazla tablo seçmek için CTRL tuşunu basılı tutun.";
+$l['select_all'] = "Tümünü Seç";
+$l['deselect_all'] = "Tümünün Seçimini Kaldır";
+$l['select_forum_tables'] = "Forum Tablolarını Seçin";
+$l['file_type'] = "Dosya Türü";
+$l['file_type_desc'] = "Veritabanı yedeğinin kaydedilmesini istediğiniz dosya türünü seçin.";
+$l['gzip_compressed'] = "GZIP Sıkıştırılmış (Tavsiye Edilir)";
+$l['plain_text'] = "Düz Metin (.sql - Sıkıştırılmamış)";
+$l['save_method'] = "Kaydetme Yöntemi";
+$l['save_method_desc'] = "Yedeklemeyi kaydetmek için kullanmak istediğiniz yöntemi seçin.";
+$l['backup_directory'] = "Yedekleme Dizini <em>(./admin/backups)</em>";
+$l['backup_contents'] = "Yedekleme İçeriği";
+$l['backup_contents_desc'] = "Yedeklemeye dahil edilmesini istediğiniz bilgileri seçin.";
+$l['structure_and_data'] = "Yapı ve Veriler (Tavsiye Edilir)";
+$l['structure_only'] = "Sadece Yapı";
+$l['data_only'] = "Yalnızca Veri";
+$l['analyze_and_optimize'] = "Seçilen Tabloları Analiz ve Optimize Et";
+$l['analyze_and_optimize_desc'] = "Seçilen tabloların yedekleme sırasında analiz edilmesini ve optimize edilmesini ister misiniz?";
+$l['perform_backup'] = "Yedeği Oluştur";
+$l['backup_filename'] = "Yedek Dosya Adı";
+$l['file_size'] = "Dosya Boyutu";
+$l['creation_date'] = "Oluşturulma Tarihi";
+$l['no_backups'] = "Şu anda oluşturulmuş herhangi bir yedek bulunmuyor.";
 
-$l['error_file_not_specified'] = "You did not specify a database backup to download.";
-$l['error_invalid_backup'] = "The back up file you selected is either invalid or does not exist.";
-$l['error_backup_doesnt_exist'] = "The specified backup does not exist";
-$l['error_backup_not_deleted'] = "The backup has not been deleted.";
-$l['error_tables_not_selected'] = "You did not select any tables to backup.";
-$l['error_no_zlib'] = "The zlib library for PHP is not enabled - you cannot create GZIP compressed backups.";
+$l['error_file_not_specified'] = "İndirilecek bir veritabanı yedeği belirtmediniz.";
+$l['error_invalid_backup'] = "Seçtiğiniz yedekleme dosyası ya geçersiz ya da mevcut değil.";
+$l['error_backup_doesnt_exist'] = "Belirtilen yedek mevcut değil.";
+$l['error_backup_not_deleted'] = "Yedek silinemedi.";
+$l['error_tables_not_selected'] = "Yedeklenecek herhangi bir tablo seçmediniz.";
+$l['error_no_zlib'] = "PHP için zlib kütüphanesi etkin değil - GZIP ile sıkıştırılmış yedekler oluşturamazsınız. Lütfen, sunucu yöneticiniz ile iletişime geçin.";
 
-$l['alert_not_writable'] = "Your backups directory (within the Admin CP directory) is not writable. You cannot save backups on the server.";
+$l['alert_not_writable'] = "Yedekleme klasörünüz olan <em>./admin/backups</em> dizini yazdırabilir değil. Lütfen, ilgili dizinin yazılabilir olduğundan emin olun. CHMOD: 777 olarak ayarlanmalı. Detaylı bilgi için <a href=\"https://mybb.pro/forum-mybb-yardim-belgeleri\" target=\"_blank\" rel=\"noopener\">tıklayınız.</a>";
 
-$l['confirm_backup_deletion'] = "Are you sure you wish to delete this backup?";
+$l['confirm_backup_deletion'] = "Bu yedeği silmek istediğinizden emin misiniz?";
 
-$l['success_backup_deleted'] = "The backup has been deleted successfully.";
-$l['success_backup_created'] = "The backup has been created successfully.";
-
+$l['success_backup_deleted'] = "Yedek başarıyla silindi.";
+$l['success_backup_created'] = "Yedek başarıyla oluşturuldu.";

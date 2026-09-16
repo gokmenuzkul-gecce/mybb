@@ -1,37 +1,43 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 17.12.2024 (v1.8.38)
  */
 
-$l['user_email_log'] = "User Email Log";
-$l['user_email_log_desc'] = "All emails sent from one member to another member as well as emails sent by the 'Send Thread to a Friend' feature are logged and shown below. Here you can identify potential abusers of this function.";
-$l['prune_user_email_log'] = "Prune User Email Log";
+$l['user_email_log'] = "Kullanıcı E-Posta Kayıtları";
+$l['user_email_log_desc'] = "Bir üyeden başka bir üyeye gönderilen tüm e-postaların yanı sıra 'Konuyu Arkadaşına Gönder' özelliği ile gönderilen e-postalar da kaydedilir ve aşağıda gösterilir. Burada bu işlevi kötüye kullanan potansiyel kişileri tespit edebilirsiniz.";
+$l['prune_user_email_log'] = "Kullanıcı E-Posta Kayıtlarını Temizle";
 
-$l['close_window'] = "Close Window";
-$l['user_email_log_viewer'] = "User Email Log Viewer";
-$l['to'] = "To";
-$l['from'] = "From";
-$l['ip_address'] = "IP Address";
-$l['subject'] = "Subject";
-$l['date'] = "Date";
-$l['email'] = "Email";
-$l['date_sent'] = "Date Sent";
-$l['deleted'] = "Sild";
-$l['sent_using_send_thread_feature'] = "Sent using the Send Thread to Friend feature";
-$l['thread'] = "Thread:";
-$l['find_emails_by_user'] = "Find all emails sent by this user";
-$l['find'] = "Find";
-$l['deleted_user'] = "Sild User";
-$l['email_sent_to_user'] = "Email sent to user";
-$l['email_sent_using_contact_form'] = "Email sent using the contact form";
-$l['no_logs'] = "There are no log entries with the selected criteria.";
-$l['filter_user_email_log'] = "Filter User Email Log";
-$l['username_is'] = "Username is";
-$l['email_contains'] = "Email Address contains";
-$l['subject_contains'] = "Subject contains";
-$l['find_emails_to_user'] = "Find all emails sent to this user";
+$l['close_window'] = "Pencereyi Kapat";
+$l['user_email_log_viewer'] = "Kullanıcı E-Posta Kaydı Görüntüleyicisi";
+$l['to'] = "Kime";
+$l['from'] = "Kimden";
+$l['ip_address'] = "IP Adresi";
+$l['subject'] = "Konu";
+$l['date'] = "Tarih";
+$l['email'] = "E-Posta";
+$l['date_sent'] = "Gönderildiği Tarih";
+$l['deleted'] = "Silinmiş";
+$l['sent_using_send_thread_feature'] = "Konuyu Arkadaşına Gönder özelliği kullanılarak gönderildi.";
+$l['thread'] = "Konu:";
+$l['find_emails_by_user'] = "Bu kullanıcı tarafından gönderilen tüm e-postaları bulun.";
+$l['find'] = "Bul";
+$l['deleted_user'] = "Silinmiş Kullanıcı";
+$l['email_sent_to_user'] = "Kullanıcıya gönderilen e-posta";
+$l['email_sent_using_contact_form'] = "İletişim formu kullanılarak gönderilen e-posta";
+$l['no_logs'] = "Seçilen kriterlere sahip hiçbir kayıt yok.";
+$l['filter_user_email_log'] = "Kullanıcı E-Posta Kayıtlarını Filtrele";
+$l['username_is'] = "Kullanıcı Adı";
+$l['email_contains'] = "E-Posta Adresi";
+$l['subject_contains'] = "Konu şunları içerir:";
+$l['find_emails_to_user'] = "Bu kullanıcıya gönderilen tüm e-postaları bulun.";
 
-$l['error_invalid_user'] = "The username you entered does not exist.";
-
+$l['error_invalid_user'] = "Girdiğiniz kullanıcı adı mevcut değil.";

@@ -1,121 +1,127 @@
 <?php
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 19.12.2024 (v1.8.38)
  */
 
-$l['mass_mail'] = "Mass Mail";
+$l['mass_mail'] = "Toplu E-Posta";
 
-$l['mass_mail_queue'] = "Mass Mail Queue";
-$l['mass_mail_queue_desc'] = "Here you can manage mass mailings that are currently being sent or are queued for the future.";
-$l['create_mass_mail'] = "Create New Mailing";
-$l['create_mass_mail_desc'] = "Here you can create a new mass mailing and set its options.";
-$l['mass_mail_archive'] = "Mass Mailing Archive";
-$l['mass_mail_archive_desc'] = "Here you can view a log of mass mailings that have already been sent.";
-$l['edit_mass_mail'] = "Edit Mass Mailing";
-$l['edit_mass_mail_desc'] = "Here you can edit a mass mailing and its options.";
-$l['send_mass_mail'] = "Send Mass Mailing";
+$l['mass_mail_queue'] = "Toplu E-Posta Durumu";
+$l['mass_mail_queue_desc'] = "Burada, şu anda gönderilmekte olan veya gelecekte gönderilmek üzere bekleme sırasına alınan toplu e-postaları yönetebilirsiniz.";
+$l['create_mass_mail'] = "Yeni E-Posta Oluştur";
+$l['create_mass_mail_desc'] = "Burada yeni bir toplu e-posta oluşturabilir ve seçeneklerini ayarlayabilirsiniz.";
+$l['mass_mail_archive'] = "Toplu E-Posta Arşivi";
+$l['mass_mail_archive_desc'] = "Burada daha önce gönderilmiş olan toplu e-postaların kayıtlarını görüntüleyebilirsiniz.";
+$l['edit_mass_mail'] = "Toplu E-Posta Düzenle";
+$l['edit_mass_mail_desc'] = "Burada bir toplu e-postayı ve seçeneklerini düzenleyebilirsiniz.";
+$l['send_mass_mail'] = "Toplu E-Posta Gönder";
 
-$l['email_addr'] = "Email Address";
-$l['board_name'] = "Board Name";
-$l['board_url'] = "Board URL";
-$l['personalize_message'] = "Personalize this message:";
+$l['email_addr'] = "E-Posta Adresi";
+$l['board_name'] = "Forum Adı";
+$l['board_url'] = "Forum URL";
+$l['personalize_message'] = "Bu Mesajı Kişiselleştirin:";
 
-$l['message_settings'] = "Message Settings";
-$l['subject'] = "Subject";
-$l['subject_desc'] = "Please enter the subject of the message.";
-$l['send_via_email'] = "Send via email";
-$l['send_via_pm'] = "Send via private message";
-$l['message_type'] = "Message Type";
-$l['deliver_immediately'] = "Deliver immediately";
-$l['deliver_specific'] = "Deliver on a specific date";
-$l['delivery_date'] = "Delivery Date";
-$l['delivery_date_desc'] = "Please select the date and time you want this mass mailing to be delivered";
-$l['per_page'] = "Per Page";
-$l['per_page_desc'] = "Please enter the number of mass mailings to run per page.";
-$l['plain_text_only'] = "Plain Text Only";
-$l['html_only'] = "HTML Only";
-$l['html_and_plain_text'] = "HTML and Plain Text";
-$l['message_format'] = "Message Format";
-$l['define_html_message'] = "Define the HTML Message";
-$l['define_html_message_desc'] = "Enter the HTML version of the message";
-$l['auto_gen_plain_text'] = "Attempt to automatically generate text version";
-$l['define_text_version'] = "Define the Text Version";
-$l['define_text_version_desc'] = "Enter the Text version of the message";
-$l['define_the_recipients'] = "Define the Recipients";
-$l['username_contains'] = "Username contains&hellip;";
-$l['email_addr_contains'] = "Email address contains&hellip;";
-$l['members_of'] = "Members of the following groups&hellip;";
-$l['greater_than'] = "Greater Than";
-$l['is_exactly'] = "Is Exactly";
-$l['less_than'] = "Less Than";
-$l['more_than'] = "More Than";
-$l['post_count_is'] = "Post Count is";
-$l['hours'] = "Hours";
-$l['days'] = "Days";
-$l['weeks'] = "Weeks";
-$l['months'] = "Months";
-$l['years'] = "Years";
-$l['ago'] = "ago";
-$l['user_last_active'] = "User was Last Active";
-$l['user_registered'] = "User Registered";
-$l['save_mass_mail'] = "Kaydet Mass Mail";
-$l['additional_user_groups_desc'] = "Use CTRL to select multiple groups";
+$l['message_settings'] = "Mesaj Ayarları";
+$l['subject'] = "Konu";
+$l['subject_desc'] = "Lütfen mesajın konusunu girin.";
+$l['send_via_email'] = "E-Posta ile gönder";
+$l['send_via_pm'] = "Özel Mesaj ile gönder";
+$l['message_type'] = "Mesaj İletim Türü";
+$l['deliver_immediately'] = "Hemen teslim et.";
+$l['deliver_specific'] = "Belirli bir tarihte teslim et.";
+$l['delivery_date'] = "Teslim Tarihi";
+$l['delivery_date_desc'] = "Lütfen bu toplu e-postanın teslim edilmesini istediğiniz tarih ve saati seçin.";
+$l['per_page'] = "Sayfa Başına";
+$l['per_page_desc'] = "Lütfen sayfa başına iletilecek toplu e-posta sayısını girin.";
+$l['plain_text_only'] = "Yalnızca Düz Metin";
+$l['html_only'] = "Yalnızca HTML";
+$l['html_and_plain_text'] = "HTML ve Düz Metin";
+$l['message_format'] = "Mesaj Formatı";
+$l['define_html_message'] = "HTML Mesajını Tanımla";
+$l['define_html_message_desc'] = "Mesajın HTML sürümünü girin.";
+$l['auto_gen_plain_text'] = "Metin sürümünü otomatik olarak oluşturmayı dene.";
+$l['define_text_version'] = "Metin Sürümünü Tanımla";
+$l['define_text_version_desc'] = "Mesajın Metin versiyonunu girin.";
+$l['define_the_recipients'] = "Alıcıları Tanımla";
+$l['username_contains'] = "Kullanıcı adı şunları içerir&hellip;";
+$l['email_addr_contains'] = "E-posta adresi şunları içerir&hellip;";
+$l['members_of'] = "Aşağıdaki grupların üyelesi&hellip;";
+$l['greater_than'] = "Daha Büyük";
+$l['is_exactly'] = "Tam olarak";
+$l['less_than'] = "Daha az";
+$l['more_than'] = "Daha Fazlası";
+$l['post_count_is'] = "Gönderi Sayısı";
+$l['hours'] = "Saat";
+$l['days'] = "Gün";
+$l['weeks'] = "Hafta";
+$l['months'] = "Ay";
+$l['years'] = "Yıl";
+$l['ago'] = "";
+$l['user_last_active'] = "Kullanıcının En Son Aktif Olduğu Zaman";
+$l['user_registered'] = "Kullanıcının En Son Kayıt Olduğu Tarih";
+$l['save_mass_mail'] = "Toplu E-Postayı Kaydet";
+$l['additional_user_groups_desc'] = "Birden fazla grup seçmek için CTRL tuşunu kullanın.";
 
-$l['step_four'] = "Step 4";
-$l['delivery_method'] = "Delivery Method";
-$l['private_message'] = "Private Message";
-$l['email'] = "Email";
-$l['subject'] = "Subject";
-$l['message'] = "Message";
-$l['text_based'] = "Text Based";
-$l['preview'] = "Önizleme";
-$l['mass_mail_preview'] = "Mass Email Önizleme";
-$l['html_based'] = "HTML Based";
-$l['total_recipients'] = "Total Recipients";
-$l['change_recipient_conds'] = "Change recipient conditions";
-$l['review_message'] = "Review Your Message";
-$l['define_delivery_date'] = "Define Delivery Date";
-$l['schedule_for_delivery'] = "Schedule for Delivery";
-$l['username'] = "Username";
+$l['step_four'] = "Adım 4";
+$l['delivery_method'] = "Teslimat Yöntemi";
+$l['private_message'] = "Özel Mesaj";
+$l['email'] = "E-Posta";
+$l['subject'] = "Konu";
+$l['message'] = "Mesaj";
+$l['text_based'] = "Metin Tabanlı";
+$l['preview'] = "Önizle";
+$l['mass_mail_preview'] = "Toplu E-Posta Önizlemesi";
+$l['html_based'] = "HTML Tabanlı";
+$l['total_recipients'] = "Toplam Alıcılar";
+$l['change_recipient_conds'] = "Alıcı koşullarını değiştirin.";
+$l['review_message'] = "Mesajınızı İnceleyin";
+$l['define_delivery_date'] = "Teslim Tarihini Tanımla";
+$l['schedule_for_delivery'] = "Teslimat için Zamanla";
+$l['username'] = "Kullanıcı Adı";
 
-$l['step_three'] = "Step 3";
-$l['next_step'] = "Next Step";
+$l['step_three'] = "Adım 3";
+$l['next_step'] = "Sonraki Adım";
 
-$l['step_two'] = "Step 2";
-$l['review_text_version'] = "Review Text Version";
-$l['review_text_version_desc'] = "Please review the automatically generated text version";
+$l['step_two'] = "Adım 2";
+$l['review_text_version'] = "Metin Sürümünü İncele";
+$l['review_text_version_desc'] = "Lütfen otomatik olarak oluşturulan metin versiyonunu inceleyin.";
 
-$l['step_one'] = "Step 1";
+$l['step_one'] = "Adım 1";
 
-$l['status'] = "Status";
-$l['recipients'] = "Recipients";
-$l['delivered'] = "Delivered";
-$l['canceled'] = "İptaled";
-$l['resend'] = "Resend";
-$l['no_archived_messages'] = "You do not have any previously sent or canceled mass mailings.";
+$l['status'] = "Durum";
+$l['recipients'] = "Alıcılar";
+$l['delivered'] = "Teslim Edildi";
+$l['canceled'] = "İptal Edildi";
+$l['resend'] = "Yeniden Gönder";
+$l['no_archived_messages'] = "Daha önce gönderilmiş veya iptal edilmiş toplu e-postalarınız yok.";
 
-$l['draft'] = "Draft";
-$l['queued'] = "Queued";
-$l['delivering'] = "Delivering";
+$l['draft'] = "Taslak";
+$l['queued'] = "Sırada";
+$l['delivering'] = "Teslim Ediliyor";
 $l['na'] = "N/A";
-$l['mass_mail_cancel_confirmation'] = "Are you sure you wish to cancel the delivery of this mass mailing?";
-$l['no_unsent_messages'] = "You do not have any unsent, queued or currently delivering mass mailings.";
+$l['mass_mail_cancel_confirmation'] = "Bu toplu e-postanın gönderimini iptal etmek istediğinizden emin misiniz?";
+$l['no_unsent_messages'] = "Gönderilmemiş, sıraya alınmış veya şu anda teslim edilmekte olan toplu e-postanız yok.";
 
-$l['error_invalid_mid'] = "You have selected an invalid mass mailing.";
-$l['error_only_in_future'] = "You can only deliver mass mailings in the future.";
-$l['error_no_users'] = "Your search criteria did not return any users. Please adjust your criteria and try again.";
-$l['error_missing_plain_text'] = "You did not enter a plain text version of this message.";
-$l['error_missing_subject'] = "You did not enter a subject for this mass mailing.";
-$l['error_missing_message'] = "You did not enter a message to send.";
-$l['error_missing_html'] = "You did not enter a HTML version of this message.";
-$l['error_delete_invalid_mid'] = "You have selected an invalid mass mailing to delete.";
+$l['error_invalid_mid'] = "Geçersiz bir toplu e-posta seçtiniz.";
+$l['error_only_in_future'] = "Toplu e-postaları yalnızca gelecekte gönderebilirsiniz.";
+$l['error_no_users'] = "Arama kriterleriniz dahilinde herhangi bir kullanıcı bulunamadı. Lütfen kriterlerinizi yeniden ayarlayın ve tekrar deneyin.";
+$l['error_missing_plain_text'] = "Bu mesajın düz metin versiyonunu girmediniz.";
+$l['error_missing_subject'] = "Bu toplu e-posta için bir konu girmediniz.";
+$l['error_missing_message'] = "Gönderilecek bir mesaj girmediniz.";
+$l['error_missing_html'] = "Bu mesajın HTML versiyonunu girmediniz.";
+$l['error_delete_invalid_mid'] = "Silmek için geçersiz bir toplu e-posta seçtiniz.";
 
-$l['success_mass_mail_saved'] = "The mass mailing has been saved successfully.";
-$l['success_mass_mail_deleted'] = "The selected mass mailing has been deleted successfully.";
-$l['success_mass_mail_resent'] = "The mass mailing has been copied successfully. Please review it below.";
-$l['success_mass_mail_canceled'] = "The mass mailing delivery has been canceled successfully.";
+$l['success_mass_mail_saved'] = "Toplu e-posta gönderimi başarıyla kaydedildi.";
+$l['success_mass_mail_deleted'] = "Seçilen toplu e-posta başarıyla silindi.";
+$l['success_mass_mail_resent'] = "Toplu e-posta başarıyla tekrar gönderildi. Lütfen aşağıda ilgili mesajı inceleyiniz.";
+$l['success_mass_mail_canceled'] = "Toplu e-posta gönderimi başarıyla iptal edildi.";
 
-$l['mass_mail_deletion_confirmation'] = "Are you sure you want to delete this mass mailing?";
+$l['mass_mail_deletion_confirmation'] = "Bu toplu e-postayı silmek istediğinizden emin misiniz?";
 

@@ -1,15 +1,20 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-/*
- * Custom Help Document Translation Format
- *
- * // Help Document {hid}
- * $l['d{hid}_name'] = "Document name";
- * $l['d{hid}_desc'] = "Document description";
- * $l['d{hid}_document'] = "Document text";
+/** 
+ * Yardım Belgeleri {hid}
+ * $l['d{hid}_name'] = "Belge Adı";
+ * $l['d{hid}_desc'] = "Belge Açıklaması";
+ * $l['d{hid}_document'] = "Belge İçeriği";
  */

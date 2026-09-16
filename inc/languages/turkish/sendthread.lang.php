@@ -1,17 +1,23 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 27.11.2024 (v1.8.38)
  */
 
-$l['nav_sendthread'] = "Send Thread to a Friend";
+$l['nav_sendthread'] = "Konuyu Arkadaşına Gönder";
 
-$l['send_thread'] = "Send To Friend";
-$l['recipient'] = "Recipient:";
-$l['recipient_note'] = "Enter your friends email address here.";
-$l['subject'] = "Subject:";
-$l['message'] = "Message:";
-$l['error_nosubject'] = "You are required to enter a subject for the message to send your thread";
-$l['error_nomessage'] = "You are required to enter a message before you can send this thread to your friend";
-
+$l['send_thread'] = "Arkadaşına Gönder";
+$l['recipient'] = "Alıcı:";
+$l['recipient_note'] = "Arkadaşlarınızın e-posta adresini buraya girin.";
+$l['subject'] = "Konu:";
+$l['message'] = "Mesaj:";
+$l['error_nosubject'] = "Mesajınızı göndermek için bir konu girmeniz gerekmektedir.";
+$l['error_nomessage'] = "Bu konuyu arkadaşınıza gönderebilmeniz için önce bir mesaj girmeniz gerekmektedir.";

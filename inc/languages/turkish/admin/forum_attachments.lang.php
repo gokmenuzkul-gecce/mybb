@@ -1,112 +1,119 @@
 <?php
+
 /**
- * MyBB 1.8 English Language Pack
- * Copyright 2014 MyBB Group, All Rights Reserved
+ * MyBB 1.8 Türkçe Dil Paketi
+ * Copyright © 2024 MyBB Pro, Tüm Hakları Saklıdır.
+ * 
+ * Website: https://mybb.pro
+ * Lisans: https://mybb.pro/hakkimizda/lisans/
+ * 
+ * Support: https://mybb.pro/
  *
+ * Last Update: 08.12.2024 (v1.8.38)
  */
 
-// Tabs
-$l['attachments'] = "Attachments";
-$l['stats'] = "Statistics";
-$l['find_attachments'] = "Find Attachments";
-$l['find_attachments_desc'] = "Using the attachments search system you can search for specific files users have attached to your forums. Begin by entering some search terms below. All fields are optional and won't be included in the criteria unless they contain a value.";
-$l['find_orphans'] = "Find Orphaned Attachments";
-$l['find_orphans_desc'] = "Orphaned attachments are attachments which are for some reason missing in the database or the file system. This utility will assist you in locating and removing them.";
-$l['attachment_stats'] = "Attachment Statistics";
-$l['attachment_stats_desc'] = "Below are some general statistics for the attachments currently on your forum.";
+// Sekmeler
+$l['attachments'] = "Ek Dosyalar";
+$l['stats'] = "İstatistikler";
+$l['find_attachments'] = "Ek Dosyaları Bul";
+$l['find_attachments_desc'] = "Ek dosya arama sistemini kullanarak kullanıcıların forumlarınıza ekledikleri belirli dosyaları arayabilirsiniz. Aşağıya bazı arama terimleri girerek başlayın. Tüm alanlar isteğe bağlıdır ve bir değer içermedikleri sürece arama kriterlerine dahil edilmezler.";
+$l['find_orphans'] = "Sahipsiz Ek Dosyaları Bul";
+$l['find_orphans_desc'] = "Sahipsiz ek dosyalar, veritabanında veya dosya sisteminde herhangi bir nedenle eksik/hatalı olan ek dosyalardır. Bu araç, bunları bulmanıza ve kaldırmanıza yardımcı olacaktır.";
+$l['attachment_stats'] = "Ek Dosya İstatistikleri";
+$l['attachment_stats_desc'] = "Aşağıda, şu anda forumunuzda bulunan ek dosyalar için bazı genel istatistikler yer almaktadır.";
 
-// Errors
-$l['error_nothing_selected'] = "Please select one or more attachments to delete.";
-$l['error_no_attachments'] = "There aren't any attachments on your forum yet. Once an attachment is posted you'll be able to access this section.";
-$l['error_not_all_removed'] = "Only some orphaned attachments were successfully deleted, others could not be removed from the uploads directory.";
-$l['error_count'] = 'Unable to remove {1} attachment(s).';
-$l['error_invalid_username'] = "The username you entered is invalid.";
-$l['error_invalid_forums'] = "One or more forums you selected are invalid.";
-$l['error_no_results'] = "No attachments were found with the specified search criteria.";
-$l['error_not_found'] = "Attachment file could not be found in the uploads directory.";
-$l['error_not_attached'] = "Attachment was uploaded over 24 hours ago but not attached to a post.";
-$l['error_does_not_exist'] = "Thread or post for this attachment no longer exists.";
+// Hatalar
+$l['error_nothing_selected'] = "Lütfen silmek için bir veya daha fazla ek dosya seçin.";
+$l['error_no_attachments'] = "Forumunuzda henüz herhangi bir ek dosya yok. Bir ek dosya yüklendikten sonra bu bölüme erişebileceksiniz.";
+$l['error_not_all_removed'] = "Sadece bazı sahipsiz ek dosyalar başarıyla silindi, diğerleri yükleme dizininden kaldırılamadı.";
+$l['error_count'] = '{1} ek dosyaları kaldırılamıyor.';
+$l['error_invalid_username'] = "Girdiğiniz kullanıcı adı geçersiz.";
+$l['error_invalid_forums'] = "Seçtiğiniz bir veya daha fazla forum geçersiz.";
+$l['error_no_results'] = "Belirtilen arama kriterlerine uygun hiçbir ek dosya bulunamadı.";
+$l['error_not_found'] = "Ek dosya uploads dizininde bulunamadı.";
+$l['error_not_attached'] = "Ek Dosya 24 saat önce yüklenmiş ancak herhangi bir gönderiye eklenmemiş.";
+$l['error_does_not_exist'] = "Bu ek dosya için konu veya gönderi artık mevcut değil.";
 
-// Success
-$l['success_deleted'] = "The selected attachments have been deleted successfully.";
-$l['success_orphan_deleted'] = "The selected orphaned attachment(s) have been deleted successfully.";
-$l['success_count'] = '{1} attachment(s) removed successfully.';
-$l['success_no_orphans'] = "There are no orphaned attachments on your forum.";
+// Başarılı Mesajları
+$l['success_deleted'] = "Seçilen ek dosya(lar) başarıyla silindi.";
+$l['success_orphan_deleted'] = "Seçilen sahipsiz ek dosya(lar) başarıyla silindi.";
+$l['success_count'] = '{1} ek dosya(lar) başarıyla kaldırıldı.';
+$l['success_no_orphans'] = "Forumunuzda sahipsiz ek dosya yok.";
 
-// Confirm
-$l['confirm_delete'] = "Are you sure you wish to delete the selected attachments?";
+// Onay
+$l['confirm_delete'] = "Seçilen ek dosyaları silmek istediğinizden emin misiniz?";
 
-// == Pages
-// = Stats
-$l['general_stats'] = "General Statistics";
-$l['stats_attachment_stats'] = "Attachments - Attachment Statistics";
-$l['num_uploaded'] = "<strong>No. Uploaded Attachments</strong>";
-$l['space_used'] = "<strong>Attachment Space Used</strong>";
-$l['bandwidth_used'] = "<strong>Estimated Bandwidth Usage</strong>";
-$l['average_size'] = "<strong>Average Attachment Size</strong>";
-$l['size'] = "Size";
-$l['posted_by'] = "Posted By";
-$l['thread'] = "Thread";
-$l['downloads'] = "Downloads";
-$l['date_uploaded'] = "Date Uploaded";
-$l['popular_attachments'] = "Top 5 Most Popular Attachments";
-$l['largest_attachments'] = "Top 5 Largest Attachments";
-$l['users_diskspace'] = "Top 5 Users Using the Most Disk Space";
-$l['username'] = "Username";
-$l['total_size'] = "Total Size";
+// == Sayfalar
+// = İstatistikler
+$l['general_stats'] = "Genel İstatistikler";
+$l['stats_attachment_stats'] = "Ek Dosyalar - Ek Dosya İstatistikleri";
+$l['num_uploaded'] = "<strong>Hayır. Yüklenen Ek Dosyalar</strong>";
+$l['space_used'] = "<strong>Kullanılan Ek Dosya Alanı</strong>";
+$l['bandwidth_used'] = "<strong>Tahmini Bant Genişliği Kullanımı</strong>";
+$l['average_size'] = "<strong>Ortalama Ek Dosya Boyutu</strong>";
+$l['size'] = "Boyut";
+$l['posted_by'] = "Yükleyen";
+$l['thread'] = "Konu";
+$l['downloads'] = "İndirmeler";
+$l['date_uploaded'] = "Yüklendiği Tarih";
+$l['popular_attachments'] = "En Popüler 5 Ek Dosya";
+$l['largest_attachments'] = "Boyutu En Yüksek Olan 5 Ek Dosya";
+$l['users_diskspace'] = "En Çok Disk Alanı Kullanan İlk 5 Kullanıcı";
+$l['username'] = "Kullanıcı Adı";
+$l['total_size'] = "Toplam Boyut";
 
-// = Orphans
-$l['orphan_results'] = "Orphaned Attachments Search - Results";
-$l['orphan_attachments_search'] = "Orphaned Attachments Search";
-$l['reason_orphaned'] = "Reason Orphaned";
-$l['reason_not_in_table'] = "Not in attachments table";
-$l['reason_file_missing'] = "Attached file missing";
-$l['reason_thread_deleted'] = "Thread been deleted";
-$l['reason_post_never_made'] = "Post never made";
-$l['unknown'] = "Unknown";
-$l['results'] = "Results";
-$l['step1'] = "Step 1";
-$l['step2'] = "Step 2";
-$l['step1of2'] = "Step 1 of 2 - File System Scan";
-$l['step2of2'] = "Step 2 of 2 - Database Scan";
-$l['step1of2_line1'] = "Please wait, the file system is currently being scanned for orphaned attachments.";
-$l['step2of2_line1'] = "Please wait, the database is currently being scanned for orphaned attachments.";
-$l['step_line2'] = "You'll automatically be redirected to the next step once this process is complete.";
-$l['scanning'] = 'Scanning&hellip;';
+// = Sahipsizler
+$l['orphan_results'] = "Sahipsiz Ek Dosyalar Arama - Sonuçlar";
+$l['orphan_attachments_search'] = "Sahipsiz Ek Dosya Arama";
+$l['reason_orphaned'] = "Sahipsiz Kalma Nedeni";
+$l['reason_not_in_table'] = "Ek dosyalar tablosunda değil.";
+$l['reason_file_missing'] = "Ek dosya eksik.";
+$l['reason_thread_deleted'] = "Konusu silindi.";
+$l['reason_post_never_made'] = "Gönderi hiç yapılmadı.";
+$l['unknown'] = "Bilinmiyor";
+$l['results'] = "Sonuçlar";
+$l['step1'] = "Adım 1";
+$l['step2'] = "Adım 2";
+$l['step1of2'] = "Adım 1/2 - Dosya Sistemi Taraması";
+$l['step2of2'] = "Adım 2/2 - Veritabanı Taraması";
+$l['step1of2_line1'] = "Lütfen bekleyin, dosya sistemi şu anda sahipsiz ek dosyalar için taranıyor.";
+$l['step2of2_line1'] = "Lütfen bekleyin, veritabanı şu anda sahipsiz ek dosyalar için taranıyor.";
+$l['step_line2'] = "Bu işlem tamamlandığında otomatik olarak bir sonraki adıma yönlendirileceksiniz.";
+$l['scanning'] = 'Taranıyor&hellip;';
 
-// = Attachments / Index
-$l['index_find_attachments'] = "Attachments - Find Attachments";
-$l['find_where'] = "Find attachments where&hellip;";
-$l['name_contains'] = "File name contains";
-$l['name_contains_desc'] = "Search for attachments that include the given query in the file name. For example, enter .zip to find attachments using the .zip file extension.";
-$l['type_contains'] = "File type contains";
-$l['forum_is'] = "Forum is";
-$l['username_is'] = "Posters' username is";
-$l['poster_is'] = "Poster is";
-$l['poster_is_either'] = "User or Guest";
-$l['poster_is_user'] = "Users Only";
-$l['poster_is_guest'] = "Guests Only";
-$l['more_than'] = "More than";
-$l['greater_than'] = "Greater than";
-$l['is_exactly'] = "Is exactly";
-$l['less_than'] = "Less than";
-$l['date_posted_is'] = "Date posted is";
-$l['days_ago'] = "days ago";
-$l['file_size_is'] = "File size is";
+// = Ek Dosyalar / Dizin (İndex)
+$l['index_find_attachments'] = "Ek Dosyalar - Ek Dosyaları Bul";
+$l['find_where'] = "Ek Dosyaları Nasıl Bulabiliriz&hellip;";
+$l['name_contains'] = "Dosya Adıyla Ara";
+$l['name_contains_desc'] = "Dosya adını içeren ek dosyaları arayın. Örneğin, .zip dosya uzantısını kullanan ekleri bulmak için .zip girin.";
+$l['type_contains'] = "Dosya Türüne Göre Ara";
+$l['forum_is'] = "Forumlarda Bul";
+$l['username_is'] = "Yükleyen Kullanıcının Adı";
+$l['poster_is'] = "Yükleyen Kişi";
+$l['poster_is_either'] = "Kullanıcı veya Ziyaretçi";
+$l['poster_is_user'] = "Yalnızca Kullanıcılar";
+$l['poster_is_guest'] = "Sadece Ziyaretçiler";
+$l['more_than'] = "Daha Fazla";
+$l['greater_than'] = "Daha Büyük";
+$l['is_exactly'] = "Tam Olarak";
+$l['less_than'] = "Daha Az";
+$l['date_posted_is'] = "Gönderildiği Tarih";
+$l['days_ago'] = "Gün Önce";
+$l['file_size_is'] = "Dosya Boyutu";
 $l['kb'] = "KB";
-$l['download_count_is'] = "Download count is";
-$l['display_options'] = "Display Options";
-$l['filename'] = "File Name";
-$l['filesize'] = "File Size";
-$l['download_count'] = "Download Count";
-$l['post_username'] = "Post Username";
-$l['asc'] = "Ascending";
-$l['desc'] = "Descending";
-$l['sort_results_by'] = "Sort results by";
-$l['results_per_page'] = "Results per page";
-$l['in'] = "in";
+$l['download_count_is'] = "İndirme Sayısı";
+$l['display_options'] = "Görüntüleme Seçenekleri";
+$l['filename'] = "Dosya Adı";
+$l['filesize'] = "Dosya Boyutu";
+$l['download_count'] = "İndirme Sayısı";
+$l['post_username'] = "Yükleyen Kullanıcı Adı";
+$l['asc'] = "Artan";
+$l['desc'] = "Azalan";
+$l['sort_results_by'] = "Sonuçları Şuna Göre Sırala";
+$l['results_per_page'] = "Sayfa Başına Sonuç";
+$l['in'] = "-";
 
-// Buttons
-$l['button_delete_orphans'] = "Sil Checked Orphans";
-$l['button_delete_attachments'] = "Sil Checked Attachments";
-$l['button_find_attachments'] = "Find Attachments";
+// Buttonlar
+$l['button_delete_orphans'] = "İşaretlenen Sahipsizleri Sil";
+$l['button_delete_attachments'] = "Seçilen Ek Dosyaları Sil";
+$l['button_find_attachments'] = "Ek Dosyaları Bul";
