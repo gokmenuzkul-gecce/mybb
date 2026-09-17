@@ -16,7 +16,7 @@ function simulated_community_meta()
 
 	$sub_menu = $plugins->run_hooks('admin_simulated_community_menu', $sub_menu);
 
-	$page->add_menu_item('Simüle Topluluk', 'simulated_community', 'index.php?module=simulated_community', 67, $sub_menu);
+	$page->add_menu_item('Simüle Topluluk', 'simulated_community', 'index.php?module=simulated_community', 62, $sub_menu);
 	return true;
 }
 
@@ -42,11 +42,11 @@ function simulated_community_action_handler($action)
 
 function simulated_community_admin_permissions()
 {
-	global $lang;
-
 	return array(
-		'simulated_community' => array(
+		'name' => 'Simüle Topluluk',
+		'permissions' => array(
 			'dashboard' => 'Simüle topluluk panelini görüntüle ve içerik üret',
 		),
+		'disporder' => 67,
 	);
 }

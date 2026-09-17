@@ -31,7 +31,7 @@ if(defined('THIS_SCRIPT') && THIS_SCRIPT == 'index.php')
 }
 
 $plugins->add_hook('build_forumbits_forum', 'crypto_forumcards_enrich');
-$plugins->add_hook('pre_output_page', 'crypto_forumcards_slider');
+$plugins->add_hook('global_start', 'crypto_usermenu_global_start');
 
 function crypto_forumcards_info()
 {
@@ -39,7 +39,7 @@ function crypto_forumcards_info()
 		'name'			=> 'Crypto Forum Cards',
 		'description'	=> 'Forum satirlarina basliga gore ikon ve son mesaj atanin avatarini ekler.',
 		'website'		=> '',
-		'author'		=> 'crypto-web3 theme',
+		'author'		=> 'Gecce',
 		'authorsite'	=> '',
 		'version'		=> '1.0',
 		'compatibility'	=> '18*',
@@ -234,111 +234,53 @@ function crypto_forumcards_avatar_for($uid)
 	return $cache[$uid];
 }
 
+
+/* --------------------------------------------------------- user menu --- */
+
 /**
- * Featured-thread slider for the board index.
- *
- * Threads are pulled live rather than hard-coded so the hero never goes stale,
- * and every candidate is filtered through the viewer's own forum permissions —
- * surfacing a thread from a forum they cannot read would leak both its title
- * and its existence.
+ * Feed the header's user menu: avatar, primary group title and PM counters.
  */
-function crypto_forumcards_slider($contents)
+function crypto_usermenu_global_start()
 {
-        global $mybb, $db;
+    global $mybb, $db, $templates, $lang, $config;
+    global $nextgen_usermenu_avatar, $nextgen_usermenu_group, $nextgen_usermenu_pm, $nextgen_usermenu_staff;
 
-        if(THIS_SCRIPT != 'index.php')
-        {
-                return $contents;
-        }
+    $nextgen_usermenu_staff = '';
 
-        // Guard on the markup, not the bare class prefix: headerinclude carries
-        // the slider's JS, which contains "nextgen-slider-dot" and would
-        // otherwise make this bail out on every page that loads the theme.
-        if(strpos($contents, 'class="nextgen-slider"') !== false)
-        {
-                return $contents;
-        }
+    $uid = (int)$mybb->user['uid'];
+    if($uid <= 0)
+    {
+        return;
+    }
 
-        $perms = forum_permissions();
-        $readable = array();
-        foreach($perms as $fid => $perm)
-        {
-                if(!empty($perm['canview']) && !empty($perm['canviewthreads']))
-                {
-                        $readable[] = (int)$fid;
-                }
-        }
+    $avatar = format_avatar($mybb->user['avatar'], $mybb->user['avatardimensions'], '44x44');
+    $nextgen_usermenu_avatar = '<img class="nextgen-usermenu-img" src="'.htmlspecialchars_uni($avatar['image']).'" alt="" loading="lazy" />';
 
-        if(!$readable)
-        {
-                return $contents;
-        }
+    $group = $mybb->usergroup['title'] ? $mybb->usergroup['title'] : $lang->guest;
+    $nextgen_usermenu_group = htmlspecialchars_uni($group);
 
-        // Prefer threads with discussion behind them; a slider of empty test
-        // topics reads as a dead board. If the board is too young to have any,
-        // fall back to whatever exists rather than showing nothing.
-        $fids = implode(',', $readable);
-        $sql = "
-                SELECT t.tid, t.subject, t.replies, t.views, t.dateline, t.uid, t.username,
-                       f.name AS forumname, f.fid
-                FROM ".TABLE_PREFIX."threads t
-                LEFT JOIN ".TABLE_PREFIX."forums f ON (f.fid = t.fid)
-                WHERE t.visible='1' AND t.fid IN ({$fids}) AND t.closed NOT LIKE 'moved|%'
-                {FILTER}
-                ORDER BY t.replies DESC, t.views DESC, t.dateline DESC
-                LIMIT 5
-        ";
+    $unread = (int)$mybb->user['unreadpms'];
+    $total = (int)$mybb->user['totalpms'];
+    $nextgen_usermenu_pm = '<span class="nextgen-usermenu-badge'.($unread > 0 ? ' is-unread' : '').'">'.$unread.'/'.$total.'</span>';
 
-        // str_replace rather than sprintf: the LIKE pattern above contains a
-        // literal '%' that sprintf would read as a conversion specifier.
-        $query = $db->query(str_replace('{FILTER}', 'AND (t.replies >= 2 OR t.views >= 50)', $sql));
-        if($db->num_rows($query) < 2)
-        {
-                $query = $db->query(str_replace('{FILTER}', '', $sql));
-        }
+    // Staff shortcuts are built here rather than with a template conditional:
+    // MyBB 1.8 templates have no <if> syntax, so an inline conditional would be
+    // printed to every member verbatim and leak the links to them.
+    $bburl = $mybb->settings['bburl'];
+    $staff = '';
 
-        $slides = '';
-        $dots = '';
-        $i = 0;
-        while($t = $db->fetch_array($query))
-        {
-                $subject = htmlspecialchars_uni($t['subject']);
-                $forum = htmlspecialchars_uni($t['forumname']);
-                $url = htmlspecialchars_uni(get_thread_link((int)$t['tid']));
-                $replies = (int)$t['replies'];
-                $views = (int)$t['views'];
-                $active = ($i === 0) ? ' is-active' : '';
+    if(!empty($mybb->usergroup['canmodcp']))
+    {
+        $staff .= '<a class="nextgen-usermenu-link is-staff" href="'.$bburl.'/modcp.php">'
+            . '<i class="fa-solid fa-gavel" aria-hidden="true"></i><span>Mod CP</span></a>';
+    }
 
-                $slides .= '<a class="nextgen-slide'.$active.'" href="'.$url.'" data-slide="'.$i.'">'
-                        . '<span class="nextgen-slide-forum">'.$forum.'</span>'
-                        . '<strong class="nextgen-slide-title">'.$subject.'</strong>'
-                        . '<span class="nextgen-slide-meta">'.$replies.' yanıt &middot; '.$views.' görüntüleme</span>'
-                        . '</a>';
+    if(!empty($mybb->usergroup['cancp']))
+    {
+        $admin_dir = !empty($config['admin_dir']) ? $config['admin_dir'] : 'admin';
+        $staff .= '<a class="nextgen-usermenu-link is-staff" href="'.$bburl.'/'.$admin_dir.'/index.php">'
+            . '<i class="fa-solid fa-shield-halved" aria-hidden="true"></i><span>Admin CP</span></a>';
+    }
 
-                $dots .= '<button type="button" class="nextgen-slider-dot'.$active.'" data-slide="'.$i.'" aria-label="'.$subject.'"></button>';
-                $i++;
-        }
-
-        if($i < 2)
-        {
-                return $contents;
-        }
-
-        $slider = <<<HTML
-<section class="nextgen-slider" aria-label="Öne çıkan konular" data-slider>
-  <div class="nextgen-slider-track">{$slides}</div>
-  <div class="nextgen-slider-nav">{$dots}</div>
-</section>
-HTML;
-
-        // Sits directly above the forum directory so it reads as the board's
-        // own highlight reel rather than as an advertisement.
-        $needle = '<section class="nextgen-forum-directory"';
-        $pos = strpos($contents, $needle);
-        if($pos !== false)
-        {
-                $contents = substr_replace($contents, $slider.$needle, $pos, strlen($needle));
-        }
-
-        return $contents;
+    $nextgen_usermenu_staff = $staff;
 }

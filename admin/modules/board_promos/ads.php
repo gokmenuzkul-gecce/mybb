@@ -18,10 +18,10 @@ $action = $mybb->get_input('action');
 $adid = $mybb->get_input('adid', MyBB::INPUT_INT);
 
 $placements = array(
-        'index_top' => 'Ana sayfa &mdash; hero altı (geniş)',
-        'index_mid' => 'Ana sayfa &mdash; forum listesi altı',
-        'index_bottom' => 'Ana sayfa &mdash; sayfa sonu',
-        'global_footer' => 'Tüm sayfalar &mdash; footer üstü',
+        'index_top' => array('label' => 'Ana sayfa: Hero altı (geniş)', 'hint' => 'Ana sayfanın en üstünde, forum listesinin hemen üstünde görünür.'),
+        'index_mid' => array('label' => 'Ana sayfa: Forum listesi altı', 'hint' => 'Ana sayfada forum kategorilerinin bittiği yerde görünür.'),
+        'index_bottom' => array('label' => 'Ana sayfa: Sayfa sonu', 'hint' => 'Ana sayfanın en altında, topluluk duyurusunun üstünde görünür.'),
+        'global_footer' => array('label' => 'Tüm sayfalar: Footer üstü', 'hint' => 'Konu, forum ve profil dahil her sayfanın altında görünür.'),
 );
 
 $sizes = array(
@@ -41,16 +41,29 @@ $types = array(
 
 /**
  * Render a <select> with the row's current value preselected.
+ *
+ * Labels are plain text: MyBB's Form helper escapes the option body, so an
+ * embedded entity such as `&mdash;` would be printed verbatim to the admin.
  */
 function board_promos_select($name, $map, $current)
 {
         $out = '<select name="'.$name.'" id="'.$name.'">';
         foreach($map as $value => $label)
         {
+                $text = is_array($label) ? $label['label'] : $label;
                 $sel = ((string)$value === (string)$current) ? ' selected="selected"' : '';
-                $out .= '<option value="'.htmlspecialchars_uni($value).'"'.$sel.'>'.htmlspecialchars_uni(strip_tags($label)).'</option>';
+                $out .= '<option value="'.htmlspecialchars_uni($value).'"'.$sel.'>'.htmlspecialchars_uni($text).'</option>';
         }
         return $out.'</select>';
+}
+
+/**
+ * The one-line hint shown under the placement dropdown, reflecting what is
+ * currently selected.
+ */
+function board_promos_placement_hint($map, $current)
+{
+        return isset($map[$current]['hint']) ? $map[$current]['hint'] : 'Reklamın sayfada çıkacağı alan.';
 }
 
 if($mybb->request_method == 'post')
@@ -197,7 +210,7 @@ if($action == 'add' || $action == 'edit')
 
         $fc->output_row('Reklam adı', 'Yalnızca panelde görünür. Örn: Eylül bülten sponsorluğu.', $form->generate_text_box('title', htmlspecialchars_uni($a['title']), array('maxlength' => 160)), 'title');
         $fc->output_row('Tür', 'Görsel, yazılı ya da butonlu.', board_promos_select('type', $types, $a['type']));
-        $fc->output_row('Yerleşim', 'Reklamın sayfada çıkacağı alan.', board_promos_select('placement', $placements, $a['placement']));
+        $fc->output_row('Yerleşim', board_promos_placement_hint($placements, $a['placement']), board_promos_select('placement', $placements, $a['placement']));
         $fc->output_row('Boyut', 'Alanın görsel biçimi.', board_promos_select('size', $sizes, $a['size']));
         $fc->output_row('Metin', 'Yazılı ve butonlu reklamlarda gösterilir.', $form->generate_text_area('body', htmlspecialchars_uni($a['body']), array('rows' => 3)), 'body');
         $fc->output_row('Görsel adresi', 'Tam adres ya da site içi yol. Örn: images/sponsor.png', $form->generate_text_box('image_url', htmlspecialchars_uni($a['image_url'])), 'image_url');
@@ -251,8 +264,12 @@ while($a = $db->fetch_array($query))
         $label = '<strong>'.htmlspecialchars_uni($a['title']).'</strong>'
                 . '<div class="smalltext">'.htmlspecialchars_uni(isset($types[$a['type']]) ? $types[$a['type']] : $a['type']).'</div>';
 
+        $placement_text = isset($placements[$a['placement']]['label'])
+                ? $placements[$a['placement']]['label']
+                : $a['placement'];
+
         $table->construct_cell($label);
-        $table->construct_cell(htmlspecialchars_uni(isset($placements[$a['placement']]) ? strip_tags($placements[$a['placement']]) : $a['placement']), array('class' => 'align_center'));
+        $table->construct_cell(htmlspecialchars_uni($placement_text), array('class' => 'align_center'));
         $table->construct_cell(htmlspecialchars_uni(isset($sizes[$a['size']]) ? $sizes[$a['size']] : $a['size']), array('class' => 'align_center'));
         $table->construct_cell((int)$a['clicks'], array('class' => 'align_center'));
         $table->construct_cell($status, array('class' => 'align_center'));

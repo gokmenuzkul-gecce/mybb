@@ -17,7 +17,7 @@ function rss_news_bot_meta()
 
 	$sub_menu = $plugins->run_hooks('admin_rss_news_bot_menu', $sub_menu);
 
-	$page->add_menu_item('RSS Haber Botu', 'rss_news_bot', 'index.php?module=rss_news_bot', 66, $sub_menu);
+	$page->add_menu_item('RSS Haber Botu', 'rss_news_bot', 'index.php?module=rss_news_bot', 61, $sub_menu);
 	return true;
 }
 
@@ -44,12 +44,12 @@ function rss_news_bot_action_handler($action)
 
 function rss_news_bot_admin_permissions()
 {
-	global $lang;
-
 	return array(
-		'rss_news_bot' => array(
+		'name' => 'RSS Haber Botu',
+		'permissions' => array(
 			'queue' => 'Haber onay kuyruğunu görüntüle ve onayla',
 			'feeds' => 'RSS beslemelerini yönet',
 		),
+		'disporder' => 66,
 	);
 }

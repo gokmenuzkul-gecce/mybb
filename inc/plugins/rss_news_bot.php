@@ -22,7 +22,7 @@ function rss_news_bot_info()
 		'name' => 'RSS Haber Botu',
 		'description' => 'Kripto haber sitelerinin RSS beslemelerini çeker, onay kuyruğuna ekler. Konular yalnızca yönetici onayından sonra açılır.',
 		'website' => '',
-		'author' => 'Crypton Web3',
+		'author' => 'Gecce',
 		'authorsite' => '',
 		'version' => '1.0',
 		'codename' => 'rss_news_bot',

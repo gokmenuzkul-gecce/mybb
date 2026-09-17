@@ -24,7 +24,6 @@ if(!defined('IN_MYBB'))
         die('Bu dosyaya doğrudan erişilemez.');
 }
 
-$plugins->add_hook('global_start', 'board_promos_footer_ad');
 $plugins->add_hook('pre_output_page', 'board_promos_announcements');
 $plugins->add_hook('pre_output_page', 'board_promos_ads');
 $plugins->add_hook('pre_output_page', 'board_promos_sponsor_strip');
@@ -37,7 +36,7 @@ function board_promos_info()
                 'name'          => 'Duyuru, Reklam ve Sponsor Yönetimi',
                 'description'   => 'Ana sayfa duyuru şeridi, reklam alanları ve sponsor/affiliate takibi.',
                 'website'       => '',
-                'author'        => 'Crypton Web3 Community',
+                'author'        => 'Gecce',
                 'authorsite'    => '',
                 'version'       => '1.0',
                 'guid'          => 'c4f8a1d6e27b4390ab5c8d1f6e93b204',
@@ -396,16 +395,43 @@ function board_promos_create_templates()
 /* ----------------------------------------------------------- helpers --- */
 
 /**
- * Only http(s), site-absolute and board-relative targets are allowed through.
+ * Does this look like a hostname rather than a board-relative path?
  *
- * Everything here is typed by an admin, but a stored `javascript:` value would
- * be served to every member as a live link, so the scheme is checked on the way
- * in and again on the way out.
- *
- * A bare "tronscan.org/x" is deliberately NOT auto-prefixed: "sponsor.php" is a
- * legal relative path that the same heuristic would rewrite into
- * "https://sponsor.php". External links must spell out their scheme.
+ * Operators routinely type `google.com` without a scheme. Treating that as a
+ * relative path silently rewrote it to `https://<board>/google.com`, which is
+ * why sponsor links appeared to go nowhere. The trailing label must look like a
+ * real TLD and must not be a file extension, so `sponsor.php` and
+ * `images/ad.png` stay relative.
  */
+function board_promos_bare_domain($url)
+{
+        if(strpos($url, '.') === false || preg_match('/\s/', $url))
+        {
+                return false;
+        }
+        if(!preg_match('#^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?(?:\.[a-z0-9](?:[a-z0-9-]*[a-z0-9])?)+(?::\d+)?(?:[/?].*)?$#i', $url))
+        {
+                return false;
+        }
+
+        $path = preg_replace('#^([^/?]*).*$#', '$1', $url);
+        $last = strtolower(substr($path, strrpos($path, '.') + 1));
+
+        $extensions = array(
+                'php', 'php3', 'php4', 'php5', 'phtml', 'html', 'htm', 'xhtml', 'asp', 'aspx',
+                'jsp', 'cgi', 'pl', 'css', 'js', 'mjs', 'json', 'xml', 'txt', 'csv', 'pdf',
+                'zip', 'gz', 'tar', 'rar', 'png', 'jpg', 'jpeg', 'gif', 'svg', 'webp', 'ico',
+                'bmp', 'avif', 'mp4', 'webm', 'mp3', 'wav', 'woff', 'woff2', 'ttf', 'eot',
+        );
+
+        if(strlen($last) < 2 || strlen($last) > 24 || in_array($last, $extensions, true))
+        {
+                return false;
+        }
+
+        return true;
+}
+
 function board_promos_safe_url($url)
 {
         $url = trim((string)$url);
@@ -417,14 +443,22 @@ function board_promos_safe_url($url)
         {
                 return $url;
         }
-        if($url[0] === '/' || $url[0] === '#')
+        if($url[0] === '#' || strpos($url, '//') === 0)
+        {
+                return '';
+        }
+        if($url[0] === '/')
         {
                 return $url;
         }
         // Any other scheme (javascript:, data:, mailto:) is refused outright.
-        if(strpos($url, ':') !== false || strpos($url, '//') === 0)
+        if(strpos($url, ':') !== false)
         {
                 return '';
+        }
+        if(board_promos_bare_domain($url))
+        {
+                return $url;
         }
         return $url;
 }
@@ -445,6 +479,12 @@ function board_promos_abs_url($url, $bburl)
         if($url[0] === '/')
         {
                 return $bburl.$url;
+        }
+        // Scheme-less hosts get one guessed for them; relative board paths do not
+        // get prefixed with http:// or they would look like hostnames.
+        if(board_promos_bare_domain($url))
+        {
+                return 'http://'.$url;
         }
         return $bburl.'/'.$url;
 }
@@ -544,19 +584,9 @@ function board_promos_active_sponsors()
  */
 function board_promos_should_show_promo()
 {
-        global $mybb;
-
-        if(!empty($mybb->usergroup['canmodcp']) || !empty($mybb->usergroup['cancp']))
-        {
-                return false;
-        }
-
-        $vip_gid = (int)$mybb->settings['vip_group'];
-        if($vip_gid && (int)$mybb->user['uid'] > 0 && (int)$mybb->user['usergroup'] == $vip_gid)
-        {
-                return false;
-        }
-
+        // Promo placements must look identical signed in or signed out. Staff and
+        // VIP members previously got a different page from guests, which is exactly
+        // the inconsistency the placement rules are meant to avoid.
         return true;
 }
 
@@ -703,6 +733,10 @@ function board_promos_render_ad($ad)
                 $href = htmlspecialchars_uni($mybb->settings['bburl'].'/promo.php?go=ad&id='.(int)$ad['adid']);
         }
 
+        // Outbound campaigns are opened in a new tab; the click counter has already
+        // recorded the referral by the time the destination loads.
+        $link_attrs = ' target="_blank" rel="noopener noreferrer sponsored"';
+
         $inner = '';
 
         if($type === 'image')
@@ -713,7 +747,7 @@ function board_promos_render_ad($ad)
                         ? '<img src="'.htmlspecialchars_uni($img).'" alt="'.$alt.'" loading="lazy" />'
                         : '<span class="nextgen-ad-missing">Görsel eklenmedi</span>';
                 $inner = $href !== ''
-                        ? '<a class="nextgen-ad-link" href="'.$href.'">'.$img_html.'</a>'
+                        ? '<a class="nextgen-ad-link" href="'.$href.'"'.$link_attrs.'>'.$img_html.'</a>'
                         : $img_html;
         }
         elseif($type === 'button')
@@ -722,22 +756,51 @@ function board_promos_render_ad($ad)
                 $body = htmlspecialchars_uni($ad['body']);
                 $inner = ($body !== '' ? '<span class="nextgen-ad-copy">'.$body.'</span>' : '');
                 $inner .= $href !== ''
-                        ? '<a class="nextgen-ad-button" href="'.$href.'">'.$label.'</a>'
+                        ? '<a class="nextgen-ad-button" href="'.$href.'"'.$link_attrs.'>'.$label.'</a>'
                         : '<span class="nextgen-ad-button">'.$label.'</span>';
         }
         else
         {
                 $body = htmlspecialchars_uni($ad['body']);
-                $label = htmlspecialchars_uni($ad['button_text']);
-                $inner = '<span class="nextgen-ad-copy">'.$body.'</span>';
-                if($href !== '' && $label !== '')
+                // A text ad with a target but no button label used to render no
+                // anchor at all, so the campaign looked broken. Fall back to the
+                // ad's own name instead of silently dropping the link.
+                $label = htmlspecialchars_uni($ad['button_text'] !== '' ? $ad['button_text'] : $ad['title']);
+                if($href !== '')
                 {
-                        $inner .= '<a class="nextgen-ad-button" href="'.$href.'">'.$label.'</a>';
+                        $inner = '<a class="nextgen-ad-copy nextgen-ad-copy-link" href="'.$href.'"'.$link_attrs.'>'.$body.'</a>';
+                        $inner .= '<a class="nextgen-ad-button" href="'.$href.'"'.$link_attrs.'>'.$label.'</a>';
+                }
+                else
+                {
+                        $inner = '<span class="nextgen-ad-copy">'.$body.'</span>';
                 }
         }
 
         return '<div class="nextgen-ad nextgen-ad-'.$size.'" data-ad-type="'.htmlspecialchars_uni($type).'">'
                 . '<span class="nextgen-ad-label">Reklam</span>'.$inner.'</div>';
+}
+
+/**
+ * Invitation shown in a placement that has no active ad.
+ *
+ * Rendered by board_promos_ads() only when the `promo_ads_placeholder` setting
+ * is on, which is what makes that toggle in the ACP do something.
+ */
+function board_promos_placeholder_html()
+{
+        global $mybb;
+
+        $url = htmlspecialchars_uni($mybb->settings['bburl']).'/sponsor.php';
+
+        return '<div class="nextgen-ad-placeholder">'
+                . '<i class="fa-solid fa-bullhorn" aria-hidden="true"></i>'
+                . '<div class="nextgen-ad-placeholder-copy">'
+                . '<strong>Bu alan sponsorluk i&#231;in a&#231;&#305;k</strong>'
+                . '<span>Markan&#305;z&#305; kripto ve web3 toplulu&#287;una tan&#305;t&#305;n. Al&#305;mlar s&#305;n&#305;rl&#305; say&#305;da.</span>'
+                . '</div>'
+                . '<a class="nextgen-ad-placeholder-cta" href="'.$url.'">Teklif Al</a>'
+                . '</div>';
 }
 
 function board_promos_ads($contents)
@@ -754,26 +817,42 @@ function board_promos_ads($contents)
 
         if($is_index)
         {
+                // index_top is the main-sponsor box above the forum directory. The
+                // other two anchor on markers that ship in the custom index template,
+                // so every placement offered in the ACP actually renders somewhere.
                 $slots['index_top'] = '<section class="nextgen-promo-grid"';
-                $slots['index_mid'] = '<section class="nextgen-community-notice"';
-                $slots['index_bottom'] = '<dl class="forum_legend';
+                $slots['index_mid'] = '<section class="nextgen-forum-directory"';
+                $slots['index_bottom'] = '<section class="nextgen-community-notice"';
         }
 
-        $placeholder = '';
-
-        // The unsold-slot invitation is itself a call to action, so it is withheld
-        // from staff and from members who already pay for VIP.
-        if($mybb->settings['promo_ads_placeholder'] == 1 && board_promos_should_show_promo())
+        // The footer slot lands above the footer links on every page. Only matched
+        // when a global_footer ad is sold, so unsold pages keep their markup clean.
+        if(board_promos_active_ads('global_footer'))
         {
-                $placeholder = '<div class="nextgen-ad nextgen-ad-placeholder"><span class="nextgen-ad-label">Reklam</span>'
-                        . '<span class="nextgen-ad-copy">Buraya reklam verebilirsiniz</span>'
-                        . '<a class="nextgen-ad-button" href="'.htmlspecialchars_uni($mybb->settings['bburl'].'/sponsor.php').'">Sponsor Ol</a></div>';
+                $slots['global_footer'] = '<nav class="nextgen-mobile-nav"';
+        }
+
+        // Unsold slots stay invisible unless the admin asked for the invitation.
+        // The pitch is aimed at visitors who could actually buy, so staff and
+        // existing VIP members never see it.
+        $placeholder = '';
+        if($mybb->settings['promo_ads_placeholder'] == 1
+                && empty($mybb->usergroup['cancp'])
+                && empty($mybb->usergroup['canmodcp'])
+                && (int)$mybb->user['usergroup'] != (int)$mybb->settings['vip_group'])
+        {
+                $placeholder = board_promos_placeholder_html();
         }
 
         foreach($slots as $slot => $needle)
         {
                 $ads = board_promos_active_ads($slot);
-                if(!$ads && $placeholder === '')
+
+                // The footer slot repeats on every page, so an empty one there would
+                // nag the whole board rather than the homepage.
+                $show_placeholder = ($placeholder !== '' && $slot !== 'global_footer');
+
+                if(!$ads && !$show_placeholder)
                 {
                         continue;
                 }
@@ -798,40 +877,6 @@ function board_promos_ads($contents)
         }
 
         return $contents;
-}
-
-/**
- * The footer anchor is a template variable, so it is filled in on every page.
- */
-function board_promos_footer_ad()
-{
-        global $mybb, $templates, $promo_footer_ad;
-
-        $promo_footer_ad = '';
-
-        if($mybb->settings['promo_ads_on'] != 1)
-        {
-                return;
-        }
-
-        $ads = board_promos_active_ads('global_footer');
-        $inner = '';
-        foreach($ads as $ad)
-        {
-                $inner .= board_promos_render_ad($ad);
-        }
-
-        if($inner === '' && $mybb->settings['promo_ads_placeholder'] == 1 && board_promos_should_show_promo())
-        {
-                $inner = '<div class="nextgen-ad nextgen-ad-placeholder"><span class="nextgen-ad-label">Reklam</span>'
-                        . '<span class="nextgen-ad-copy">Buraya reklam verebilirsiniz</span>'
-                        . '<a class="nextgen-ad-button" href="'.htmlspecialchars_uni($mybb->settings['bburl'].'/sponsor.php').'">Sponsor Ol</a></div>';
-        }
-
-        if($inner !== '')
-        {
-                $promo_footer_ad = '<section class="nextgen-ad-slot" data-promo-slot="global_footer">'.$inner.'</section>';
-        }
 }
 
 /* ---------------------------------------------------------- sponsors --- */
@@ -876,7 +921,7 @@ function board_promos_sponsor_strip($contents)
                 if($target !== '')
                 {
                         $href = htmlspecialchars_uni($mybb->settings['bburl'].'/promo.php?go=sponsor&id='.(int)$s['sid']);
-                        $items .= '<a class="nextgen-sponsor-card" href="'.$href.'" rel="sponsored noopener">'.$inner.'</a>';
+                        $items .= '<a class="nextgen-sponsor-card" href="'.$href.'" target="_blank" rel="sponsored noopener noreferrer">'.$inner.'</a>';
                 }
                 else
                 {

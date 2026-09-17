@@ -248,7 +248,22 @@ input.nextgen-reg-button:hover, input.nextgen-reg-button:focus { transform: tran
 .nextgen-thread-byline { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; margin-top: 5px; color: var(--text-dim); }
 .nextgen-thread-replies a { display: inline-block; min-width: 34px; padding: 5px 10px; border-radius: 9px; background: rgba(34, 197, 94, .14); box-shadow: inset 0 0 0 1px rgba(34, 197, 94, .3); color: #bbf7d0; font-size: 13px; font-weight: 800; }
 .nextgen-thread-replies a:hover { background: rgba(34, 197, 94, .26); color: #dcfce7; }
+/* Views carry the same pill treatment as replies; previously only replies had
+   one, so the two adjacent counters looked mismatched. */
 .nextgen-thread-views { color: var(--text-muted); font-size: 13px; font-weight: 700; }
+.nextgen-thread-viewcount { display: inline-block; min-width: 34px; padding: 5px 10px; border-radius: 9px; background: rgba(96, 165, 250, .13); box-shadow: inset 0 0 0 1px rgba(96, 165, 250, .3); color: #bfdbfe; font-size: 13px; font-weight: 800; }
+
+/* "First unread post" arrow. It used to be emitted inside the title cell, where
+   it pushed the subject sideways; it now has its own narrow leading cell. */
+.nextgen-thread-jump { width: 30px; padding-left: 0 !important; padding-right: 0 !important; }
+.nextgen-thread-jump img {
+  width: 16px;
+  height: 16px;
+  opacity: .55;
+  transition: opacity .18s ease, transform .18s ease;
+}
+.nextgen-thread-row:hover .nextgen-thread-jump img { opacity: 1; transform: translateX(2px); }
+.nextgen-thread-jump:empty { display: none; }
 .nextgen-thread-last .lastpost { display: inline-block; line-height: 1.6; color: var(--text-muted); }
 .nextgen-thread-last .lastpost a { color: #7dd3fc; font-weight: 600; }
 .nextgen-thread-last .lastpost a:hover { color: #bae6fd; }
@@ -317,9 +332,35 @@ form #message { width: 100%; min-height: 480px; padding: 15px 17px; border: 1px 
 #clickable_smilies td { display: flex !important; align-items: center; justify-content: center; min-height: 30px; padding: 4px !important; border-radius: 7px; }
 #clickable_smilies td:hover { background: var(--primary-soft); }
 #clickable_smilies .smilie { display: block; max-width: 24px; max-height: 24px; margin: auto; }
-/* Standalone smilie popup box only — must NOT match the posting form, which
-   embeds #clickable_smilies inside it (form also holds #message). */
-.tborder:has(#clickable_smilies):not(:has(#message)) { width: min(100%, 340px) !important; margin: 14px auto !important; }
+/* Standalone smilie popup box only — must NOT match a posting form (#message)
+   or the User CP signature editor (#signature), both of which embed
+   #clickable_smilies and would otherwise collapse to 340px. */
+.tborder:has(#clickable_smilies):not(:has(#message)):not(:has(#signature)) { width: min(100%, 340px) !important; margin: 14px auto !important; }
+
+/* Post icons are labels wrapping an <img>; keep them on one row. */
+.posticons_label { display: inline-flex; align-items: center; gap: 3px; margin: 0 8px 4px 0; white-space: nowrap; vertical-align: middle; }
+.posticons_label img { display: inline-block; vertical-align: middle; }
+
+/* --- User CP signature editor --- */
+.tborder:has(#signature) { width: 100% !important; }
+#signature {
+  width: 100%;
+  min-height: 320px;
+  padding: 15px 17px;
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  background: #0f1a2e;
+  color: var(--text-main);
+  font-size: 14.5px;
+  line-height: 1.65;
+}
+.tborder:has(#signature) .sceditor-container { min-height: 520px; }
+.tborder:has(#signature) .sceditor-container iframe { min-height: 405px; }
+
+/* PM quick reply: a plain textarea with rows="8", not the full posting editor.
+   The global form #message floor would otherwise stretch it to 480px. */
+.tborder:has(#quickreply_e) #message { min-height: 180px; }
+.tborder:has(#quickreply_e) > tbody > tr > td > div[style*="95%"] { width: 100%; }
 
 #content { padding: 34px 0 96px; background: radial-gradient(circle at 12% 0, rgba(59, 130, 246, .16), transparent 30%), linear-gradient(135deg, #0d1728 0%, #162238 100%); }
 .nextgen-hero { margin: 0 auto 28px; padding: 34px; border: 1px solid rgba(59, 130, 246, .26); border-radius: var(--radius-card); background-image: linear-gradient(120deg, rgba(15, 23, 42, .96), rgba(15, 23, 42, .72)), url('/images/crypto-hero.svg'); background-position: center, right center; background-repeat: no-repeat; background-size: cover, 52% auto; box-shadow: var(--shadow-card); }
@@ -347,16 +388,48 @@ form #message { width: 100%; min-height: 480px; padding: 15px 17px; border: 1px 
   background: var(--bg-card);
   box-shadow: var(--shadow-card);
 }
-.nextgen-forum-directory > table.tborder { margin-bottom: 18px; background: rgba(17, 24, 39, .62); }
-.nextgen-forum-directory > table.tborder > thead .thead { min-height: 68px; padding: 16px 20px; background: linear-gradient(135deg, #172554, #1e40af); font-size: 16px; }
+.nextgen-forum-directory > table.tborder {
+  margin-bottom: 22px;
+  border: 1px solid rgba(96, 165, 250, .16);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(20, 29, 47, .92), rgba(13, 19, 33, .96));
+  box-shadow: 0 26px 60px -34px rgba(2, 6, 23, .9), inset 0 1px 0 rgba(255, 255, 255, .04);
+}
+.nextgen-forum-directory > table.tborder > thead .thead {
+  min-height: 68px;
+  padding: 16px 22px;
+  border-bottom: 1px solid rgba(96, 165, 250, .16);
+  background: linear-gradient(135deg, rgba(30, 64, 175, .55), rgba(15, 23, 42, .3));
+  font-size: 16px;
+}
 .nextgen-forum-directory > table.tborder > thead .thead a { color: #eff6ff; }
 .nextgen-forum-category { display: inline-flex; align-items: center; gap: 10px; font-size: 16px; }
 .nextgen-forum-category i { color: #93c5fd; font-size: 18px; animation: nextgen-icon-float 4.4s ease-in-out infinite; }
-.nextgen-forum-colhead .tcat { padding: 9px 14px; color: var(--text-dim); background: #111827; font-size: 11px; letter-spacing: .04em; text-transform: uppercase; }
+/* Hairline column head instead of the stock grey band. */
+.nextgen-forum-colhead .tcat {
+  padding: 10px 14px;
+  border: 0;
+  border-bottom: 1px solid rgba(148, 163, 184, .12);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 10.5px;
+  letter-spacing: .09em;
+  text-transform: uppercase;
+}
 .nextgen-forum-row .trow1,
 .nextgen-forum-row .trow2 { padding: 13px 12px; background: transparent; border: 0; }
-.nextgen-forum-row:hover .trow1,
-.nextgen-forum-row:hover .trow2 { background: rgba(59, 130, 246, .07); }
+.nextgen-forum-row > td { border-bottom: 1px solid rgba(148, 163, 184, .09); transition: background .24s ease, box-shadow .24s ease; }
+.nextgen-forum-row:last-child > td { border-bottom: 0; }
+/* The row lifts on hover: a left accent rail, a soft wash and a slight shift of
+   the whole row, so moving down the list feels responsive. */
+.nextgen-forum-row:hover > .trow1,
+.nextgen-forum-row:hover > .trow2 {
+  background: linear-gradient(90deg, rgba(59, 130, 246, .14), rgba(59, 130, 246, .05) 55%, transparent) !important;
+}
+.nextgen-forum-row > td:first-child { box-shadow: inset 3px 0 0 transparent; }
+.nextgen-forum-row:hover > td:first-child { box-shadow: inset 3px 0 0 #3b82f6; }
+.nextgen-forum-row:hover .nextgen-forum-name { transform: translateX(3px); }
+.nextgen-forum-name { display: inline-block; transition: transform .24s cubic-bezier(.2, .8, .3, 1); }
 
 /* The icon leads the row and carries the read/unread state as a corner badge,
    so the row keeps a single focal point. .forum_status keeps its id, classes
@@ -896,6 +969,30 @@ textarea,
 .nextgen-vip-plan-price small { color: var(--text-muted); font-size: 14px; font-weight: 700; }
 .nextgen-vip-plan-per { margin-bottom: 8px; color: var(--text-dim); font-size: 12px; }
 .nextgen-vip-plan form { margin: 0; }
+/* Renewal ribbon: only rendered for members who already hold VIP, pinned to the
+   card corner so the plan still reads as a plan. */
+.nextgen-vip-plan-badge {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 12px;
+  border: 1px solid rgba(34, 197, 94, .45);
+  border-radius: 999px;
+  background: linear-gradient(135deg, #16a34a, #15803d);
+  color: #f0fdf4;
+  font-size: 10.5px;
+  font-weight: 800;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  box-shadow: 0 8px 18px -8px rgba(22, 163, 74, .8);
+}
+.nextgen-vip-plan-badge i { font-size: 10px; }
+/* The resulting expiry date of an extension, shown under the CTA. */
+.nextgen-vip-plan-note { display: block; margin-top: 7px; color: var(--text-dim); font-size: 11.5px; }
 
 .nextgen-vip-submit {
   display: inline-flex;
@@ -1078,8 +1175,8 @@ textarea,
 .nextgen-vip-showcase {
   position: relative;
   overflow: hidden;
-  margin: 30px 0;
-  padding: 30px 28px;
+  margin: 22px 0;
+  padding: 22px 20px;
   border: 1px solid rgba(250, 204, 21, .3);
   border-radius: 20px;
   background:
@@ -1098,7 +1195,7 @@ textarea,
   background: linear-gradient(90deg, transparent, var(--vip), transparent);
   opacity: .8;
 }
-.nextgen-vip-showcase-head { position: relative; margin-bottom: 22px; text-align: center; }
+.nextgen-vip-showcase-head { position: relative; margin-bottom: 16px; text-align: center; }
 .nextgen-vip-showcase-lock {
   display: inline-flex;
   align-items: center;
@@ -1115,28 +1212,28 @@ textarea,
 }
 .nextgen-vip-showcase-lock i { font-size: 10px; }
 .nextgen-vip-showcase-head h2 {
-  margin: 14px 0 8px;
+  margin: 11px 0 6px;
   background: linear-gradient(120deg, #ffffff 20%, #fde68a 70%, #facc15 100%);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  font-size: clamp(24px, 4vw, 34px);
+  font-size: clamp(20px, 3vw, 26px);
   font-weight: 800;
   letter-spacing: -.02em;
 }
-.nextgen-vip-showcase-head p { max-width: 660px; margin: 0 auto; color: var(--text-muted); font-size: 13.5px; line-height: 1.65; }
+.nextgen-vip-showcase-head p { max-width: 560px; margin: 0 auto; color: var(--text-muted); font-size: 12.5px; line-height: 1.6; }
 
 .nextgen-vip-showcase-perks {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  gap: 12px;
-  margin-bottom: 22px;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 10px;
+  margin-bottom: 17px;
 }
 .nextgen-vip-showcase-perk {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px 16px;
+  gap: 10px;
+  padding: 11px 13px;
   border: 1px solid var(--border);
   border-radius: 14px;
   background: rgba(15, 23, 42, .6);
@@ -1148,29 +1245,29 @@ textarea,
   flex: 0 0 auto;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
-  border-radius: 11px;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
   background: rgba(250, 204, 21, .12);
   color: var(--vip);
-  font-size: 15px;
+  font-size: 13px;
 }
 .nextgen-vip-showcase-perk div { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-.nextgen-vip-showcase-perk strong { color: var(--text-main); font-size: 13.5px; font-weight: 800; }
-.nextgen-vip-showcase-perk span { color: var(--text-dim); font-size: 11.5px; line-height: 1.5; }
+.nextgen-vip-showcase-perk strong { color: var(--text-main); font-size: 12.5px; font-weight: 800; }
+.nextgen-vip-showcase-perk span { color: var(--text-dim); font-size: 11px; line-height: 1.45; }
 
 .nextgen-vip-showcase-plans {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 12px;
-  margin-bottom: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 10px;
+  margin-bottom: 18px;
 }
 .nextgen-vip-showcase-plan {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  padding: 18px 14px;
+  gap: 5px;
+  padding: 13px 11px;
   border: 1px solid var(--border);
   border-radius: 15px;
   background: linear-gradient(165deg, rgba(30, 41, 59, .9), rgba(12, 19, 33, .88));
@@ -1189,20 +1286,20 @@ textarea,
   letter-spacing: .07em;
   text-transform: uppercase;
 }
-.nextgen-vip-showcase-plan strong { color: var(--text-main); font-size: 13.5px; font-weight: 800; }
-.nextgen-vip-showcase-price { color: var(--vip); font-size: 22px; font-weight: 800; letter-spacing: -.01em; }
-.nextgen-vip-showcase-price small { color: var(--text-dim); font-size: 11.5px; font-weight: 700; }
+.nextgen-vip-showcase-plan strong { color: var(--text-main); font-size: 12.5px; font-weight: 800; }
+.nextgen-vip-showcase-price { color: var(--vip); font-size: 17px; font-weight: 800; letter-spacing: -.01em; }
+.nextgen-vip-showcase-price small { color: var(--text-dim); font-size: 10.5px; font-weight: 700; }
 
-.nextgen-vip-showcase-actions { display: flex; flex-direction: column; align-items: center; gap: 10px; }
+.nextgen-vip-showcase-actions { display: flex; flex-direction: column; align-items: center; gap: 8px; }
 .nextgen-vip-showcase-cta {
   display: inline-flex;
   align-items: center;
-  gap: 9px;
-  padding: 13px 30px;
-  border-radius: 13px;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 12px;
   background: linear-gradient(135deg, #facc15, #f59e0b);
   color: #1c1917 !important;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 800;
   box-shadow: 0 14px 32px rgba(250, 204, 21, .25);
   transition: transform .22s ease, filter .22s ease, box-shadow .22s ease;
@@ -1216,8 +1313,8 @@ textarea,
 .nextgen-vip-showcase-note { color: var(--text-dim); font-size: 11.5px; text-align: center; }
 
 @media (max-width: 620px) {
-  .nextgen-vip-showcase { padding: 24px 18px; }
-  .nextgen-vip-showcase-perk { padding: 12px 14px; }
+  .nextgen-vip-showcase { padding: 18px 14px; }
+  .nextgen-vip-showcase-perk { padding: 10px 12px; }
   .nextgen-vip-showcase-cta { width: 100%; justify-content: center; }
 }
 
@@ -1483,10 +1580,56 @@ textarea,
 .nextgen-ad-button:hover, .nextgen-ad-button:active { color: #fff; transform: translateY(-1px); box-shadow: 0 14px 30px rgba(59, 130, 246, .4); }
 
 /* The unsold-slot invitation reads as dashed and muted so it is never mistaken
-   for a paying advertiser. */
-.nextgen-ad-placeholder { border-style: dashed; background: rgba(15, 23, 42, .5); }
-.nextgen-ad-placeholder .nextgen-ad-button { background: rgba(148, 163, 184, .18); color: var(--text-main); box-shadow: none; }
-.nextgen-ad-placeholder .nextgen-ad-button:hover { background: rgba(148, 163, 184, .28); }
+   for a paying advertiser. It is a horizontal row: icon, copy, then the CTA. */
+.nextgen-ad-placeholder {
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 14px;
+  padding: 15px 18px;
+  border-style: dashed;
+  background: rgba(15, 23, 42, .5);
+  text-align: left;
+}
+.nextgen-ad-placeholder > i {
+  flex: 0 0 auto;
+  display: grid;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border-radius: 12px;
+  background: rgba(59, 130, 246, .16);
+  color: #93c5fd;
+  font-size: 16px;
+}
+.nextgen-ad-placeholder-copy { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.nextgen-ad-placeholder-copy strong { color: var(--text-main); font-size: 13.5px; font-weight: 800; }
+.nextgen-ad-placeholder-copy span { color: var(--text-dim); font-size: 12px; line-height: 1.45; }
+.nextgen-ad-placeholder-cta {
+  flex: 0 0 auto;
+  margin-left: auto;
+  padding: 9px 18px;
+  border: 1px solid rgba(96, 165, 250, .35);
+  border-radius: 999px;
+  background: rgba(59, 130, 246, .14);
+  color: #bfdbfe;
+  font-size: 12.5px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .2s ease, background .2s ease, border-color .2s ease;
+}
+.nextgen-ad-placeholder-cta:hover {
+  transform: translateY(-1px);
+  border-color: rgba(96, 165, 250, .6);
+  background: rgba(59, 130, 246, .26);
+  color: #fff;
+}
+
+@media (max-width: 760px) {
+  .nextgen-ad-placeholder { flex-wrap: wrap; }
+  .nextgen-ad-placeholder-cta { width: 100%; margin-left: 0; text-align: center; }
+}
 
 .nextgen-ad-leaderboard { width: 100%; min-height: 96px; }
 .nextgen-ad-rectangle { width: 336px; min-height: 250px; }
@@ -1869,3 +2012,311 @@ input.error {
 .nextgen-social-btn .fa-google { color: #ea4335; }
 .nextgen-social-btn .fa-github { color: #e6edf3; }
 .nextgen-social-btn .fa-discord { color: #5865f2; }
+
+/* ================= Top-right account area =================
+   Guest gets a pill pair; members get a bare avatar (no surrounding box) that
+   opens a slide-down panel. Both replace the stock .panel_links / .user_links
+   list pair, which rendered as two rows of bare links inside a grey box. */
+.nextgen-guest-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: auto;
+}
+.nextgen-guest-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border: 1px solid rgba(148, 163, 184, .24);
+  border-radius: 999px;
+  background: rgba(11, 18, 32, .6);
+  color: var(--text-main);
+  font-size: 13px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease, box-shadow .2s ease;
+}
+.nextgen-guest-link i { font-size: 13px; color: #93c5fd; transition: color .2s ease; }
+.nextgen-guest-link:hover {
+  transform: translateY(-2px);
+  border-color: rgba(96, 165, 250, .55);
+  background: rgba(59, 130, 246, .2);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, .32);
+}
+.nextgen-guest-link:hover i { color: #bfdbfe; }
+.nextgen-guest-link.is-primary {
+  border-color: transparent;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  box-shadow: 0 12px 26px rgba(37, 99, 235, .4);
+}
+.nextgen-guest-link.is-primary:hover {
+  background: linear-gradient(135deg, #3b82f6, #1d4ed8);
+  box-shadow: 0 16px 32px rgba(37, 99, 235, .5);
+}
+.nextgen-guest-link.is-primary i { color: #dbeafe; }
+
+/* The stock welcome sentence is noise next to the buttons. */
+.header_welcomeblock_guest .welcome,
+.header_welcomeblock_member .welcome { display: none; }
+
+.nextgen-usermenu {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 10px 0 4px;
+  margin-left: auto;
+}
+.nextgen-usermenu-profile {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+  padding: 4px;
+  border: 0;
+  border-radius: 999px;
+  background: none;
+  text-decoration: none;
+}
+.nextgen-usermenu-avatar {
+  position: relative;
+  display: grid;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  place-items: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  box-shadow: 0 0 0 2px rgba(11, 18, 32, .9), 0 0 0 4px rgba(96, 165, 250, .42), 0 8px 20px rgba(37, 99, 235, .4);
+  overflow: hidden;
+  transition: box-shadow .2s ease, transform .2s ease;
+}
+.nextgen-usermenu-profile:hover .nextgen-usermenu-avatar {
+  transform: translateY(-2px);
+  box-shadow: 0 0 0 2px rgba(11, 18, 32, .9), 0 0 0 4px rgba(147, 197, 253, .7), 0 14px 30px rgba(37, 99, 235, .55);
+}
+.nextgen-usermenu-img { display: block; width: 100%; height: 100%; object-fit: cover; }
+/* Only the name and the member type sit beside the avatar; everything else is
+   parked inside the slide-down panel. */
+.nextgen-usermenu-id { display: flex; flex-direction: column; min-width: 0; line-height: 1.25; }
+.nextgen-usermenu-id strong {
+  overflow: hidden;
+  max-width: 150px;
+  color: var(--text-main);
+  font-size: 14px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nextgen-usermenu-id small {
+  overflow: hidden;
+  max-width: 150px;
+  color: #93c5fd;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: .05em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.nextgen-usermenu-logout {
+  display: grid;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  place-items: center;
+  border: 1px solid rgba(248, 113, 113, .28);
+  border-radius: 999px;
+  background: rgba(127, 29, 29, .22);
+  color: #fca5a5;
+  font-size: 13px;
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+}
+.nextgen-usermenu-logout:hover { transform: translateY(-2px); background: rgba(220, 38, 38, .32); color: #fee2e2; }
+
+/* Slide-down panel, toggled from the avatar. Kept out of flow so the header
+   height does not jump when it opens. */
+.nextgen-usermenu-links {
+  position: absolute;
+  top: calc(100% + 12px);
+  right: 0;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 244px;
+  padding: 10px;
+  border: 1px solid rgba(96, 165, 250, .22);
+  border-radius: 18px;
+  background: linear-gradient(160deg, rgba(22, 33, 55, .98), rgba(11, 18, 32, .99));
+  box-shadow: 0 26px 60px rgba(2, 6, 23, .6), inset 0 1px 0 rgba(255, 255, 255, .05);
+  opacity: 0;
+  transform: translateY(-10px) scale(.97);
+  transform-origin: top right;
+  visibility: hidden;
+  transition: opacity .2s ease, transform .22s cubic-bezier(.2, .8, .3, 1), visibility .2s;
+}
+.nextgen-usermenu[data-open="1"] .nextgen-usermenu-links {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  visibility: visible;
+}
+.nextgen-usermenu-link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: transform .16s ease, background .16s ease, color .16s ease;
+}
+.nextgen-usermenu-link i { flex: 0 0 auto; width: 16px; color: #60a5fa; font-size: 13px; text-align: center; transition: color .16s ease; }
+.nextgen-usermenu-link:hover {
+  transform: translateX(3px);
+  background: rgba(59, 130, 246, .16);
+  color: var(--text-main);
+}
+.nextgen-usermenu-link:hover i { color: #93c5fd; }
+.nextgen-usermenu-badge {
+  display: inline-flex;
+  align-items: center;
+  min-width: 30px;
+  margin-left: auto;
+  justify-content: center;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(148, 163, 184, .2);
+  color: #cbd5e1;
+  font-size: 10.5px;
+  font-weight: 800;
+}
+.nextgen-usermenu-badge.is-unread { background: linear-gradient(135deg, #22c55e, #16a34a); color: #052e16; }
+
+/* Staff shortcuts get their own separator so the panel reads in two groups. */
+.nextgen-usermenu-link.is-staff { color: #bfdbfe; }
+.nextgen-usermenu-link.is-staff + .nextgen-usermenu-link.is-staff { margin-top: 0; }
+.nextgen-usermenu-link.is-staff:first-of-type { margin-top: 6px; border-top: 1px solid rgba(148, 163, 184, .16); padding-top: 14px; }
+
+@media (max-width: 900px) {
+  .nextgen-usermenu { margin-left: 0; }
+  .nextgen-usermenu-links { right: auto; left: 0; }
+  .nextgen-usermenu-id { display: none; }
+  .nextgen-guest-actions { gap: 7px; }
+  .nextgen-guest-link { padding: 9px 13px; font-size: 12px; }
+  .nextgen-guest-link span { display: none; }
+}
+
+
+/* ================= Forum thread list ================= */
+/* Stock .trow_sep is a full-width #ddd band that ignores .tborder's radius and
+   reads as a bright stripe across the dark card. Restyle it as a subtle label. */
+.trow_sep {
+  padding: 11px 18px;
+  background: linear-gradient(90deg, rgba(30, 58, 95, .55), rgba(15, 23, 42, .35));
+  border: 0;
+  border-top: 1px solid rgba(148, 163, 184, .14);
+  color: #93c5fd;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+.trow_sep:first-child { border-top: 0; }
+
+/* Slow drifting sheen behind the thread rows. Purely decorative and confined to
+   the list container so it cannot bleed past the card border. */
+.nextgen-thread-list {
+  position: relative;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 80% at 12% 0%, rgba(59, 130, 246, .1), transparent 60%),
+    radial-gradient(120% 80% at 88% 100%, rgba(34, 197, 94, .08), transparent 62%),
+    linear-gradient(115deg, rgba(30, 41, 59, .55), rgba(15, 23, 42, .75));
+}
+.nextgen-thread-list::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 25%, rgba(96, 165, 250, .07) 48%, transparent 72%);
+  background-size: 260% 100%;
+  animation: nextgen-thread-sheen 15s linear infinite;
+  pointer-events: none;
+}
+@keyframes nextgen-thread-sheen {
+  0% { background-position: 130% 0; }
+  100% { background-position: -130% 0; }
+}
+.nextgen-thread-list > tbody { position: relative; z-index: 1; }
+
+/* Two icon cells read as one chip pair: a state dot plus the type glyph. */
+.nextgen-thread-status { width: 34px; padding-right: 0 !important; }
+.nextgen-thread-status .thread_status {
+  display: inline-grid;
+  width: 30px;
+  height: 30px;
+  place-items: center;
+  border-radius: 10px;
+  background: rgba(11, 18, 32, .6);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, .2);
+  background-image: none;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+/* Drive the read/unread state from the stock folder class, but paint it as a
+   glyph instead of the 20px sprite strip. */
+.nextgen-thread-status .thread_status::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-radius: 999px;
+  background: var(--text-dim);
+  box-shadow: 0 0 0 3px rgba(100, 116, 139, .18);
+}
+.nextgen-thread-status .thread_status.dot_newfolder::before,
+.nextgen-thread-status .thread_status.dot_newhotfolder::before,
+.nextgen-thread-status .thread_status.newfolder::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 3px rgba(34, 197, 94, .2), 0 0 12px rgba(34, 197, 94, .55);
+}
+.nextgen-thread-status .thread_status.dot_hotfolder::before,
+.nextgen-thread-status .thread_status.dot_newhotfolder::before,
+.nextgen-thread-status .thread_status.hotfolder::before {
+  background: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, .2), 0 0 12px rgba(245, 158, 11, .5);
+}
+.nextgen-thread-status .thread_status.dot_closefolder::before,
+.nextgen-thread-status .thread_status.dot_hotclosefolder::before,
+.nextgen-thread-status .thread_status.dot_newclosefolder::before,
+.nextgen-thread-status .thread_status.closefolder::before {
+  width: 7px;
+  height: 10px;
+  border-radius: 2px;
+  background: #f87171;
+}
+.nextgen-thread-row:hover .thread_status { transform: scale(1.08); }
+
+.nextgen-thread-icon { width: 44px; }
+.nextgen-thread-icon img {
+  width: 30px;
+  height: 30px;
+  padding: 4px;
+  border-radius: 10px;
+  background: rgba(11, 18, 32, .6);
+  box-shadow: inset 0 0 0 1px rgba(148, 163, 184, .2);
+  object-fit: contain;
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+.nextgen-thread-row:hover .nextgen-thread-icon img {
+  transform: translateY(-2px) scale(1.06);
+  background: rgba(59, 130, 246, .2);
+  box-shadow: inset 0 0 0 1px rgba(96, 165, 250, .45), 0 8px 18px rgba(37, 99, 235, .35);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .nextgen-thread-list::after { animation: none; }
+}

@@ -41,6 +41,36 @@ $notice = '';
 $vip_body = '';
 $pending = false;
 
+// An existing VIP cannot buy from scratch again: doing so would stack a fresh
+// term on top of an active one and let the clock run away. They extend instead.
+$vip_until = 0;
+if($is_vip)
+{
+        $q = $db->simple_select('vip_orders', 'paid_until', "uid='{$uid}' AND status='approved'", array('order_by' => 'paid_until', 'order_dir' => 'DESC', 'limit' => 1));
+        if($db->num_rows($q))
+        {
+                $vip_until = max(0, (int)$db->fetch_field($q, 'paid_until'));
+        }
+}
+$vip_days_left = $vip_until > TIME_NOW ? (int)ceil(($vip_until - TIME_NOW) / 86400) : 0;
+
+// The hero sentence changes with the visitor's standing. Dynamic values are
+// escaped as they are interpolated, so the markup stays intentional.
+if($is_vip && $vip_days_left > 0)
+{
+        $vip_lead = 'VIP üyeliğiniz aktif. <strong>'.$vip_days_left.' gün</strong> kaldı '
+                . '(bitiş: '.htmlspecialchars_uni(my_date($mybb->settings['dateformat'], $vip_until)).'). '
+                . 'Üyeliğinizi kesintisiz sürdürmek için mevcut sürenizin üzerine ekleyerek uzatabilirsiniz.';
+}
+elseif($is_vip)
+{
+        $vip_lead = 'VIP üyeliğiniz sona erdi. Kaldığınız yerden devam etmek için bir plan seçip yeniden etkinleştirin.';
+}
+else
+{
+        $vip_lead = 'VIP Club; balina sinyalleri, erken aşama fırsatlar ve otomasyon scriptlerinin paylaşıldığı kapalı bir alandır. Üyeliğiniz onaylandığı anda tüm VIP forumları açılır.';
+}
+
 /* ---------------------------------------------------------- order list --- */
 
 // "Open" means the member still has a claim on the queue: either they have not
@@ -328,12 +358,29 @@ else
 				$picker = '<input type="hidden" name="nid" value="'.(int)$pay_networks[0]['nid'].'" />';
 			}
 
+			// An active VIP is extending, not buying: label the action and show
+			// the resulting expiry so the stacking is explicit.
+			$current_until = $vip_until > TIME_NOW ? $vip_until : TIME_NOW;
+			$new_until = $current_until + ($days * 86400);
+			if($is_vip)
+			{
+				$cta_label = $vip_days_left > 0 ? 'Süreyi Uzat' : 'Yeniden Etkinleştir';
+				$cta_note = '<span class="nextgen-vip-plan-note">Yeni bitiş: '
+					.htmlspecialchars_uni(my_date($mybb->settings['dateformat'], $new_until)).'</span>';
+			}
+			else
+			{
+				$cta_label = 'Şimdi Satın Al';
+				$cta_note = '';
+			}
+			
 			$cta = '<form action="'.htmlspecialchars_uni($mybb->settings['bburl']).'/vip.php" method="post">
 				<input type="hidden" name="action" value="order" />
 				<input type="hidden" name="pid" value="'.(int)$p['pid'].'" />
 				<input type="hidden" name="my_post_key" value="'.$mybb->post_code.'" />
 				'.$picker.'
-				<button type="submit" class="nextgen-vip-submit">Şimdi Satın Al</button>
+				<button type="submit" class="nextgen-vip-submit">'.$cta_label.'</button>
+				'.$cta_note.'
 			</form>';
 		}
 		else
@@ -341,8 +388,17 @@ else
 			$cta = '<a class="nextgen-vip-submit" href="'.htmlspecialchars_uni($mybb->settings['bburl']).'/member.php?action=login">Giriş Yap ve Satın Al</a>';
 		}
 
+
+		// Mark the plans as an extension when the member already holds VIP, so the
+		// button does not read as a second, independent purchase.
+		$badge = '';
+		if($is_vip && $vip_days_left > 0)
+		{
+			$badge = '<span class="nextgen-vip-plan-badge"><i class="fa-solid fa-arrow-up" aria-hidden="true"></i> Uzatma</span>';
+		}
 		$plans .= <<<HTML
 <div class="nextgen-vip-plan">
+  {$badge}
   <span class="nextgen-vip-plan-days">{$days} gün</span>
   <strong class="nextgen-vip-plan-title">{$ptitle}</strong>
   <span class="nextgen-vip-plan-price">{$price} <small>{$currency}</small></span>

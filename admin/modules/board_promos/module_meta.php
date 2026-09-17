@@ -22,7 +22,7 @@ function board_promos_meta()
 
         $sub_menu = $plugins->run_hooks('admin_board_promos_menu', $sub_menu);
 
-        $page->add_menu_item('Duyuru & Reklam', 'board_promos', 'index.php?module=board_promos', 66, $sub_menu);
+        $page->add_menu_item('Duyuru & Reklam', 'board_promos', 'index.php?module=board_promos', 60, $sub_menu);
         return true;
 }
 
@@ -51,12 +51,14 @@ function board_promos_action_handler($action)
 
 function board_promos_admin_permissions()
 {
-        return array(
-                'board_promos' => array(
-                        'requests' => 'Sponsor başvurularını görüntüle ve yanıtla',
-                        'announcements' => 'Duyuruları yönet',
-                        'ads' => 'Reklam alanlarını yönet',
-                        'sponsors' => 'Sponsorları ve affiliate kodlarını yönet',
-                ),
-        );
+	return array(
+		'name' => 'Duyuru & Reklam',
+		'permissions' => array(
+			'requests' => 'Sponsor başvurularını görüntüle ve yanıtla',
+			'announcements' => 'Duyuruları yönet',
+			'ads' => 'Reklam alanlarını yönet',
+			'sponsors' => 'Sponsorları ve affiliate kodlarını yönet',
+		),
+		'disporder' => 66,
+	);
 }

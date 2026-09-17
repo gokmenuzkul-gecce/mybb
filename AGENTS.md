@@ -68,6 +68,30 @@ is plain CSS in `themes/crypto-web3/global.css`, which defines every
 `tailwind.config` block were removed from `headerinclude` so the theme renders
 without external network access. FontAwesome (CDN) is still used for icons.
 
+Keep Tailwind out. Its preflight sets `img { display: block }`, which turns any
+row of inline `<img>`s into a vertical stack. That is exactly how the post-icon
+row (`.posticons_label`, one `<label>` + `<img>` per icon) and the smilie
+insertion table broke. Restoring the CDN silently wrecks both again, so the
+`.posticons_label { display: inline-flex }` rule in `global.css` is a
+belt-and-braces guard, not a redundant one.
+
+## Replying to a PM opens an empty editor
+
+`private.php` builds the reply body in two places, and both used to seed the
+editor with the original message quoted. The owner wants replies to start blank
+so the member writes their own text.
+
+- The full reply form (`action=send&do=reply`, around line 900) now quotes only
+  on `do == 'forward'`. `reply` and `replyall` set `$message = ''` and keep the
+  `Re:` subject, recipient and signature/receipt options.
+- The quick reply block (`action=read`, around line 1235) no longer builds
+  `$quoted_message` at all; the template's `<textarea>` ships empty.
+
+Forwarding still quotes, so the two paths deliberately diverge. If you touch
+either branch, keep the `do == 'forward'` guard — that is the whole behaviour.
+`$quoted_message` in `private_quickreply` is now dead as a variable name; the
+quick-reply textarea is a plain `#message` with no SCEditor.
+
 ## Localization
 
 Turkish is the board default. `inc/languages/turkish/` has full key coverage
@@ -146,6 +170,21 @@ posting form (new thread / new reply):
   *standalone* smilie box. The smilie block is embedded inside the posting form,
   so without `:not(:has(#message))` the form table collapses and the editor
   shrinks to a few hundred pixels wide.
+
+`#message` alone is not a reliable "is a posting form" test. The User CP
+signature editor (`usercp_editsig`) carries `#clickable_smilies` and a
+`#signature` textarea but *no* `#message`, so the standalone-box rule matched it
+and pinned the whole signature form to 340px — the "textarea is tiny/broken"
+report. That rule now also excludes `:not(:has(#signature))`, and the signature
+form gets its own sizing block. Both selectors have to grow together: any new
+page that embeds `#clickable_smilies` next to a non-`#message` editor needs the
+same exclusion, or it inherits the popup width.
+
+The same `#message` selector is also a trap in the other direction. The PM
+quick reply (`private_quickreply`) *is* a bare `<textarea id="message">` with
+`rows="8"` and no SCEditor, so `form #message { min-height: 480px }` stretched
+it to a full posting editor. It is scoped back down through
+`.tborder:has(#quickreply_e) #message`.
 
 The form's `table.tborder` must also be excluded from the mobile
 `.tborder table { min-width: 620px }` floor; that floor otherwise pushes the
@@ -459,6 +498,105 @@ To exercise the flow, temporarily set `social_*_on=1` plus dummy `*_id`/
 `*_secret` values, run the checks, then set them back to `0`/`''` and
 `rebuild_settings()`. Leaving dummy secrets in the committed database would be
 a credential leak.
+
+## ACP management area for the seven plugins
+
+Every plugin ships an ACP module under `admin/modules/<codename>/` with a
+`module_meta.php` (`<codename>_meta()`, `_action_handler()`,
+`_admin_permissions()`). Verified working, all returning real module content:
+
+| Plugin | ACP menu label | Sub-pages |
+| --- | --- | --- |
+| `board_promos` | Duyuru & Reklam | requests, announcements, ads, sponsors |
+| `rss_news_bot` | RSS Haber Botu | queue, feeds |
+| `simulated_community` | Simüle Topluluk | dashboard |
+| `market_ticker` | Canlı Borsa Tablosu | ticker (+ settings deep link) |
+| `social_login` | Sosyal Giriş | providers, accounts (+ settings deep link) |
+| `vip_membership` | VIP Üyelik | orders, plans, networks |
+| `crypto_forumcards` | Forum Kartları | icons |
+
+The menu labels live in `module_meta.php`, NOT in the `config-settings` group
+titles — the two disagree for `board_promos` (`Duyuru, Reklam ve Sponsor` in
+`mybb_settinggroups`, `Duyuru & Reklam` in the sidebar). Read the label from the
+file when checking the sidebar.
+
+`config-settings&action=change&gid=N` deep links resolve for all six setting
+groups (gid 31–36). The sub-menu link must carry a **raw** `&` — `add_menu_items()`
+runs links through `htmlspecialchars_uni()`, so a pre-escaped `&amp;` renders as
+`&amp;amp;`.
+
+### ACP menu `disporder` must be unique
+
+`$page->add_menu_item(..., N, $sub_menu)` with `N` already taken by another
+module silently collapses the two entries into one sidebar item — no error, no
+duplicate, just a module you cannot reach. Several of these plugins were authored
+independently and `board_promos` and `rss_news_bot` both landed on 66. The
+core modules use 1/10/20/30/40/50, so the plugin block is 60–66 and is packed
+contiguously in the intended order. When adding a plugin ACP module, check the
+whole range first:
+
+```bash
+grep -h "add_menu_item" admin/modules/*/module_meta.php
+```
+
+Assert the rendered sidebar too — top-level items are
+`<li><a href="index.php?module=X">Label</a>`, and the sub-menu/toolbar links use
+a different shape, so a loose regex counts a module more than once.
+
+### The ACP approve/reject flow is GET-confirm, POST-execute
+
+`vip_membership-orders` renders a confirmation form on `GET ...&action=approve`
+and only performs the grant when the follow-up `POST` arrives (the verb is the
+flag; there is no hidden field). A test that follows the `Düzenle`-style link
+with `GET` will see `status` stay `pending` and look like a broken handler. Fetch
+the confirm form, lift its `my_post_key`, then POST `oid` + `action`.
+
+### Testing ACP pages headlessly
+
+A row in `mybb_adminsessions` alone is not enough — `lastactive` must be within
+7200s of now, `ip` must be `my_inet_pton(get_ip())` (`x'7f000001'` for
+127.0.0.1), and `authenticated` must be `1` or the 2FA gate kicks in. Then send
+`mybbuser=1_<loginkey>; sid=<sid>; adminsid=<sid>`.
+
+A short page (~2KB) is the ACP login form, not the module. Real module pages run
+6–18KB (the RSS queue is ~100KB). Do not grep for the Turkish string
+`hata oluştu` as an error signal: `lang.unknown_error` is embedded in every ACP
+page's `<script>` block. Sweep `mybb_adminsessions` for the test `useragent`
+afterwards and leave the user's real session alone.
+
+### Ad placements must all render
+
+`board_promos_ads()` used to wire only `index_top`, while the ACP still offered
+`index_mid`, `index_bottom` and `global_footer`. Ads created in the ACP for those
+placements were silently invisible. All four now anchor on markup that ships in
+the custom templates: `index_top` → `.nextgen-promo-grid`, `index_mid` →
+`.nextgen-forum-directory`, `index_bottom` → `.nextgen-community-notice`, and
+`global_footer` → `<nav class="nextgen-mobile-nav"` (matched only when a
+`global_footer` ad is actually sold, so unsold pages stay clean). The
+`{$promo_footer_ad}` placeholder in `footer` is still unused — the footer slot is
+injected through `pre_output_page` instead.
+
+An unsold slot renders the `promo_ads_placeholder` invitation (icon + copy +
+`sponsor.php` CTA) rather than nothing, so an empty placement still looks
+deliberate. `promo_ads_placeholder` is a setting, so flipping it in
+`mybb_settings` is invisible until `inc/settings.php` is regenerated — and it
+must be regenerated through `rebuild_settings()` (boot `global.php` from a
+throwaway CLI script), not hand-written, or the file loses MyBB's header and
+`addcslashes` escaping. `board_promos`'s placeholder branch is the only writer
+of `.nextgen-ad-placeholder*`; the older
+`.nextgen-ad-placeholder .nextgen-ad-button` rules are dead because that markup
+no longer emits a `.nextgen-ad-button`.
+
+### Thread list styling
+
+Stock `.trow_sep` is a full-width `#ddd` band — the "white stripe" across the
+dark thread card. Restyled as an uppercase label with a hairline top border.
+`forumdisplay_threadlist`'s table carries `nextgen-thread-list`, which supplies
+the drifting sheen (`::after`, disabled under `prefers-reduced-motion`).
+`forumdisplay_thread` had reply/view badges duplicating the dedicated Yanıtlar /
+Okunma columns; those are removed, and the status cell is driven from the real
+`thread_status` classes (`folder`, `dot_folder`, `newfolder`, `hotfolder`,
+`closefolder`, `newhotfolder`).
 
 ## Warning and error styling
 
