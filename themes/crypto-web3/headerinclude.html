@@ -10,7 +10,7 @@
 <script type="text/javascript" src="{$mybb->asset_url}/jscripts/jquery.plugins.min.js?ver=1821"></script>
 <script type="text/javascript" src="{$mybb->asset_url}/jscripts/general.js?ver=1827"></script>
 {$stylesheets}
-<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=32" />
+<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=46" />
 <script type="text/javascript">
 var templates = { modal: '{$jsTemplates['modal']}', modal_button: '{$jsTemplates['modal_button']}' };
 var cookieDomain = "{$mybb->settings['cookiedomain']}";
@@ -77,6 +77,44 @@ document.addEventListener('DOMContentLoaded', function() {
         if (event.key === 'Escape') setMenu(false);
       });
     }
+  }
+
+  // Pin the search trigger + account menu into the brand row's band once the
+  // page scrolls, so they stop hovering over the threads with posts showing
+  // through them. Heights are measured unpinned and cached; only `--topoffset`
+  // can change while pinned (the ACP control bar), so no reflow loop.
+  var header = document.getElementById('header');
+  var logoRow = document.getElementById('logo');
+  var panelRow = document.querySelector('#panel .upper');
+  if (header && logoRow && panelRow) {
+    var root = document.documentElement;
+    var container = document.getElementById('container');
+    var logoH = 0;
+    var update = function() {
+      // Absolute document top of the page box: 0 normally, non-zero if anything
+      // (an admin notice callout, say) is rendered above it.
+      var top = container
+        ? Math.max(0, Math.round(container.getBoundingClientRect().top + window.pageYOffset))
+        : 0;
+      root.style.setProperty('--topoffset', top + 'px');
+      root.classList.toggle('panel-pinned', window.pageYOffset > logoH);
+    };
+    var measure = function() {
+      root.classList.remove('panel-pinned');
+      root.style.setProperty('--panel-h', '0px');
+      logoH = logoRow.offsetHeight;
+      root.style.setProperty('--logo-h', logoH + 'px');
+      root.style.setProperty('--panel-h', panelRow.offsetHeight + 'px');
+      update();
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function() { ticking = false; update(); });
+    }, { passive: true });
   }
 
 });

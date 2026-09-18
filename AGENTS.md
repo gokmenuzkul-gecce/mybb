@@ -222,6 +222,37 @@ Prefer raising specificity (`input.foo`, `td.foo`) over sprinkling
 `!important`; reserve `!important` for resetting a rival's property, and delete
 superseded rules instead of layering a new one on top.
 
+### `unapprovedposts` is a ghost counter the ACP cannot repair
+
+The homepage posts column appends MyBB's unapproved counter to the real count:
+`{$posts}{$unapproved['unapproved_posts']}` renders `0 (10)` when
+`mybb_forums.unapprovedposts` is stale. Those rows are built by
+`get_forum_unapproved()` (`inc/functions_forumlist.php`), which emits
+`<span title="...">(N)</span>` only when the counter is non-zero **and**
+`is_moderator($fid, "canviewunapprove")` passes — so it is visible to the admin
+and nobody else.
+
+`unapprovedposts` is only ever adjusted **incrementally** by
+`update_forum_counters()`; the ACP "Recount & Rebuild" tool does not touch it at
+all. A counter left behind when an unapproved post is hard-deleted therefore
+survives every rebuild, and the column keeps advertising posts that do not exist
+(`fid=11` and `fid=15` each carried one while holding zero posts).
+
+Repair it against the real rows, through MyBB's own handler:
+
+```php
+define('IN_MYBB', 1); define('THIS_SCRIPT', 'index.php');
+require_once MYBB_ROOT.'global.php';
+$n = (int)$db->fetch_field($db->simple_select('posts',
+    'COUNT(*) AS n', "fid='{$fid}' AND visible='0'"), 'n');
+update_forum_counters($fid, array('unapprovedposts' => $n));
+```
+
+`IN_MYBB` is required, not just `THIS_SCRIPT` — without it `global.php` dies with
+"Direct initialization of this file is not allowed". The `forums` datacache holds
+no `unapprovedposts` key, so the template reads the live table and no cache
+invalidation is needed. Delete any one-off repair script afterwards.
+
 ### Avatars are capped at 100x100
 
 `maxavatardims` / `useravatardims` are `100x100`, and `images/default_avatar.png`
@@ -373,73 +404,79 @@ should read 8.4.x, which renders every page with 0 deprecations.
 The board's own state survives a reset — `inc/config.php`, `inc/settings.php`
 and `cache/mybb.sqlite` are all still on disk. Only the toolchain is transient.
 
-## `board_promos` plugin (announcements, ads, sponsors)
+## `board_promos` plugin — REMOVED
 
-Installed and active. State lives entirely in the database, so a fresh clone
-needs `install()` + activation, not just a file copy.
+The announcements / ads / sponsors plugin was removed on request. The homepage
+no longer renders the announcement strip, the ad slots or the sponsor strip, and
+the ACP has no `board_promos` area.
 
-### Installing from the CLI
+What was removed:
 
-There is no `inc/functions_plugins.php` in 1.8.40 — `find_replace_templatesets()`
-comes from `inc/adminfunctions_templates.php`, and the install functions are
-ordinary plugin functions you call directly:
+- `inc/plugins/board_promos.php`, `promo.php`, `sponsor.php`
+- `admin/modules/board_promos/` (all five files)
+- Tables `mybb_promo_announcements`, `mybb_promo_ads`, `mybb_promo_sponsors`,
+  `mybb_promo_sponsor_requests`, `mybb_promo_clicks`
+- Settings `promo_announcements_on`, `promo_ads_on`, `promo_ads_placeholder`,
+  `promo_sponsors_on`, `promo_sponsor_notify_uid`, `promo_sponsor_intro`,
+  `promo_sponsor_cooldown`, the `board_promos` setting group, and the
+  `promo_announcements` / `promo_sponsor_page` / `promo_sponsor_strip` templates
+- The codename was dropped from the `plugins` datacache
 
-```php
-require_once MYBB_ROOT.'global.php';
-require_once MYBB_ROOT.'inc/plugins/board_promos.php';  // not loaded until active
-board_promos_install();
-```
+**Do NOT drop `mybb_promotions` / `mybb_promotionlogs`** — those are core MyBB
+tables (present in `install/resources/mysql_db_tables.php`), unrelated to the
+plugin despite the name.
 
-`board_promos_install()` is idempotent per step, so re-running it repairs a
-partial install instead of erroring. Activation is a cache write:
+`announcements.php` is also core MyBB, not part of the plugin: it serves
+`mybb_announcements` (forum-wide notices) and is linked from `archive/index.php`
+and `inc/init.php`. It was kept.
 
-```php
-$c = $cache->read('plugins');
-$c['active']['board_promos'] = 'board_promos';
-$cache->update('plugins', $c);
-board_promos_activate();     // adds the footer variable + find_replace_templatesets
-rebuild_settings();
-```
+### Removing a plugin: don't write while a SELECT cursor is open
+
+The first removal pass died with a blank "MyBB SQL Error" page. The cause was
+`$db->update_query(...)` inside the `while($t = $db->fetch_array($q))` loop over
+`mybb_templates` — the open SELECT cursor and the write target the same table,
+and SQLite refuses. Buffer the rows into an array first, then write, or do the
+cleanup with Python's `sqlite3` directly.
+
+`{$promo_footer_ad}` had also accumulated **three** copies in the `footer`
+template (`sid=1`, tid=975) because `board_promos_activate()` was run more than
+once — `find_replace_templatesets()` is not idempotent. When removing such a
+placeholder, strip every occurrence with `str_replace`, not a single replace.
 
 ### The SQLite driver does not escape `insert_query()` values
 
 `db_sqlite`'s `quote_val()` only wraps values in quotes. Every string bound for
 `insert_query()`/`update_query()` must be escaped by the caller, or an
-apostrophe truncates the query — `"VIP Club'ı keşfet"` in the seed data did
-exactly that and produced an unhelpful blank "SQL Error" page. Use
-`$db->escape_string($value)` on the whole array, as
-`board_promos_create_templates()` and the seed loops already do.
+apostrophe truncates the query — `"VIP Club'ı keşfet"` in seed data did exactly
+that and produced an unhelpful blank "SQL Error" page. Use
+`$db->escape_string($value)` on the whole array before it reaches the query.
 
 ### Avoid the ACP-only `Form` class
 
 `new Form(...)` (`inc/class_form.php`) is loaded by the ACP only; using it in a
-front-end script dies with `Class "Form" not found`. `sponsor.php` builds its
-form as plain HTML for this reason. Likewise prefer `validate_email_format()`
-from `inc/functions.php` over anything only defined further downstream.
+front-end script dies with `Class "Form" not found`. Front-end scripts must
+build forms as plain HTML. Likewise prefer `validate_email_format()` from
+`inc/functions.php` over anything only defined further downstream.
 
-### URL handling
+### Rebuilding `inc/settings.php` after a settings change
 
-`board_promos_safe_url()` accepts `http(s)://`, `/absolute` and bare relative
-board paths, and rejects any other scheme. It deliberately does NOT guess a
-scheme for `tronscan.org/x`: the same heuristic rewrites the valid relative
-path `sponsor.php` into `https://sponsor.php`. External links must be written
-with their scheme.
+`inc/settings.php` is a flat generated cache; a write to `mybb_settings` stays
+invisible until it is regenerated. Boot `global.php` from a throwaway CLI
+script and call `rebuild_settings()` — do not hand-write the file, or it loses
+MyBB's header and `addcslashes` escaping:
+
+```php
+define('IN_MYBB', 1);
+define('THIS_SCRIPT', 'index.php');
+require_once './global.php';
+rebuild_settings();
+```
+
+Delete the script afterwards.
 
 When building an href that already contains `&`, pass the raw `&` to
 `htmlspecialchars_uni()` — passing `&amp;` double-escapes into `&amp;amp;` in
 the rendered page.
-
-### Verifying
-
-```bash
-curl -s http://127.0.0.1:12000/index.php | grep -c nextgen-announce-slide
-curl -s http://127.0.0.1:12000/sponsor.php | grep -c nextgen-sponsor-form-wrap
-curl -s -o /dev/null -w '%{redirect_url}' 'http://127.0.0.1:12000/promo.php?go=sponsor&id=1'
-```
-
-The sponsor form's honeypot field is `website` and must stay hidden — a filled
-value returns the success page without writing a row, which is the intended
-behaviour, not a bug.
 
 ## `market_ticker` plugin (live crypto prices)
 
@@ -458,9 +495,12 @@ Coins and currency are settings (`market_ticker_coins`,
 `[a-z0-9-]` before being used in the request URL, so a setting cannot inject
 query parameters.
 
-Installing from the CLI follows the `board_promos` recipe; the task row and
-settings group are created by `market_ticker_install()`, and the plugin must
-then be added to the `plugins` cache and `market_ticker_activate()` called.
+Installing from the CLI: create the task row and settings group via
+`market_ticker_install()`, then add the codename to the `plugins` datacache and
+call `market_ticker_activate()`. There is no `inc/functions_plugins.php` in
+1.8.40 — `find_replace_templatesets()` comes from
+`inc/adminfunctions_templates.php`, and the install/activate functions are
+ordinary plugin functions you `require_once` and call directly.
 
 ## `social_login` plugin (Google / GitHub / Discord OAuth 2.0)
 
@@ -499,7 +539,7 @@ To exercise the flow, temporarily set `social_*_on=1` plus dummy `*_id`/
 `rebuild_settings()`. Leaving dummy secrets in the committed database would be
 a credential leak.
 
-## ACP management area for the seven plugins
+## ACP management area for the plugins
 
 Every plugin ships an ACP module under `admin/modules/<codename>/` with a
 `module_meta.php` (`<codename>_meta()`, `_action_handler()`,
@@ -507,7 +547,6 @@ Every plugin ships an ACP module under `admin/modules/<codename>/` with a
 
 | Plugin | ACP menu label | Sub-pages |
 | --- | --- | --- |
-| `board_promos` | Duyuru & Reklam | requests, announcements, ads, sponsors |
 | `rss_news_bot` | RSS Haber Botu | queue, feeds |
 | `simulated_community` | Simüle Topluluk | dashboard |
 | `market_ticker` | Canlı Borsa Tablosu | ticker (+ settings deep link) |
@@ -515,25 +554,29 @@ Every plugin ships an ACP module under `admin/modules/<codename>/` with a
 | `vip_membership` | VIP Üyelik | orders, plans, networks |
 | `crypto_forumcards` | Forum Kartları | icons |
 
-The menu labels live in `module_meta.php`, NOT in the `config-settings` group
-titles — the two disagree for `board_promos` (`Duyuru, Reklam ve Sponsor` in
-`mybb_settinggroups`, `Duyuru & Reklam` in the sidebar). Read the label from the
-file when checking the sidebar.
+`board_promos` used to be in this table; it has been removed, and its
+`admin/modules/board_promos/` directory is gone. Its `disporder` slot (66) is
+now free — the remaining plugin block is no longer contiguous, which is fine as
+long as each value is unique.
 
-`config-settings&action=change&gid=N` deep links resolve for all six setting
-groups (gid 31–36). The sub-menu link must carry a **raw** `&` — `add_menu_items()`
-runs links through `htmlspecialchars_uni()`, so a pre-escaped `&amp;` renders as
-`&amp;amp;`.
+The menu labels live in `module_meta.php`, NOT in the `config-settings` group
+titles — the two can disagree. Some plugins had a different label in
+`mybb_settinggroups` than in the sidebar. Read the label from the file when
+checking the sidebar.
+
+`config-settings&action=change&gid=N` deep links resolve for the remaining six
+setting groups (gid 31–36 minus the removed one). The sub-menu link must carry a
+**raw** `&` — `add_menu_items()` runs links through `htmlspecialchars_uni()`, so
+a pre-escaped `&amp;` renders as `&amp;amp;`.
 
 ### ACP menu `disporder` must be unique
 
 `$page->add_menu_item(..., N, $sub_menu)` with `N` already taken by another
 module silently collapses the two entries into one sidebar item — no error, no
 duplicate, just a module you cannot reach. Several of these plugins were authored
-independently and `board_promos` and `rss_news_bot` both landed on 66. The
-core modules use 1/10/20/30/40/50, so the plugin block is 60–66 and is packed
-contiguously in the intended order. When adding a plugin ACP module, check the
-whole range first:
+independently and two once landed on the same number. The core modules use
+1/10/20/30/40/50, so the plugin block is 60–66. When adding a plugin ACP module,
+check the whole range first:
 
 ```bash
 grep -h "add_menu_item" admin/modules/*/module_meta.php
@@ -563,29 +606,6 @@ A short page (~2KB) is the ACP login form, not the module. Real module pages run
 `hata oluştu` as an error signal: `lang.unknown_error` is embedded in every ACP
 page's `<script>` block. Sweep `mybb_adminsessions` for the test `useragent`
 afterwards and leave the user's real session alone.
-
-### Ad placements must all render
-
-`board_promos_ads()` used to wire only `index_top`, while the ACP still offered
-`index_mid`, `index_bottom` and `global_footer`. Ads created in the ACP for those
-placements were silently invisible. All four now anchor on markup that ships in
-the custom templates: `index_top` → `.nextgen-promo-grid`, `index_mid` →
-`.nextgen-forum-directory`, `index_bottom` → `.nextgen-community-notice`, and
-`global_footer` → `<nav class="nextgen-mobile-nav"` (matched only when a
-`global_footer` ad is actually sold, so unsold pages stay clean). The
-`{$promo_footer_ad}` placeholder in `footer` is still unused — the footer slot is
-injected through `pre_output_page` instead.
-
-An unsold slot renders the `promo_ads_placeholder` invitation (icon + copy +
-`sponsor.php` CTA) rather than nothing, so an empty placement still looks
-deliberate. `promo_ads_placeholder` is a setting, so flipping it in
-`mybb_settings` is invisible until `inc/settings.php` is regenerated — and it
-must be regenerated through `rebuild_settings()` (boot `global.php` from a
-throwaway CLI script), not hand-written, or the file loses MyBB's header and
-`addcslashes` escaping. `board_promos`'s placeholder branch is the only writer
-of `.nextgen-ad-placeholder*`; the older
-`.nextgen-ad-placeholder .nextgen-ad-button` rules are dead because that markup
-no longer emits a `.nextgen-ad-button`.
 
 ### Thread list styling
 
@@ -625,3 +645,125 @@ Two constraints on the registration form: `inc/jscripts/member.js` binds to
 stay `<input type="submit" name="regsubmit">` — MyBB checks that field name
 server-side, so a `<button>` silently breaks the POST. `{$passboxes}` emits
 bare `<tr>` rows, so the password section has to keep a `<table>` wrapper.
+
+## User dropdown: the logout button is a child of the panel
+
+`header_welcomeblock_member` (tid=169, `sid=-2`, **no disk copy**) used to place
+`a.nextgen-usermenu-logout` as a sibling of `.nextgen-usermenu-links`. Because
+`.nextgen-usermenu` is a flex row, the button sat beside the trigger in the
+header and — once absolutely positioned — spilled outside the opened card.
+It is now the **first child inside** `.nextgen-usermenu-links`, pinned with
+`position: absolute; top: 8px; right: 8px`, and the panel carries
+`padding-top: 46px` to clear it. Moving the button back out of the panel makes
+it reappear in the header; keep it in the panel.
+
+The panel also no longer has its `1px solid rgba(96,165,250,.22)` border — that
+rectangle read as a stray frame floating behind the card. The edge comes from
+the background plus `box-shadow`. Do not re-add a border without checking it
+against the opened state in a browser.
+
+## Thread list: column contract and the empty `<td>` trap
+
+`forumdisplay_thread` renders **eight** `<td>` cells (status chip, jump arrow,
+subject, replies, views, rating, last post, checkbox) and the header in
+`forumdisplay_threadlist` spans them with `colspan="3"` + four single cells.
+Two things break that alignment, both already fixed — don't undo them:
+
+- The subject cell (`{width: 100%}`, counters `{width: 1%}`) absorbs leftover
+  width. Header padding must match the body (`7px 10px` vs `4px 10px`) or the
+  label sits on a different rhythm than the data under it.
+- **Never `display: none` an empty `<td>`.** `.nextgen-thread-jump:empty` did
+  that and the row dropped to seven cells while the header still spanned eight,
+  so every later cell shifted one column left (`Yanıtlar` body at x=319 under a
+  header at x=474). Hide the content or leave the cell in the grid with
+  `padding: 0` so an empty arrow is a 6px hairline.
+
+`$colspan` in `forumdisplay.php` is computed (`7` with ratings, `6` without,
+`+1` for a moderator), so hard-coding a colspan in `forumdisplay_threadlist` /
+`forumdisplay_threads_sep` breaks those two variants. Leave `{$colspan}` alone.
+Merging the arrow cell into the subject cell would mean editing that PHP — not
+worth it just to remove a gutter.
+
+Column widths are written as px on the body cells and inline on the header
+cells; verify with a real browser, not by eye:
+
+```python
+# getBoundingClientRect on header vs body cells — left/right must match
+sorted({x['l'] for x in header + body}) == [211, 253, 273, 928, 1014, 1093, 1207, 1349]
+```
+
+### The dot chip centres on the row, and one ancient rule hid a specificity bug
+
+`td.nextgen-thread-status` carries `vertical-align: middle` so the chip lands on
+the row centre, matching the announcement rows (which use the stock
+`.forumdisplay_announcement` cell and are centred by `.nextgen-thread-row > td`).
+
+Two rules used to fight this and produced the "icon is not where it belongs"
+report for regular rows while the announcement row looked fine:
+
+- `.nextgen-thread-status .thread_status { display: inline-block }` (0,2,0)
+  out-specified the chip rule (0,1,0), so the 9px `::before` dot inherited an
+  inline-block box and sat ~8px above the chip's centre. The chip rule now stands
+  alone; do not re-add a descendant-selector `display` for that span.
+- `td.nextgen-thread-status { vertical-align: top }` pinned the chip ~22px above
+  the row centre, while the announcement row stayed centred — so the two dot
+  columns never lined up.
+
+Verify by row centre, not by eye: `chipCentre - rowCentre` must be ≈ 0 for the
+announcement row *and* every regular row. Rows can be 51px (one-line) or 71px
+(two-line, multi-line) — the constant is the row centre, not the subject's top.
+
+### Header: only the action row pins, not the whole header
+
+`#header` is **not** sticky (it cannot be — the brand row must not stay behind),
+so the action row pins itself. `headerinclude` measures the brand row (`--logo-h`),
+the row's own height (`--panel-h`, kept as a placeholder on `#panel` so the
+document does not jump) and the page box's document top (`--topoffset`), then
+toggles `html.panel-pinned` once `pageYOffset > logoH`. The pinned row is
+`position: fixed` with a real background and `backdrop-filter`, otherwise the
+thread rows show straight through it.
+
+Heights are measured with `.panel-pinned` removed first, so the signed/unsigned
+`--panel-h` never feeds back into itself. Only `--topoffset` is recomputed while
+pinned, and `panel-pinned` is the last write in `update()`, so a scroll can never
+flip the class twice. Admin/mod CP links are a `<span>` inside the account menu
+in the stock template, not a bar above the page — `--topoffset` addresses the
+`#container` box, which is the only thing that could sit above it.
+
+Panel bars: `#panel .upper` / `#panel .lower` were painted `#111c30` / `#0b1425`,
+which showed as a blue-black slab behind the search trigger. Both are
+`transparent` with no padding, and `.lower` has **no** `border-bottom` — that
+hairline was the grey line under the account menu. The `<br class="clear">` in
+`header_welcomeblock_member` is `display: none`; together with `.lower`'s old
+padding it stacked ~40px of dead space under the menu.
+
+### Two grey-border sources on the thread list
+
+`.nextgen-thread-row > td` strips its border, but two other row types did not:
+
+- `td.forumdisplay_announcement` (announcement rows) only carries the stock
+  `.trow1`, whose `border: 1px solid; border-color: #fff #ddd #ddd #fff` frames
+  each cell in grey. Override it with `border: 0` plus the same bottom hairline.
+- `.trow_sep` had a theme `border-top: 1px` that drew the line above the
+  category label.
+
+### The NBSP in `.thread_status` is a grid item
+
+Stock markup is `<span class="thread_status">&nbsp;</span>`. Under
+`display: inline-grid; place-items: center`, the text node is an **anonymous grid
+item** and takes part in alignment, so the 9px `::before` dot was pushed onto the
+NBSP's baseline row (measured centre y=634 in a box centred at y=643 — 9px high).
+`display: flex` ignores the text node's box for alignment and `font-size: 0`
+collapses its line box, so the dot lands dead centre. Scope the chip rule to bare
+`.thread_status` (not `.nextgen-thread-status .thread_status`) so announcement
+rows get it too.
+
+## Thread counter chips: no ring, tight vertical padding
+
+`.nextgen-thread-replies a` and `.nextgen-thread-viewcount` are flat tinted
+pills (`padding: 2px 9px`, `border-radius: 999px`) with **no** `inset` ring.
+They previously carried `padding: 5px 10px` plus `box-shadow: inset 0 0 0 1px`,
+which grew every row that wrapped to two lines. The title cell is
+`.nextgen-thread-main { width: 100% }` while the counter cells are `width: 1%`,
+so leftover width goes to long subjects instead of the counters. `forumdisplay_thread`
+has no disk copy — edit it in `mybb_templates` (`sid=-2`).
