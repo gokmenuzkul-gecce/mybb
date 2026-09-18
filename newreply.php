@@ -938,15 +938,15 @@ if($mybb->input['action'] == "newreply" || $mybb->input['action'] == "editdraft"
 		}
 		else
 		{
-			$subject = $thread_subject;
-			// Subject too long? Shorten it to avoid error message
-			if(my_strlen($subject) > 85)
-			{
-				$subject = my_substr($subject, 0, 82).'...';
-			}
-			$subject = "RE: ".$subject;
+			// Leave the reply subject empty. Prefilling it with "RE: <thread title>"
+			// only made posters resend the thread title as the post subject.
+			$subject = '';
 		}
 	}
+
+	// The "replying to" caption repeats the thread title and author already shown
+	// above the form, so it is cleared here rather than edited out of the template.
+	$lang->reply_to = '';
 
 	// Preview a post that was written.
 	$preview = '';

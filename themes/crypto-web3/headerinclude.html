@@ -1,17 +1,4 @@
-<link rel="preconnect" href="https://cdn.jsdelivr.net" />
-<script src="https://cdn.tailwindcss.com"></script>
-<script>
-  tailwind.config = {
-    theme: {
-      extend: {
-        colors: {
-          crypto: { 500: '#3b82f6', 600: '#2563eb' },
-          gain: { 500: '#22c55e', 600: '#16a34a' }
-        }
-      }
-    }
-  };
-</script>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 <link rel="alternate" type="application/rss+xml" title="{$lang->latest_threads} (RSS 2.0)" href="{$mybb->settings['bburl']}/syndication.php" />
 <link rel="alternate" type="application/atom+xml" title="{$lang->latest_threads} (Atom 1.0)" href="{$mybb->settings['bburl']}/syndication.php?type=atom1.0" />
@@ -23,7 +10,7 @@
 <script type="text/javascript" src="{$mybb->asset_url}/jscripts/jquery.plugins.min.js?ver=1821"></script>
 <script type="text/javascript" src="{$mybb->asset_url}/jscripts/general.js?ver=1827"></script>
 {$stylesheets}
-<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=26" />
+<link rel="stylesheet" href="{$mybb->settings['bburl']}/themes/crypto-web3/global.css?v=46" />
 <script type="text/javascript">
 var templates = { modal: '{$jsTemplates['modal']}', modal_button: '{$jsTemplates['modal_button']}' };
 var cookieDomain = "{$mybb->settings['cookiedomain']}";
@@ -70,36 +57,65 @@ document.addEventListener('DOMContentLoaded', function() {
       editor.appendChild(suggestion);
     }
   });
-  var slider = document.querySelector('[data-slider]');
-  if (slider) {
-    var slides = slider.querySelectorAll('.nextgen-slide');
-    var dots = slider.querySelectorAll('.nextgen-slider-dot');
-    if (slides.length > 1) {
-      var current = 0;
-      var timer = null;
-      var show = function(index) {
-        current = (index + slides.length) % slides.length;
-        slides.forEach(function(slide, i) { slide.classList.toggle('is-active', i === current); });
-        dots.forEach(function(dot, i) { dot.classList.toggle('is-active', i === current); });
-      };
-      var start = function() {
-        stop();
-        timer = setInterval(function() { show(current + 1); }, 6500);
-      };
-      var stop = function() { if (timer) { clearInterval(timer); timer = null; } };
-      dots.forEach(function(dot) {
-        dot.addEventListener('click', function() {
-          show(parseInt(dot.getAttribute('data-slide'), 10));
-          start();
-        });
+  var usermenu = document.querySelector('[data-usermenu]');
+  if (usermenu) {
+    var profileBtn = usermenu.querySelector('[data-usermenu-toggle]');
+    var panel = usermenu.querySelector('.nextgen-usermenu-links');
+    var setMenu = function(open) {
+      usermenu.setAttribute('data-open', open ? '1' : '0');
+      if (profileBtn) profileBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    if (profileBtn && panel) {
+      profileBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+        setMenu(usermenu.getAttribute('data-open') !== '1');
       });
-      slider.addEventListener('mouseenter', stop);
-      slider.addEventListener('mouseleave', start);
-      // Respect users who asked the OS to reduce motion: no auto-advance.
-      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-        start();
-      }
+      document.addEventListener('click', function(event) {
+        if (!usermenu.contains(event.target)) setMenu(false);
+      });
+      document.addEventListener('keydown', function(event) {
+        if (event.key === 'Escape') setMenu(false);
+      });
     }
   }
+
+  // Pin the search trigger + account menu into the brand row's band once the
+  // page scrolls, so they stop hovering over the threads with posts showing
+  // through them. Heights are measured unpinned and cached; only `--topoffset`
+  // can change while pinned (the ACP control bar), so no reflow loop.
+  var header = document.getElementById('header');
+  var logoRow = document.getElementById('logo');
+  var panelRow = document.querySelector('#panel .upper');
+  if (header && logoRow && panelRow) {
+    var root = document.documentElement;
+    var container = document.getElementById('container');
+    var logoH = 0;
+    var update = function() {
+      // Absolute document top of the page box: 0 normally, non-zero if anything
+      // (an admin notice callout, say) is rendered above it.
+      var top = container
+        ? Math.max(0, Math.round(container.getBoundingClientRect().top + window.pageYOffset))
+        : 0;
+      root.style.setProperty('--topoffset', top + 'px');
+      root.classList.toggle('panel-pinned', window.pageYOffset > logoH);
+    };
+    var measure = function() {
+      root.classList.remove('panel-pinned');
+      root.style.setProperty('--panel-h', '0px');
+      logoH = logoRow.offsetHeight;
+      root.style.setProperty('--logo-h', logoH + 'px');
+      root.style.setProperty('--panel-h', panelRow.offsetHeight + 'px');
+      update();
+    };
+    measure();
+    window.addEventListener('resize', measure);
+    var ticking = false;
+    window.addEventListener('scroll', function() {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(function() { ticking = false; update(); });
+    }, { passive: true });
+  }
+
 });
 </script>

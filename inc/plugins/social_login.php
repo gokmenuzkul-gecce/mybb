@@ -36,7 +36,7 @@ function social_login_info()
                 'name'          => 'Sosyal Giriş (Google, GitHub, Discord)',
                 'description'   => 'OAuth 2.0 ile Google, GitHub ve Discord üzerinden giriş ve kayıt.',
                 'website'       => '',
-                'author'        => 'Crypton Web3 Community',
+                'author'        => 'Gecce',
                 'authorsite'    => '',
                 'version'       => '1.0',
                 'guid'          => 'e91b7a34c6f24d58b0a3e7c1d9f24653',
@@ -782,22 +782,26 @@ function social_login_render_buttons($contents)
                 . '<div class="nextgen-social-buttons">'.$buttons.'</div>'
                 . '</div>';
 
-        // Anchor under the login form / register form tables. Both are .tborder
-        // tables, and the block belongs directly below the one that holds the
-        // username field.
-        $pos = strpos($contents, 'name="username"');
-        if($pos === false)
+        // Anchor on the submit control, not on the first <table> after the username
+        // field. The register form has several nested tables, so the block used to
+        // land inside the referrer fieldset instead of under the whole form. The
+        // submit row is always the last thing in the form, and the register button
+        // is an <input name="regsubmit">.
+        foreach(array('name="regsubmit"', 'name="loginsubmit"', 'name="submit"', 'name="username"') as $needle)
         {
-                $pos = strpos($contents, 'name="password"');
-        }
-
-        if($pos !== false)
-        {
-                $close = strpos($contents, '</table>', $pos);
-                if($close !== false)
+                $pos = strpos($contents, $needle);
+                if($pos === false)
                 {
-                        $at = $close + strlen('</table>');
-                        return substr_replace($contents, $block, $at, 0);
+                        continue;
+                }
+
+                foreach(array('</table>', '</form>') as $close_tag)
+                {
+                        $close = strpos($contents, $close_tag, $pos);
+                        if($close !== false)
+                        {
+                                return substr_replace($contents, $block, $close + strlen($close_tag), 0);
+                        }
                 }
         }
 

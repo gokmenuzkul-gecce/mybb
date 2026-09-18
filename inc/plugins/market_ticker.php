@@ -26,7 +26,7 @@ function market_ticker_info()
                 'name'          => 'Canlı Borsa Tablosu',
                 'description'   => 'Ana sayfada CoinGecko verisiyle çalışan sade, göz yormayan canlı fiyat şeridi.',
                 'website'       => '',
-                'author'        => 'Crypton Web3 Community',
+                'author'        => 'Gecce',
                 'authorsite'    => '',
                 'version'       => '1.0',
                 'guid'          => 'd4f81c60a7e2451b9c3d6a0e5f2b8471',
@@ -145,7 +145,9 @@ function market_ticker_create_task()
                 'title' => $db->escape_string('Canlı Borsa Fiyat Yenilemesi'),
                 'description' => $db->escape_string('CoinGecko fiyatlarını çeker ve ana sayfa şeridinin cache\'ini günceller.'),
                 'file' => 'market_ticker',
-                'minute' => '*/5',
+                // MyBB's task scheduler only accepts a comma list or '*': cron-style
+                // '*/5' reaches mktime() as a string and fatals in functions_task.php.
+                'minute' => '0,5,10,15,20,25,30,35,40,45,50,55',
                 'hour' => '*',
                 'day' => '*',
                 'weekday' => '*',
@@ -438,8 +440,10 @@ function market_ticker_render($contents)
                 . '<div class="nextgen-ticker-track">'.$items.'</div>'
                 . '</section>';
 
-        // Place it just under the hero, above the announcements strip.
-        foreach(array('<section class="nextgen-ad-slot"', 'data-promo="announcements"', '<section class="nextgen-vip-showcase"', '<section class="nextgen-forum-directory"') as $needle)
+        // Anchor on markup that renders for members and guests alike. An ad slot
+        // is the wrong anchor: index_top only appears while an ad is live, so the
+        // strip silently fell to index_mid (bottom of the page) once it expired.
+        foreach(array('<section class="nextgen-promo-grid"', 'data-promo="announcements"', '<section class="nextgen-vip-showcase"', '<section class="nextgen-forum-directory"') as $needle)
         {
                 $pos = strpos($contents, $needle);
                 if($pos !== false)

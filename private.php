@@ -898,14 +898,23 @@ if($mybb->input['action'] == "send")
 		{
 			// forward/reply
 			$subject = preg_replace("#(FW|RE):( *)#is", '', $subject);
-			$message = "[quote='{$pm['quotename']}']\n$message\n[/quote]";
-			$message = preg_replace('#^/me (.*)$#im', "* ".$pm['quotename']." \\1", $message);
 
-			require_once MYBB_ROOT."inc/functions_posting.php";
-
-			if($mybb->settings['maxpmquotedepth'] != '0')
+			if($mybb->input['do'] == 'forward')
 			{
-				$message = remove_message_quotes($message, $mybb->settings['maxpmquotedepth']);
+				$message = "[quote='{$pm['quotename']}']\n$message\n[/quote]";
+				$message = preg_replace('#^/me (.*)$#im', "* ".$pm['quotename']." \\1", $message);
+
+				require_once MYBB_ROOT."inc/functions_posting.php";
+
+				if($mybb->settings['maxpmquotedepth'] != '0')
+				{
+					$message = remove_message_quotes($message, $mybb->settings['maxpmquotedepth']);
+				}
+			}
+			else
+			{
+				// A reply opens a blank editor so the member writes their own message.
+				$message = '';
 			}
 
 			if($mybb->input['do'] == 'forward')
@@ -1223,19 +1232,9 @@ if($mybb->input['action'] == "read")
 			$optionschecked['readreceipt'] = 'checked="checked"';
 		}
 
-		require_once MYBB_ROOT.'inc/functions_posting.php';
-
-		$quoted_message = array(
-			'message' => htmlspecialchars_uni($parser->parse_badwords($pm['message'])),
-			'username' => $pm['username'],
-			'quote_is_pm' => true
-		);
-		$quoted_message = parse_quoted_message($quoted_message);
-
-		if($mybb->settings['maxpmquotedepth'] != '0')
-		{
-			$quoted_message = remove_message_quotes($quoted_message, $mybb->settings['maxpmquotedepth']);
-		}
+		// The quick reply opens empty: the member writes the response instead of
+		// sending the original message back as a quote.
+		$quoted_message = '';
 
 		$subject = preg_replace("#(FW|RE):( *)#is", '', $pm['subject']);
 

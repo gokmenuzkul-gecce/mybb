@@ -46,13 +46,13 @@ function vip_membership_action_handler($action)
 
 function vip_membership_admin_permissions()
 {
-	global $lang;
-
 	return array(
-		'vip_membership' => array(
+		'name' => 'VIP Üyelik',
+		'permissions' => array(
 			'orders' => 'Ödeme kuyruğunu görüntüle ve onayla',
 			'plans' => 'VIP planlarını yönet',
 			'networks' => 'Ödeme ağlarını ve cüzdan adreslerini yönet',
 		),
+		'disporder' => 65,
 	);
 }

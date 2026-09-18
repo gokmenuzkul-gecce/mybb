@@ -46,9 +46,9 @@ Durum (bu dosya güncel tutulmalı):
 |---|-------|-----|
 | 1 | bitti | `vip_membership_home_showcase()` |
 | 2 | bitti | `vip_membership_send_welcome()` + banner |
-| 3 | bitti | `board_promos` duyuru şeridi |
-| 4 | bitti | `board_promos` reklam slotları |
-| 5 | bitti | `board_promos` sponsor + affiliate + tıklama takibi |
+| 3 | kaldırıldı | `board_promos` duyuru şeridi ana sayfadan, ACP alanıyla birlikte kaldırıldı |
+| 4 | kaldırıldı | `board_promos` reklam slotları ana sayfadan kaldırıldı |
+| 5 | kaldırıldı | `board_promos` sponsor+affiliate+tıklama takibi kaldırıldı |
 | 6 | bitti | `social_login` eklentisi (Google/GitHub/Discord, e-posta çakışması reddi) |
 | 7 | bitti | `member_register` + 11 alt şablon `nextgen` div düzeni; sözleşme ve giriş sayfası da modern |
 | 8 | bitti | `portal=0` kapatıldı |

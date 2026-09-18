@@ -29,7 +29,7 @@ function simulated_community_info()
 		'name' => 'Simüle Topluluk (Suni Canlılık)',
 		'description' => 'Forumu boş göstermemek için etiketlenmiş demo hesaplar ve örnek tartışma konuları oluşturur. Tüm hesaplar "demo" olarak işaretlenir.',
 		'website' => '',
-		'author' => 'Crypton Web3',
+		'author' => 'Gecce',
 		'authorsite' => '',
 		'version' => '1.0',
 		'codename' => 'simulated_community',

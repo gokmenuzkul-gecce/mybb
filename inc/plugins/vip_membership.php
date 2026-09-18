@@ -30,7 +30,7 @@ function vip_membership_info()
 		'name'          => 'VIP Üyelik ve Kripto Ödeme',
 		'description'   => 'TRC-20 USDT ile VIP üyelik satışı, admin onay kuyruğu ve otomatik süreli rütbe değişimi.',
 		'website'       => '',
-		'author'        => 'Crypton Web3 Community',
+		'author'        => 'Gecce',
 		'authorsite'    => '',
 		'version'       => '1.0',
 		'guid'          => 'b7c1e4a2f9d34c6e8a5b0d7f2c3e9a18',
@@ -617,13 +617,15 @@ function vip_membership_home_showcase($contents)
 		return $contents;
 	}
 
-	// Already inside (member or admin) — the teaser would be noise.
-	$vip_gid = (int)$mybb->settings['vip_group'];
-	if((int)$mybb->user['uid'] > 0 && (int)$mybb->user['usergroup'] == $vip_gid)
+	// The showcase exists to sell VIP. Staff run the board and never need the
+	// pitch, and an existing member already holds the product, so neither sees it.
+	if(!empty($mybb->usergroup['cancp']) || !empty($mybb->usergroup['canmodcp']))
 	{
 		return $contents;
 	}
-	if($mybb->usergroup['cancp'] == 1)
+
+	$vip_gid = (int)$mybb->settings['vip_group'];
+	if((int)$mybb->user['usergroup'] == $vip_gid)
 	{
 		return $contents;
 	}
