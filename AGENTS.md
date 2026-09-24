@@ -1011,3 +1011,34 @@ from logged-out traffic) and `asm_show_clicks` (off = click counts only for
 `render_card()`, so a change in the ACP takes effect on the next request after
 `rebuild_settings()`.
 
+## RSS news bot: publishing path and queue upkeep
+
+Fetching and publishing are the same switch per category. `rss_categories.auto_post`
+decides whether a fetched item is published immediately (through
+`rss_news_bot_approve()`, the same path the ACP uses) or parked in `rss_queue`
+as `status='queued'`. With `auto_post=0` on every category the bot looks broken:
+a manual "Şimdi Çek" run reports `yeni haber: N` but nothing ever appears in the
+target forum, because every item is still waiting for approval. Turn on
+"Otomatik yayınlama" for each category (or set `auto_post=1` for all active
+categories) so a fetch lands in the category's own `fid_forum`.
+
+Daily limits live in two places and must not be moved:
+* `rss_news_bot_fetch_categories($force)` skips a category whose `last_fetch` is
+  newer than `TIME_NOW - 72000` (20h, so a slightly early or late schedule still
+  counts as once a day). The scheduled task calls it unforced; the ACP fetch
+  button passes `$force = true` to bypass the guard for one-off runs.
+* `rss_news_bot_fetch_category()` stops at `per_run` (seeded as 7) new items per
+  run, so a category tops up to seven topics a day instead of flooding.
+
+Google News is the fallback feed built by `rss_news_bot_category_feed_url()`; for
+narrow queries it often returns only a few items and many are years old. A
+category's `sources` (one publisher feed URL per line) are parsed first and
+Google News only fills the remaining room. Queue rows dedupe on `guid`, so
+re-running a fetch cannot double-post.
+
+`mybb_rss_queue` grows without bound because stale headlines (some from 2013)
+sit as `queued` forever. The queue page exposes a POST `action=purge` sweep
+("Eski Onay Kuyruğunu Temizle", default 30 days) that deletes only
+`status='queued'` rows older than the cutoff — approved/rejected rows and the
+topics they produced are untouched.
+

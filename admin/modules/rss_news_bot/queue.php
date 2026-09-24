@@ -150,6 +150,25 @@ if($action == 'fetch')
 	admin_redirect('index.php?module=rss_news_bot-queue'.$filter_suffix);
 }
 
+if($action == 'purge')
+{
+	verify_post_check($mybb->get_input('my_post_key'));
+
+	$days = (int)$mybb->get_input('days', MyBB::INPUT_INT);
+	if($days < 1)
+	{
+		$days = 30;
+	}
+
+	$cutoff = TIME_NOW - ($days * 86400);
+	$purge_where = "status='queued' AND dateline < '{$cutoff}'".($where !== '' ? " AND {$where}" : '');
+	$removed = (int)$db->fetch_field($db->simple_select('rss_queue', 'COUNT(*) AS c', $purge_where), 'c');
+	$db->delete_query('rss_queue', $purge_where);
+
+	flash_message($removed.' adet eski onay kaydı silindi ('.$days.' günden eski, yalnızca bekleyenler).', 'success');
+	admin_redirect('index.php?module=rss_news_bot-queue'.$filter_suffix);
+}
+
 /* ---------------------------------------------------------------- list --- */
 
 $page->output_header('RSS Onay Kuyruğu'.($filter_cat ? ' - '.htmlspecialchars_uni($filter_cat['title']) : ''));
@@ -163,6 +182,17 @@ $form = new Form('index.php?module=rss_news_bot-queue&amp;action=fetch'.$filter_
 $buttons = array($form->generate_submit_button($filter_cat ? 'Bu Kategoriyi Şimdi Çek' : 'Tüm Kategorileri Şimdi Çek'));
 $form->output_submit_wrapper($buttons);
 $form->end();
+
+// A long-lived queue accumulates stale headlines (some feeds carry years-old
+// items). Sweeping them out keeps the pending list meaningful without touching
+// anything an admin already approved.
+$purge_form = new Form('index.php?module=rss_news_bot-queue&amp;action=purge'.$filter_suffix, 'post');
+$purge_container = new FormContainer('Eski Onay Kuyruğunu Temizle');
+$purge_container->output_row('Kaç günden eski', 'Yalnızca hâlâ bekleyen (onaylanmamış/reddedilmemiş) kayıtlar silinir. Yayınlanmış konular etkilenmez.', $purge_form->generate_numeric_field('days', 30, array('id' => 'rss_purge_days', 'min' => 1, 'style' => 'width: 80px;')));
+$purge_container->end();
+$purge_buttons = array($purge_form->generate_submit_button('Eski Kayıtları Sil'));
+$purge_form->output_submit_wrapper($purge_buttons);
+$purge_form->end();
 
 $pending_where = "status='queued'".($where !== '' ? " AND {$where}" : '');
 $pending = $db->fetch_field($db->simple_select('rss_queue', 'COUNT(*) AS c', $pending_where), 'c');
