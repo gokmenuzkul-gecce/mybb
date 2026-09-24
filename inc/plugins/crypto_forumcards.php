@@ -30,6 +30,75 @@ if(defined('THIS_SCRIPT') && THIS_SCRIPT == 'index.php')
 	$templatelist .= 'forumbit_depth1_cat,forumbit_depth2_forum,forumbit_depth2_forum_lastpost';
 }
 
+$plugins->add_hook('admin_forum_management_edit_commit', 'crypto_forumcards_save_forum_icon');
+
+// The ACP icon module lives in admin/modules/crypto_forumcards/. It is not
+// registered by this plugin's activate() because MyBB discovers admin modules
+// from the filesystem; the directory only has to exist.
+function crypto_forumcards_activate()
+{
+	global $db;
+
+	// MySQL takes a storage-engine tail; SQLite errors on it.
+	$tail = ($db->type == 'mysql') ? ' ENGINE=InnoDB DEFAULT CHARSET=utf8mb4' : '';
+
+	if(!$db->table_exists('crypto_forum_icons'))
+	{
+		$db->write_query('CREATE TABLE '.TABLE_PREFIX.'crypto_forum_icons (
+			fid INTEGER NOT NULL,
+			icon VARCHAR(100) NOT NULL DEFAULT \'\',
+			color VARCHAR(20) NOT NULL DEFAULT \'\',
+			PRIMARY KEY (fid)
+		)'.$tail);
+	}
+
+	require_once MYBB_ROOT.'inc/adminfunctions_templates.php';
+	find_replace_templatesets('forumbit_depth1_cat', '#'.preg_quote('<strong class="nextgen-forum-category"><a href="{$forum_url}">').'#', '<strong class="nextgen-forum-category"><a href="{$forum_url}"><i class="{$forum[\'icon_class\']}" aria-hidden="true"></i>');
+}
+
+
+function crypto_forumcards_deactivate()
+{
+	require_once MYBB_ROOT.'inc/adminfunctions_templates.php';
+	find_replace_templatesets('forumbit_depth1_cat', '#'.preg_quote('<i class="{$forum[\'icon_class\']}" aria-hidden="true"></i>').'#', '', 0);
+}
+
+function crypto_forumcards_is_installed()
+{
+	global $db;
+	return $db->table_exists('crypto_forum_icons');
+}
+
+function crypto_forumcards_uninstall()
+{
+	global $db;
+	$db->drop_table('crypto_forum_icons');
+}
+
+// Keep the ACP-managed icon on the forum row when an admin saves the forum
+// from the stock management screen, so the two entry points cannot disagree.
+function crypto_forumcards_save_forum_icon()
+{
+	global $db, $mybb;
+
+	if(!isset($mybb->input['fid']) || !$db->table_exists('crypto_forum_icons'))
+	{
+		return;
+	}
+
+	$fid = (int)$mybb->input['fid'];
+	$icon = isset($mybb->input['crypto_icon']) ? trim($mybb->input['crypto_icon']) : '';
+	$color = isset($mybb->input['crypto_icon_color']) ? trim($mybb->input['crypto_icon_color']) : '';
+
+	if($icon === '' && $color === '')
+	{
+		$db->delete_query('crypto_forum_icons', 'fid='.$fid);
+		return;
+	}
+
+	$db->replace_query('crypto_forum_icons', array('fid' => $fid, 'icon' => $icon, 'color' => $color));
+}
+
 $plugins->add_hook('build_forumbits_forum', 'crypto_forumcards_enrich');
 $plugins->add_hook('global_start', 'crypto_usermenu_global_start');
 
@@ -58,8 +127,25 @@ function crypto_forumcards_lookup($name)
 	$n = my_strtolower($name);
 
 	$rules = array(
+		'tiktok' => array('fa-brands fa-tiktok', '#f472b6'),
+		'youtube' => array('fa-brands fa-youtube', '#ef4444'),
+		'instagram' => array('fa-brands fa-instagram', '#e879f9'),
+		'smm' => array('fa-solid fa-tower-cell', '#38bdf8'),
+		'sponsor' => array('fa-solid fa-handshake-angle', '#fbbf24'),
+		'yapay zeka' => array('fa-solid fa-brain', '#a78bfa'),
+		'zeka' => array('fa-solid fa-brain', '#a78bfa'),
+		'prompt' => array('fa-solid fa-wand-magic-sparkles', '#c084fc'),
+		'dropshipping' => array('fa-solid fa-truck-fast', '#34d399'),
+		'amazon' => array('fa-brands fa-amazon', '#fb923c'),
+		'trendyol' => array('fa-solid fa-bag-shopping', '#fb923c'),
+		'kazanma' => array('fa-solid fa-sack-dollar', '#4ade80'),
+		'lisans' => array('fa-solid fa-key', '#facc15'),
+		'tema' => array('fa-solid fa-palette', '#fbbf24'),
 		'airdrop' => array('fa-solid fa-parachute-box', '#22c55e'),
 		'testnet' => array('fa-solid fa-flask-vial', '#a855f7'),
+		'kupon' => array('fa-solid fa-ticket', '#f472b6'),
+		'firsat' => array('fa-solid fa-tags', '#f472b6'),
+		'fırsat' => array('fa-solid fa-tags', '#f472b6'),
 		'mining' => array('fa-solid fa-microchip', '#f59e0b'),
 		'telegram' => array('fa-brands fa-telegram', '#38bdf8'),
 		'otomasyon' => array('fa-solid fa-code', '#818cf8'),
@@ -96,10 +182,18 @@ function crypto_forumcards_lookup($name)
 		'etkinlik' => array('fa-solid fa-trophy', '#facc15'),
 		'yarisma' => array('fa-solid fa-trophy', '#facc15'),
 		'tanisma' => array('fa-solid fa-hand-sparkles', '#22d3ee'),
+		'tanışma' => array('fa-solid fa-hand-sparkles', '#22d3ee'),
 		'tanit' => array('fa-solid fa-hand-sparkles', '#22d3ee'),
+		'tanıt' => array('fa-solid fa-hand-sparkles', '#22d3ee'),
 		'topluluk' => array('fa-solid fa-users', '#60a5fa'),
 		'hos geldiniz' => array('fa-solid fa-door-open', '#f97316'),
+		'hoş geldiniz' => array('fa-solid fa-door-open', '#f97316'),
 		'kripto' => array('fa-solid fa-coins', '#facc15'),
+		'panel' => array('fa-solid fa-table-columns', '#38bdf8'),
+		'dunya' => array('fa-solid fa-globe', '#60a5fa'),
+		'dünya' => array('fa-solid fa-globe', '#60a5fa'),
+		'arac' => array('fa-solid fa-toolbox', '#a78bfa'),
+		'araç' => array('fa-solid fa-toolbox', '#a78bfa'),
 	);
 
 	foreach($rules as $needle => $style)
@@ -120,6 +214,39 @@ function crypto_forumcards_lookup($name)
  * instead, so its own lastposteruid is useless for the avatar. Resolve the
  * newest descendant poster once, in a single query.
  */
+/**
+ * Per-forum icon overrides set from the ACP.
+ *
+ * The keyword rules above are a heuristic; this table is the explicit answer an
+ * admin gives for one specific forum. It wins over the rules. Memoised once per
+ * request because every forum row asks for it.
+ */
+function crypto_forumcards_overrides()
+{
+        static $map = null;
+
+        if($map !== null)
+        {
+                return $map;
+        }
+
+        global $db;
+
+        $map = array();
+
+        if($db->table_exists('crypto_forum_icons'))
+        {
+                $query = $db->simple_select('crypto_forum_icons', 'fid, icon, color');
+
+                while($row = $db->fetch_array($query))
+                {
+                        $map[(int)$row['fid']] = $row;
+                }
+        }
+
+        return $map;
+}
+
 function crypto_forumcards_category_posters()
 {
 	static $map = null;
@@ -174,6 +301,23 @@ function crypto_forumcards_enrich($forum)
 	global $db;
 
 	list($icon, $color) = crypto_forumcards_lookup($forum['name']);
+
+	$overrides = crypto_forumcards_overrides();
+	if(isset($overrides[$forum['fid']]))
+	{
+		$override = $overrides[$forum['fid']];
+
+		if(!empty($override['icon']))
+		{
+			$icon = $override['icon'];
+		}
+
+		if(!empty($override['color']))
+		{
+			$color = $override['color'];
+		}
+	}
+
 	$forum['icon_class'] = $icon;
 	$forum['icon_color'] = $color;
 
