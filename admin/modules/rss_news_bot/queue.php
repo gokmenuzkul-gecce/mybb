@@ -131,9 +131,16 @@ if($action == 'fetch')
 {
 	verify_post_check($mybb->get_input('my_post_key'));
 
-	$report = rss_news_bot_fetch_all(true);
+	// The queue is fed by categories now; fetching a plain feed list here would
+	// bypass them and post straight to the global forum.
+	$report = rss_news_bot_fetch_categories(true, $cid);
 
-	$message = 'Beslemeler: '.(int)$report['feeds'].', yeni haber: '.(int)$report['new'].'.';
+	$message = 'Kategoriler: '.(int)$report['categories'].', yeni haber: '.(int)$report['new'];
+	if((int)$report['published'])
+	{
+		$message .= ', otomatik yayınlanan: '.(int)$report['published'];
+	}
+	$message .= '.';
 	if(!empty($report['errors']))
 	{
 		$message .= ' Hatalar: '.implode(' | ', array_map('htmlspecialchars_uni', $report['errors']));
@@ -153,7 +160,7 @@ if($filter_cat)
 }
 
 $form = new Form('index.php?module=rss_news_bot-queue&amp;action=fetch'.$filter_suffix, 'post');
-$buttons = array($form->generate_submit_button('Beslemeleri Şimdi Çek'));
+$buttons = array($form->generate_submit_button($filter_cat ? 'Bu Kategoriyi Şimdi Çek' : 'Tüm Kategorileri Şimdi Çek'));
 $form->output_submit_wrapper($buttons);
 $form->end();
 

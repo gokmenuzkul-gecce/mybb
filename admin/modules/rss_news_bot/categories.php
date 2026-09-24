@@ -39,15 +39,60 @@ function rss_news_bot_category_forum_options()
 }
 
 /**
+ * Turn a category title into the unique slug the table indexes on, appending a
+ * counter when two titles transpose to the same letters. MyBB's slug helper
+ * only strips ASCII punctuation, so Turkish letters are folded first.
+ */
+function rss_news_bot_category_slug($title, $cid)
+{
+        global $db;
+
+        $slug = rss_news_bot_category_ascii($title);
+        $slug = strtolower(trim(preg_replace('~[^A-Za-z0-9]+~', '-', $slug), '-'));
+        if($slug === '')
+        {
+                $slug = 'kategori';
+        }
+        $slug = my_substr($slug, 0, 50);
+
+        $base = $slug;
+        $i = 2;
+        while(true)
+        {
+                $clash = $db->simple_select('rss_categories', 'cid', "slug='".$db->escape_string($slug)."' AND cid!=".(int)$cid);
+                if(!$db->num_rows($clash))
+                {
+                        return $slug;
+                }
+                $slug = $base.'-'.$i;
+                $i++;
+        }
+}
+
+function rss_news_bot_category_ascii($text)
+{
+        $map = array(
+                'ı' => 'i', 'İ' => 'I', 'ş' => 's', 'Ş' => 'S', 'ğ' => 'g', 'Ğ' => 'G',
+                'ü' => 'u', 'Ü' => 'U', 'ö' => 'o', 'Ö' => 'O', 'ç' => 'c', 'Ç' => 'C',
+        );
+
+        return strtr((string)$text, $map);
+}
+
+/**
  * The one place a category row is written from the ACP, so the field list and
- * escaping stay in a single spot.
+ * escaping stay in a single spot. A new category is appended to the bottom of
+ * the left menu; an existing one keeps its place.
  */
 function rss_news_bot_category_save($cid, $input)
 {
         global $db;
 
+        $cid = (int)$cid;
+        $title = trim($input['title']);
+
         $data = array(
-                'title' => $db->escape_string(trim($input['title'])),
+                'title' => $db->escape_string($title),
                 'fid_forum' => (int)$input['fid_forum'],
                 'query' => $db->escape_string(trim($input['query'])),
                 'sources' => $db->escape_string(trim($input['sources'])),
@@ -56,7 +101,7 @@ function rss_news_bot_category_save($cid, $input)
                 'active' => (int)$input['active'] ? 1 : 0,
         );
 
-        if($data['title'] === '')
+        if($title === '')
         {
                 return false;
         }
@@ -68,10 +113,21 @@ function rss_news_bot_category_save($cid, $input)
 
         if($cid > 0)
         {
-                $db->update_query('rss_categories', $data, 'cid='.(int)$cid);
+                $db->update_query('rss_categories', $data, 'cid='.$cid);
+        }
+        else
+        {
+                $data['slug'] = $db->escape_string(rss_news_bot_category_slug($title, 0));
+                $data['disporder'] = (int)$db->fetch_field($db->simple_select('rss_categories', 'MAX(disporder) AS d'), 'd') + 1;
+                // A manual category never inherits VIP: a checkbox mistake must not
+                // silently route the bot into a gated forum.
+                $data['is_vip'] = 0;
+                $data['last_fetch'] = 0;
+                $data['last_error'] = '';
+                $cid = (int)$db->insert_query('rss_categories', $data);
         }
 
-        return true;
+        return $cid;
 }
 
 /* ------------------------------------------------------------- actions --- */
@@ -80,7 +136,7 @@ if($action == 'save' && $mybb->request_method == 'post')
 {
         verify_post_check($mybb->get_input('my_post_key'));
 
-        if(rss_news_bot_category_save($cid, array(
+        $saved_cid = rss_news_bot_category_save($cid, array(
                 'title' => $mybb->get_input('title'),
                 'fid_forum' => $mybb->get_input('fid_forum', MyBB::INPUT_INT),
                 'query' => $mybb->get_input('query'),
@@ -88,9 +144,11 @@ if($action == 'save' && $mybb->request_method == 'post')
                 'per_run' => $mybb->get_input('per_run', MyBB::INPUT_INT),
                 'auto_post' => $mybb->get_input('auto_post', MyBB::INPUT_INT),
                 'active' => $mybb->get_input('active', MyBB::INPUT_INT),
-        )))
+        ));
+
+        if($saved_cid)
         {
-                flash_message('Kategori güncellendi.', 'success');
+                flash_message($cid > 0 ? 'Kategori güncellendi.' : 'Kategori eklendi.', 'success');
         }
         else
         {
@@ -132,18 +190,15 @@ if($action == 'fetch' && $mybb->request_method == 'post')
 
 /* ---------------------------------------------------------------- edit --- */
 
-if($action == 'edit' && $cid > 0)
+/**
+ * The add and edit screens are the same form, so a new field only has to be
+ * added once. A new category starts with the defaults the seed uses.
+ */
+function rss_news_bot_category_form($cat, $cid)
 {
-        $cat = $db->fetch_array($db->simple_select('rss_categories', '*', "cid='{$cid}'"));
-        if(!$cat)
-        {
-                flash_message('Kategori bulunamadı.', 'error');
-                admin_redirect('index.php?module=rss_news_bot-categories');
-        }
+        global $mybb;
 
-        $page->output_header('Kategori Düzenle: '.htmlspecialchars_uni($cat['title']));
-
-        $form = new Form('index.php?module=rss_news_bot-categories&amp;action=save&amp;cid='.$cid, 'post');
+        $form = new Form('index.php?module=rss_news_bot-categories&amp;action=save&amp;cid='.(int)$cid, 'post');
         $container = new FormContainer('Kategori Ayarları');
 
         $container->output_row('Kategori adı', 'Menüde ve konu başlığında görünür.', $form->generate_text_box('title', htmlspecialchars_uni($cat['title']), array('style' => 'width:100%')));
@@ -169,6 +224,44 @@ if($action == 'edit' && $cid > 0)
         $buttons = array($form->generate_submit_button('Kaydet'), $form->generate_reset_button('Sıfırla'));
         $form->output_submit_wrapper($buttons);
         $form->end();
+}
+
+if($action == 'add')
+{
+        $page->output_header('Yeni Kategori Ekle');
+
+        echo '<p>Yeni kategori listenin sonuna eklenir. Kaydettikten sonra satırındaki <em>Çek</em> düğmesiyle hemen test edebilirsiniz.</p>';
+
+        rss_news_bot_category_form(array(
+                'title' => '',
+                'fid_forum' => 0,
+                'query' => '',
+                'sources' => '',
+                'per_run' => 7,
+                'auto_post' => 0,
+                'active' => 1,
+        ), 0);
+
+        echo '<p><a href="index.php?module=rss_news_bot-categories">&larr; Kategori listesine dön</a></p>';
+
+        $page->output_footer();
+        exit;
+}
+
+if($action == 'edit' && $cid > 0)
+{
+        $cat = $db->fetch_array($db->simple_select('rss_categories', '*', "cid='{$cid}'"));
+        if(!$cat)
+        {
+                flash_message('Kategori bulunamadı.', 'error');
+                admin_redirect('index.php?module=rss_news_bot-categories');
+        }
+
+        $page->output_header('Kategori Düzenle: '.htmlspecialchars_uni($cat['title']));
+
+        rss_news_bot_category_form($cat, $cid);
+
+        echo '<p><a href="index.php?module=rss_news_bot-categories">&larr; Kategori listesine dön</a></p>';
 
         $page->output_footer();
         exit;
@@ -184,6 +277,8 @@ $form = new Form('index.php?module=rss_news_bot-categories&amp;action=fetch', 'p
 $buttons = array($form->generate_submit_button('Tüm Kategorileri Şimdi Çek'));
 $form->output_submit_wrapper($buttons);
 $form->end();
+
+echo '<p><a href="index.php?module=rss_news_bot-categories&amp;action=add" class="button">+ Yeni Kategori Ekle</a></p>';
 
 $fname = array();
 $fquery = $db->simple_select('forums', 'fid, name', "type='f'");
