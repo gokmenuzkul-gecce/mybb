@@ -111,6 +111,77 @@ board starts returning HTTP 503.
 `mybb_themestylesheets`, so MyBB never loads it; `themes/crypto-web3/global.css`
 supplies the same classes and is what actually renders.
 
+## Animated video background
+
+The board background is a fixed plexus video layer, emitted as the first child
+of `#container` in the DB `header` template (so it appears on every page, since
+`header` is shared):
+
+```
+<div class="cyber-bg-media" aria-hidden="true"><video autoplay muted loop playsinline …>…</video></div>
+```
+
+Source assets live in `themes/crypto-web3/media/`: `bg-plexus.webm`,
+`bg-plexus.mp4` (1920×1080, ~40 s, silent) and `bg-plexus.jpg` (poster/fallback).
+
+Rules that matter:
+
+- **The backdrop must be a sibling *before* `#container`, not a child of it.**
+  `#container` is `position: relative; z-index: 1`, which creates a stacking
+  context; a `position: fixed; z-index: 0` child of it still paints above the
+  non-positioned `#content`, so the whole forum body ends up washed out and
+  unreadable behind the video. `#logo` and other `position: relative` chrome
+  escape this, which is what makes the bug look like "only the middle is
+  broken". Symptom to check: text-contrast ratio on `vip.php` drops from ~1.10
+  to ~0.82; after the fix it returns to ~1.10.
+- `.cyber-bg-media` uses `position: fixed; inset: 0` (not `width: 100vw;
+  height: 100vh`) so a vertical scrollbar cannot push it sideways and trigger
+  horizontal overflow.
+- The `<video>` inside is `position: absolute; width/height: 100%`; without that
+  the element renders at the file's intrinsic width instead of filling the
+  viewport.
+- `#container`/`body` must stay `background: transparent` and `html` keeps an
+  opaque `--bg-deep` — the video only shows where content surfaces (cards,
+  `.trow*`, `.post`, tables) are not covering it. `#content` uses a
+  semi-transparent gradient so the video reads inside the content column too.
+- `prefers-reduced-motion` hides the `<video>`, leaving the poster image.
+
+**The source clip is mirrored, sharpened and upscaled.** The original is
+768×432 with the plexus crowded into the left ~55% and a dead-black right half.
+The pipeline, run once and stored as the committed media files:
+
+1. Inpaint the watermark (see below) — `clean_src.mp4`, still 768×432.
+2. `crop=iw/2:ih:0:0` then `split`/`hflip`/`hstack` — take the left 384 px and
+   butt it against its own mirror. This yields a symmetric 768×432 frame where
+   the motion is balanced edge-to-edge instead of ending halfway across.
+3. `unsharp=5:5:1.2` while still at native size, then
+   `scale=1920:1080:flags=lanczos`, then `unsharp=5:5:0.5`.
+
+Sharpening *before* the upscale is what keeps the lines crisp: the source is
+2.5× smaller than the display, so a naive `scale` leaves the Laplacian variance
+around 4 (visibly soft). Native USM + Lanczos + a light second pass lands near
+15–19, and the eye reads the lines as sharp. Sharpen at native size, never
+only after scaling.
+4. `-r 24` (the plexus is slow enough that 30 fps buys nothing) and
+   `-c:v libx264 -crf 30`. CRF 26 costs ~60% more bytes for no visible gain.
+5. Palindrome the result (`split`/`reverse`/`concat`) for a seamless loop, then
+   `-an`.
+
+Final files are ~6.9 MB (mp4) / ~8.0 MB (webm). The palindrome doubles the
+duration, which is why the clip is trimmed to ~20 s of forward motion first —
+a forward-only loop has an unusable seam (first/last frame mean difference
+~23 vs ~1.6 for the palindrome).
+
+**The stock watermark was removed from the source clip.** The iStock preview
+carries a fixed, semi-transparent "iStock by Getty Images" mark centred in the
+frame. It sits still while the plexus drifts, so it has to be inpainted:
+temporal-minimum across frames isolates it (static + brighter than its
+surroundings), then `cv2.inpaint(..., INPAINT_TELEA)` over that mask on every
+frame. If the clip is ever swapped, re-run that step — a floating overlay
+filter or blur does not remove it and OCR (`tesseract frame.png - --psm 11`)
+still finds the words. Verify with OCR afterwards; clean frames return no
+`stock`/`getty` match at all.
+
 ## Theme components
 
 Beyond the base `nextgen-*` shell, `themes/crypto-web3/global.css` styles four
@@ -767,3 +838,121 @@ which grew every row that wrapped to two lines. The title cell is
 `.nextgen-thread-main { width: 100% }` while the counter cells are `width: 1%`,
 so leftover width goes to long subjects instead of the counters. `forumdisplay_thread`
 has no disk copy — edit it in `mybb_templates` (`sid=-2`).
+
+## Forum tree: four commerce categories plus VIP
+
+The board was reorganised from the original crypto-only layout into the four
+commerce categories the owner asked for. The tree lives in `mybb_forums`; the
+homepage and the jump menu both render it through `build_forumbits()`, so
+nothing in the theme hard-codes a forum id and the tree can be re-parented purely
+in the database.
+
+Current order (`pid` / `disporder`):
+
+| # | Category | Sub-forums |
+| --- | --- | --- |
+| 1 | Hoş Geldiniz ve Duyurular | Duyurular, Ödüllü Etkinlikler, Tanışma, **Sponsorların Alanları** |
+| 2 | Dijital Ticaret & Sosyal Medya Hizmetleri | Instagram, TikTok/YouTube, SMM Panel, Hesap/Hizmet, Kripto-Nakit Takas |
+| 3 | Yapay Zeka & Dijital Araçlar | AI/Prompt Pazarı, Ortak Hesap (Premium), Dijital Lisans |
+| 4 | Kripto Para, AirDrop & Finans | Airdrop/Testnet, Kripto Haberleri, Analiz & Sinyal, Para Kazanma, Telegram/Mining, Testnet, Altcoin, Bitcoin Analizi, Al-Sat, Trading Botları, NFT |
+| 5 | E-Ticaret, Dropshipping & Kuponlar | Sıcak Fırsatlar & Kuponlar, Amazon/Trendyol Dropshipping, Yazılım ve Tema Pazarı |
+| 6 | VIP Club | Erken Airdrop Rehberleri, Balina Sinyalleri, Otomasyon Scriptleri |
+
+The sponsors block was moved out of its own top-level category and now sits as a
+sub-category under Hoş Geldiniz (fid 25, `pid=1`, `disporder=4`), which is why it
+renders as a nested heading rather than a sixth top-level category.
+
+Old category shells `fid=9` (Web3), `fid=13` (Finans) and `fid=21` (Ticaret
+Merkezi) are set `active=0` — their children were re-parented, so they hold no
+forums and would otherwise render as empty headings. Re-parenting a category
+keeps its children reachable only if you also rewrite `parentlist` (comma-joined
+ancestor chain, self last); the homepage groups by `pid` but the jump menu and
+permission inheritance both walk `parentlist`.
+
+`VIP Club` (fid=17) stays as it was: a normal public category, hidden from guests
+by `mybb_forumpermissions` rows (gid 1/2/5/7 `canview=0`, gid 8 and staff
+`canview=1`). It only disappears for guests because the permissions are correct —
+do not "fix" that by making it visible.
+
+New forums have no `mybb_forumpermissions` row of their own; they inherit through
+`build_forum_permissions()`. Adding an explicit row for a public forum is how you
+would accidentally hide it again.
+
+### Rebuilding after a tree change
+
+`mybb_forums` alone is not enough — rebuild the datacaches through MyBB's own
+code or the front end keeps serving the old tree:
+
+```php
+$cache->update_forums();           // forums + jump menu
+$cache->update_forumpermissions(); // permission inheritance
+$cache->update_forumsdisplay();    // forumsdisplay cache
+```
+
+Run that from a throwaway script that boots `global.php`, then delete the script.
+
+Homepage copy lives in `mybb_settings` group 30 (`crypton_theme`): `bbname`,
+`nextgen_hero_*` and `nextgen_box{1,2}_*`. Changing them in `mybb_settings` is
+invisible until `rebuild_settings()` regenerates `inc/settings.php`. The box
+links point at a forum id, so they must be re-checked whenever the tree is
+re-parented — they were `fid=5` before the reorg and now point at `fid=6`
+(Airdrop) and `fid=39` (Kuponlar).
+
+### Per-category icons (`crypto_forumcards`)
+
+Icons come from two layers: the keyword heuristic in
+`crypto_forumcards_lookup($name)` and an explicit row in `mybb_crypto_forum_icons`
+(`fid`, `icon`, `color`). The override always wins. Rules are matched in array
+order, so a broad keyword (`firsat`) listed before a specific one (`airdrop`)
+shadows it — put specific terms first.
+
+Add or change icons from ACP: Forum Kartları → İkon Eşleşmeleri
+(`admin/modules/crypto_forumcards/icons.php`). Empty icon + colour deletes the
+override and the forum falls back to the heuristic.
+
+Two gotchas when editing that page:
+
+* The colour validator uses `preg_match`, and PHP takes the first character of
+  the pattern as the delimiter. Writing `'#^#[0-9a-f]{3,8}$#i'` makes `#` both
+  delimiter and literal, so it rejects every valid hex colour. Use `~` instead.
+* `$db->error()` does not exist on the SQLite driver — calling it throws a MyBB
+  Internal Error that hides the real failure. Use `$db->sql_error()` instead.
+
+### Database engine portability
+
+The board runs on SQLite, so `CREATE TABLE` tails must not be MySQL-only. Gate
+the trailing `ENGINE=... DEFAULT CHARSET=...` on `$db->type == 'mysql'`, which is
+what the other plugins in `inc/plugins/` do. A stray MySQL tail surfaces as a raw
+"internal SQL error" page, not a PHP error. Use `require_once` in the plugin's
+`activate()`/`deactivate()` so re-running them in one process cannot redeclare
+`find_replace_templatesets()`.
+
+
+## `rss_news_bot` plugin — one fetch path, not two
+
+The plugin ships a single fetching system: **categories**
+(`mybb_rss_categories` → `mybb_rss_queue.cid`). Each category owns a Google
+News query plus optional publisher feeds, a target `fid_forum`, a per-run cap
+and an `auto_post` switch. `rss_queue.fid_forum` is what approval publishes
+into; a row with `fid_forum=0` silently falls back to the `rss_bot_forum`
+setting, which is how a news item lands in the wrong forum.
+
+An older release fetched a flat `mybb_rss_feeds` list into `cid=0` rows with no
+target forum. That table, its `fetch_all`/`seed_feeds` functions and its
+`feeds.php` ACP page are gone; do not reintroduce a second fetch path. Every
+entry point (the scheduled task, the categories screen, the queue screen) must
+call `rss_news_bot_fetch_categories($force, $cid)`.
+
+Rules that matter when touching this plugin:
+
+* A manual fetch passes `$force = true`; the scheduled task does not, so the
+  20-hour guard in `rss_news_bot_fetch_categories()` keeps it once per category
+  per day. A category shows `0 new` on a second run in the same day by design.
+* `FeedParser` throws on a well-formed but empty feed (Google News returns one
+  when a query has no hits), so the parse is wrapped in `try/catch`. Without it
+  one dead query takes down the whole scheduled run.
+* Queue rows link back to their category with `cid`, and the queue screen's
+  `cid` filter is what the per-category counter links to.
+* VIP categories queue like any other; the gate is the forum permission, so a
+  fetch never leaks a paid topic. A category created from the ACP is always
+  non-VIP, so a checkbox mistake cannot route the bot into a gated forum.
