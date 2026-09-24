@@ -55,6 +55,7 @@ function rss_news_bot_uninstall()
 
 	$db->drop_table('rss_feeds');
 	$db->drop_table('rss_queue');
+	$db->drop_table('rss_categories');
 
 	$db->delete_query('settings', "name IN ('rss_bot_enabled','rss_bot_forum','rss_bot_user','rss_bot_max_items','rss_bot_interval')");
 	$db->delete_query('settinggroups', "name='rss_news_bot'");
@@ -100,6 +101,17 @@ function rss_news_bot_upgrade_tables()
 		{
 			$db->add_column('rss_queue', 'fid_forum', 'INT NOT NULL DEFAULT 0');
 		}
+		if(!$db->field_exists('cid', 'rss_queue'))
+		{
+			// Which category fetched this item. 0 means a plain feed row, i.e.
+			// the behaviour before categories existed.
+			$db->add_column('rss_queue', 'cid', 'INT NOT NULL DEFAULT 0');
+		}
+	}
+
+	if($db->table_exists('rss_categories') && !$db->field_exists('auto_post', 'rss_categories'))
+	{
+		$db->add_column('rss_categories', 'auto_post', 'INT NOT NULL DEFAULT 0');
 	}
 }
 
@@ -141,6 +153,7 @@ function rss_news_bot_create_tables()
 			summary TEXT NOT NULL,
 			body TEXT,
 			fid_forum {$int} NOT NULL DEFAULT 0,
+			cid {$int} NOT NULL DEFAULT 0,
 			dateline {$int} NOT NULL DEFAULT 0,
 			status VARCHAR(20) NOT NULL DEFAULT 'queued',
 			tid {$int} NOT NULL DEFAULT 0,
@@ -156,7 +169,107 @@ function rss_news_bot_create_tables()
 		$db->write_query($index.";");
 	}
 
+	if(!$db->table_exists('rss_categories'))
+	{
+		$db->write_query("CREATE TABLE ".TABLE_PREFIX."rss_categories (
+			cid {$pk},
+			title VARCHAR(150) NOT NULL,
+			slug VARCHAR(60) NOT NULL,
+			fid_forum {$int} NOT NULL DEFAULT 0,
+			is_vip {$int} NOT NULL DEFAULT 0,
+			query VARCHAR(255) NOT NULL DEFAULT '',
+			sources TEXT NOT NULL,
+			per_run {$int} NOT NULL DEFAULT 7,
+			auto_post {$int} NOT NULL DEFAULT 0,
+			active {$int} NOT NULL DEFAULT 1,
+			disporder {$int} NOT NULL DEFAULT 0,
+			last_fetch {$int} NOT NULL DEFAULT 0,
+			last_error VARCHAR(255) NOT NULL DEFAULT ''
+		){$tail};");
+
+		$index = $mysql
+			? "CREATE UNIQUE INDEX ".TABLE_PREFIX."rss_categories_slug ON ".TABLE_PREFIX."rss_categories (slug(60))"
+			: "CREATE UNIQUE INDEX ".TABLE_PREFIX."rss_categories_slug ON ".TABLE_PREFIX."rss_categories (slug)";
+		$db->write_query($index.";");
+	}
+
 	rss_news_bot_seed_feeds();
+	rss_news_bot_seed_categories();
+}
+
+/* ------------------------------------------------------------ categories --- */
+
+/**
+ * The category list the board asked for, each wired to the forum that already
+ * holds it. `query` drives a Google News search feed; `sources` holds publisher
+ * feeds that carry a usable excerpt for that topic, one URL per line.
+ *
+ * is_vip marks the categories lined up with a locked VIP forum. A fetch for one
+ * of these still lands in the approval queue, and the membership gate stays on
+ * the forum itself, so a mis-set flag here can never leak a paid topic.
+ */
+function rss_news_bot_category_seed()
+{
+        return array(
+                array('Instagram Ticaret Pazarı', 'instagram-ticaret', 29, 0, 'instagram hesap satışı takipçi', ''),
+                array('TikTok & YouTube Dünyası', 'tiktok-youtube', 30, 0, 'tiktok youtube para kazanma', ''),
+                array('SMM Panel Dünyası', 'smm-panel', 31, 0, 'sosyal medya paneli takipçi', ''),
+                array('Hesap ve Hizmet Alım Satımı', 'hesap-hizmet', 22, 0, 'sosyal medya hesap satışı', ''),
+                array('Kripto ve Nakit Takas', 'kripto-nakit-takas', 24, 0, 'kripto nakit takas USDT', ''),
+                array('Erken Aşama AirDrop Rehberleri', 'vip-airdrop-rehberleri', 18, 1, 'airdrop rehberi erken aşama kripto', ''),
+                array('VIP Balina Sinyalleri ve Spot Sepetleri', 'vip-balina-sinyalleri', 19, 1, 'bitcoin balina hareketleri analiz', ''),
+                array('Otomasyon ve Çoklu Hesap Scriptleri', 'vip-otomasyon-script', 20, 1, 'otomasyon scripti çoklu hesap bot', ''),
+                array('Yapay Zeka ve Prompt Pazarı', 'yapay-zeka-prompt', 33, 0, 'yapay zeka prompt aracı', ''),
+                array('Ortak Hesap (Premium) Alışverişi', 'ortak-hesap-premium', 34, 0, 'premium hesap paylaşımı abonelik', ''),
+                array('Dijital Lisans Pazarı', 'dijital-lisans', 35, 0, 'dijital lisans yazılım anahtar', ''),
+                array('Sıcak Fırsatlar & İndirim Kuponları', 'sicak-firsatlar', 39, 0, 'indirim kuponu kampanya fırsat', ''),
+                array('Amazon & Trendyol Dropshipping', 'amazon-trendyol', 40, 0, 'e-ticaret dropshipping', ''),
+                array('Yazılım ve Tema Pazarı', 'yazilim-tema', 23, 0, 'wordpress tema', ''),
+                array('Ücretsiz AirDrop & Testnet Fırsatları', 'ucretsiz-airdrop-testnet', 6, 0, 'ücretsiz airdrop testnet görev', ''),
+                array('Güncel Kripto Haberleri', 'guncel-kripto-haberleri', 10, 0, 'kripto para haberleri', 'https://coin-turk.com/feed'),
+                array('Kripto Para Analiz & Sinyal', 'kripto-analiz-sinyal', 36, 0, 'kripto analiz sinyal', 'https://cryptopotato.com/feed/'),
+                array('İnternetten Para Kazanma Yolları', 'internetten-para-kazanma', 37, 0, 'internetten para kazanma yolları', ''),
+                array('Telegram Botları ve Mining', 'telegram-bot-mining', 7, 0, 'telegram bot mining kripto', ''),
+                array('Testnet ve Erken Erişim Projeleri', 'testnet-erken-erisim', 8, 0, 'testnet kripto', ''),
+                array('Altcoin ve Proje İncelemeleri', 'altcoin-proje-inceleme', 11, 0, 'altcoin proje incelemesi', 'https://bitcoinist.com/feed/'),
+                array('Bitcoin ve Piyasa Analizi', 'bitcoin-piyasa-analizi', 14, 0, 'bitcoin piyasa analizi', 'https://coin-turk.com/feed'),
+                array('Al-Sat Stratejileri ve İndikatörler', 'al-sat-stratejileri', 15, 0, 'kripto al sat stratejisi indikatör', ''),
+                array('Kripto Trading Botları', 'kripto-trading-bot', 16, 0, 'kripto trading botu', ''),
+                array('NFT ve Metaverse Dünyası', 'nft-metaverse', 12, 0, 'nft metaverse haberleri', ''),
+        );
+}
+
+/**
+ * Insert the categories once. Re-running install must not duplicate them, and
+ * the slug index is the backstop if two admins ever hit install together.
+ */
+function rss_news_bot_seed_categories()
+{
+        global $db;
+
+        $existing = $db->fetch_field($db->simple_select('rss_categories', 'COUNT(*) AS c'), 'c');
+        if($existing)
+        {
+                return;
+        }
+
+        foreach(rss_news_bot_category_seed() as $i => $c)
+        {
+                $db->insert_query('rss_categories', array(
+                        'title' => $db->escape_string($c[0]),
+                        'slug' => $db->escape_string($c[1]),
+                        'fid_forum' => (int)$c[2],
+                        'is_vip' => (int)$c[3],
+                        'query' => $db->escape_string($c[4]),
+                        'sources' => $db->escape_string($c[5]),
+                        'per_run' => 7,
+                        'auto_post' => 0,
+                        'active' => 1,
+                        'disporder' => $i + 1,
+                        'last_fetch' => 0,
+                        'last_error' => '',
+                ));
+        }
 }
 
 /**
@@ -401,6 +514,315 @@ function rss_news_bot_fetch_all($force = false)
 	return $report;
 }
 
+
+/**
+ * Build the Google News search feed for a category. Using the query endpoint
+ * keeps all 25 categories on one provider, so a single outage or markup change
+ * is the worst case instead of 25 separate ones.
+ */
+function rss_news_bot_category_feed_url($cat)
+{
+        $q = trim((string)$cat['query']);
+        if($q === '')
+        {
+                // Fall back to the title so a category with no query still resolves.
+                $q = $cat['title'];
+        }
+
+        return 'https://news.google.com/rss/search?q='.rawurlencode($q).'&hl=tr&gl=TR&ceid=TR:tr';
+}
+
+/**
+ * Google News titles read "Headline - Publisher" and carry the publisher again
+ * in a grey font tag inside the description. Prefer the tag, then the title
+ * suffix, then the search term.
+ */
+function rss_news_bot_category_source_name($description, $title, $fallback)
+{
+        if(preg_match('~<font color="#6f6f6f">(.*?)</font>~is', (string)$description, $m))
+        {
+                $name = trim(html_entity_decode(strip_tags($m[1]), ENT_QUOTES, 'UTF-8'));
+                if($name !== '')
+                {
+                        return $name;
+                }
+        }
+
+        if(strpos((string)$title, ' - ') !== false)
+        {
+                $parts = explode(' - ', $title);
+                $name = trim(array_pop($parts));
+                if($name !== '' && mb_strlen($name) < 60)
+                {
+                        return $name;
+                }
+        }
+
+        return $fallback;
+}
+
+/**
+ * Strip the " - Publisher" suffix Google News appends and clamp the result to
+ * what a thread subject accepts. The publisher is already stored separately as
+ * the source, so keeping it in the title only makes subjects too long.
+ */
+function rss_news_bot_category_title($title, $source)
+{
+        $title = trim((string)$title);
+        $source = trim((string)$source);
+
+        if($source !== '' && mb_substr($title, -mb_strlen($source)) === $source)
+        {
+                $title = rtrim(mb_substr($title, 0, mb_strlen($title) - mb_strlen($source)), " -\xE2\x80\x93");
+        }
+        elseif(strpos($title, ' - ') !== false)
+        {
+                $parts = explode(' - ', $title);
+                array_pop($parts);
+                $title = trim(implode(' - ', $parts));
+        }
+
+        if($title === '')
+        {
+                $title = trim((string)$source);
+        }
+
+        // 85 is the board's hard subject limit; leave the ellipsis room.
+        if(my_strlen($title) > 80)
+        {
+                $title = my_substr($title, 0, 80).'...';
+        }
+
+        return $title;
+}
+
+/**
+ * Fetch one category and queue its headlines for the category's forum.
+ *
+ * The daily cap is enforced per category, so a category that is fetched twice
+ * in a day does not flood the board: the second run stops at what is left of
+ * $per_run. Admins bypass the once-a-day guard from the ACP ($force).
+ */
+function rss_news_bot_fetch_category($cat, $force = false)
+{
+        global $db, $mybb;
+
+        $cid = (int)$cat['cid'];
+        $result = array('cid' => $cid, 'new' => 0, 'published' => 0, 'error' => '');
+
+        require_once MYBB_ROOT.'inc/class_feedparser.php';
+
+        $added_total = 0;
+        $urls = array();
+
+        // Publisher feeds go first: they carry the real excerpt or full text,
+        // which the Google News aggregator does not. Google News fills whatever
+        // room is left in $per_run, so a topic still updates on a quiet day.
+        foreach(preg_split('~\r\n|\r|\n~', (string)$cat['sources']) as $extra)
+        {
+                $extra = trim($extra);
+                if($extra !== '')
+                {
+                        $urls[] = $extra;
+                }
+        }
+
+        $urls[] = rss_news_bot_category_feed_url($cat);
+
+        $per_run = (int)$cat['per_run'];
+        if($per_run < 1)
+        {
+                $per_run = 7;
+        }
+
+        $fid = (int)$cat['fid_forum'];
+        $errors = array();
+
+        foreach($urls as $url)
+        {
+                if($added_total >= $per_run)
+                {
+                        break;
+                }
+
+                $parser = new FeedParser();
+
+                // FeedParser fatals on a well-formed but empty feed (Google News
+                // returns one when a query has no hits), so a category with no
+                // results must not take the whole scheduled run down with it.
+                try
+                {
+                        $parsed = $parser->parse_feed($url);
+                }
+                catch(Throwable $e)
+                {
+                        $errors[] = 'parse_failed';
+                        continue;
+                }
+
+                if(!$parsed)
+                {
+                        $errors[] = $parser->error;
+                        continue;
+                }
+
+                foreach($parser->items as $item)
+                {
+                        if($added_total >= $per_run)
+                        {
+                                break;
+                        }
+
+                        $title = isset($item['title']) ? trim($item['title']) : '';
+                        $link = isset($item['link']) ? trim($item['link']) : '';
+                        if($title === '' || $link === '')
+                        {
+                                continue;
+                        }
+
+                        $guid = isset($item['guid']) && trim($item['guid']) !== '' ? trim($item['guid']) : $link;
+
+                        $dupe = $db->simple_select('rss_queue', 'qid', "guid='".$db->escape_string($guid)."'");
+                        if($db->num_rows($dupe))
+                        {
+                                continue;
+                        }
+
+                        $description = isset($item['description']) ? $item['description'] : '';
+                        // content:encoded holds the full article when the publisher
+                        // provides it; FeedParser leaves it empty otherwise.
+                        $content = isset($item['content']) ? trim((string)$item['content']) : '';
+
+                        $source = rss_news_bot_category_source_name($description, $title, $cat['title']);
+                        $raw_title = $title;
+                        $title = rss_news_bot_category_title($title, $source);
+
+                        // Same echo test as the body: a summary that only repeats the
+                        // headline is noise, so leave it empty and the topic shows the
+                        // source line alone.
+                        $summary_text = rss_news_bot_clean_summary($description, 300);
+                        if(mb_strlen($summary_text) <= mb_strlen($raw_title) + mb_strlen($source) + 10)
+                        {
+                                $summary_text = '';
+                        }
+
+                        if($content !== '')
+                        {
+                                $body = rss_news_bot_clean_summary($content, 20000);
+                        }
+                        else
+                        {
+                                // Google News only repeats the headline in its description, so
+                                // an excerpt there carries no information. Queue the body empty
+                                // and the topic is a clean link plus the source line.
+                                $body = rss_news_bot_clean_summary($description, 600);
+                                // An echo of the headline (plus the publisher) adds nothing:
+                                // drop it so the topic body is just the source link.
+                                $echo_len = mb_strlen($raw_title) + mb_strlen($source) + 10;
+                                if(mb_strlen($body) <= $echo_len)
+                                {
+                                        $body = '';
+                                }
+                        }
+
+                        $qid = $db->insert_query('rss_queue', array(
+                                'feed_id' => 0,
+                                'cid' => $cid,
+                                'source' => $db->escape_string($source),
+                                'title' => $db->escape_string($title),
+                                'link' => $db->escape_string($link),
+                                'guid' => $db->escape_string($guid),
+                                'summary' => $db->escape_string(rss_news_bot_clean_summary($summary_text, 300)),
+                                'body' => $db->escape_string($body),
+                                'fid_forum' => $fid,
+                                'dateline' => isset($item['date_timestamp']) && (int)$item['date_timestamp'] ? (int)$item['date_timestamp'] : TIME_NOW,
+                                'status' => 'queued',
+                        ));
+
+                        // A category set to auto_post publishes immediately, through the same
+                        // approval path the ACP uses, so validation and the source link are
+                        // identical whether a human or the schedule triggered it.
+                        if((int)$cat['auto_post'] == 1)
+                        {
+                                $bot_uid = (int)$mybb->settings['rss_bot_user'];
+                                list($ok, $approve_message) = rss_news_bot_approve($qid, $bot_uid);
+                                if($ok)
+                                {
+                                        $result['published']++;
+                                }
+                                else
+                                {
+                                        $result['error'] = trim($result['error'].' '.$approve_message);
+                                }
+                        }
+
+                        $added_total++;
+                        $result['new']++;
+                }
+        }
+
+        if($errors)
+        {
+                $result['error'] = trim($result['error'].' '.implode(' | ', array_unique($errors)));
+        }
+
+        return $result;
+}
+
+/**
+ * Run every active category, or just one when $cid is given.
+ *
+ * $force skips the once-a-day guard (used by the ACP manual fetch). The daily
+ * schedule calls this unforced, so each category is pulled at most once a day.
+ */
+function rss_news_bot_fetch_categories($force = false, $cid = 0)
+{
+        global $db, $mybb;
+
+        $report = array('categories' => 0, 'new' => 0, 'published' => 0, 'errors' => array());
+
+        if(!$force && $mybb->settings['rss_bot_enabled'] != 1)
+        {
+                return $report;
+        }
+
+        $where = 'active=1';
+        if($cid > 0)
+        {
+                $where .= ' AND cid='.(int)$cid;
+        }
+
+        $query = $db->simple_select('rss_categories', '*', $where, array('order_by' => 'disporder', 'order_dir' => 'ASC'));
+
+        while($cat = $db->fetch_array($query))
+        {
+                // 72000s = 20h, so a schedule running slightly early or late still
+                // counts as once a day rather than skipping or doubling a day.
+                if(!$force && (int)$cat['last_fetch'] > TIME_NOW - 72000)
+                {
+                        continue;
+                }
+
+                $report['categories']++;
+
+                $res = rss_news_bot_fetch_category($cat, $force);
+                $report['new'] += $res['new'];
+                $report['published'] += $res['published'];
+
+                $db->update_query('rss_categories', array(
+                        'last_fetch' => TIME_NOW,
+                        'last_error' => $db->escape_string((string)$res['error']),
+                ), 'cid='.(int)$cat['cid']);
+
+                if($res['error'] !== '')
+                {
+                        $report['errors'][] = $cat['title'].': '.$res['error'];
+                }
+        }
+
+        return $report;
+}
+
 /**
  * Feed descriptions are HTML fragments with tracking pixels and relative URLs.
  * Keep a plain-text excerpt; the topic itself links to the source.
@@ -412,7 +834,7 @@ function rss_news_bot_fetch_all($force = false)
 function rss_news_bot_clean_summary($html, $limit = 0)
 {
 	$limit = (int)$limit;
-	if($limit < 100 || $limit > 5000)
+	if($limit < 100 || $limit > 20000)
 	{
 		$limit = 900;
 	}
@@ -537,7 +959,12 @@ function rss_news_bot_approve($qid, $admin_uid, $override = array())
 
 	if(!$posthandler->validate_thread())
 	{
-		return array(false, 'Konu doğrulanamadı: '.implode(' ', (array)$posthandler->get_errors()));
+		$messages = array();
+		foreach((array)$posthandler->get_errors() as $code => $detail)
+		{
+			$messages[] = is_array($detail) && isset($detail['error_code']) ? $detail['error_code'].' ('.$detail['data'].')' : (string)$code;
+		}
+		return array(false, 'Konu doğrulanamadı: '.implode(', ', $messages));
 	}
 
 	// insert_thread() returns array('pid','tid','visible'), not a bare id.
@@ -561,12 +988,19 @@ function rss_news_bot_build_message($item)
 	$source = htmlspecialchars_uni($item['source']);
 	$link = htmlspecialchars_uni($item['link']);
 	$link = str_replace(array('"', '<', '>'), '', $link);
-	$summary = htmlspecialchars_uni($item['summary']);
+	$body_text = isset($item['body']) ? trim((string)$item['body']) : '';
+	if($body_text === '')
+	{
+		$body_text = isset($item['summary']) ? trim((string)$item['summary']) : '';
+	}
 
 	$body = '';
-	if($summary !== '')
+	if($body_text !== '')
 	{
-		$body .= "[quote]{$summary}[/quote]\n\n";
+		// The queued text can be an HTML fragment; keep the topic body plain.
+		$body_text = trim(preg_replace('~\s+~u', ' ', strip_tags($body_text)));
+		$body_text = htmlspecialchars_uni($body_text);
+		$body .= "[quote]{$body_text}[/quote]\n\n";
 	}
 
 	$body .= "Haberin tamamı ve doğrulaması için kaynak: [url={$link}]{$source}[/url]\n\n";

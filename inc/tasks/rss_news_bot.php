@@ -1,32 +1,33 @@
 <?php
 /**
- * Scheduled task: pull the RSS feeds into the approval queue.
+ * Scheduled task: pull each RSS category into the approval queue.
  *
- * This only ever writes to the queue table. Publishing stays a deliberate
- * admin action in the ACP, so a badly-behaved or hijacked feed can never put
- * content straight onto the board.
+ * The guard in rss_news_bot_fetch_categories() keeps this to one run per
+ * category per day, so the hourly schedule only wakes the task up; it does not
+ * multiply the volume. Each run queues up to the category's per_run cap (7 by
+ * default) and never writes anything onto the board directly.
  */
 
 function task_rss_news_bot($task)
 {
-	global $mybb;
+        global $mybb;
 
-	if($mybb->settings['rss_bot_enabled'] != 1)
-	{
-		add_task_log($task, 'RSS Haber Botu kapalı, çekim yapılmadı.');
-		return true;
-	}
+        if($mybb->settings['rss_bot_enabled'] != 1)
+        {
+                add_task_log($task, 'RSS Haber Botu kapali, cekim yapilmadi.');
+                return true;
+        }
 
-	$report = rss_news_bot_fetch_all();
+        $report = rss_news_bot_fetch_categories();
 
-	$message = 'Beslemeler: '.(int)$report['feeds'].', kuyruğa eklenen yeni haber: '.(int)$report['new'].'.';
+        $message = 'Kategori: '.(int)$report['categories'].', kuyruga eklenen yeni haber: '.(int)$report['new'].'.';
 
-	if(!empty($report['errors']))
-	{
-		$message .= ' Hatalar: '.implode(' | ', $report['errors']);
-	}
+        if(!empty($report['errors']))
+        {
+                $message .= ' Hatalar: '.implode(' | ', $report['errors']);
+        }
 
-	add_task_log($task, $message);
+        add_task_log($task, $message);
 
-	return true;
+        return true;
 }

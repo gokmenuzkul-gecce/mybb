@@ -13,6 +13,7 @@ function rss_news_bot_meta()
 
 	$sub_menu = array();
 	$sub_menu['10'] = array('id' => 'queue', 'title' => 'Onay Kuyruğu', 'link' => 'index.php?module=rss_news_bot-queue');
+	$sub_menu['15'] = array('id' => 'categories', 'title' => 'Kategoriler', 'link' => 'index.php?module=rss_news_bot-categories');
 	$sub_menu['20'] = array('id' => 'feeds', 'title' => 'Beslemeler', 'link' => 'index.php?module=rss_news_bot-feeds');
 
 	$sub_menu = $plugins->run_hooks('admin_rss_news_bot_menu', $sub_menu);
@@ -29,6 +30,7 @@ function rss_news_bot_action_handler($action)
 
 	$actions = array(
 		'queue' => array('active' => 'queue', 'file' => 'queue.php'),
+		'categories' => array('active' => 'categories', 'file' => 'categories.php'),
 		'feeds' => array('active' => 'feeds', 'file' => 'feeds.php'),
 	);
 
@@ -48,7 +50,8 @@ function rss_news_bot_admin_permissions()
 		'name' => 'RSS Haber Botu',
 		'permissions' => array(
 			'queue' => 'Haber onay kuyruğunu görüntüle ve onayla',
-			'feeds' => 'RSS beslemelerini yönet',
+			'categories' => 'RSS kategorilerini yönet ve çek',
+		'feeds' => 'RSS beslemelerini yönet',
 		),
 		'disporder' => 66,
 	);

@@ -16,6 +16,24 @@ $page->add_breadcrumb_item('Onay Kuyruğu', 'index.php?module=rss_news_bot-queue
 
 $action = $mybb->get_input('action');
 $qid = $mybb->get_input('qid', MyBB::INPUT_INT);
+$cid = $mybb->get_input('cid', MyBB::INPUT_INT);
+
+$where = '';
+$filter_suffix = '';
+$filter_cat = null;
+if($cid > 0)
+{
+	$filter_cat = $db->fetch_array($db->simple_select('rss_categories', 'title', "cid='{$cid}'"));
+	if(!$filter_cat)
+	{
+		$cid = 0;
+	}
+	else
+	{
+		$where = "cid='{$cid}'";
+		$filter_suffix = '&amp;cid='.$cid;
+	}
+}
 
 /* ------------------------------------------------------------- actions --- */
 
@@ -28,20 +46,20 @@ if($action == 'approve' || $action == 'reject')
 	if(!$item)
 	{
 		flash_message('Kuyruk kaydı bulunamadı.', 'error');
-		admin_redirect('index.php?module=rss_news_bot-queue');
+		admin_redirect('index.php?module=rss_news_bot-queue'.$filter_suffix);
 	}
 
 	if($item['status'] != 'queued')
 	{
 		flash_message('Bu haber zaten işleme alınmış.', 'error');
-		admin_redirect('index.php?module=rss_news_bot-queue');
+		admin_redirect('index.php?module=rss_news_bot-queue'.$filter_suffix);
 	}
 
 	if($mybb->request_method != 'post')
 	{
 		$page->output_header('Haberi Onayla');
 		$page->add_breadcrumb_item('Haberi Onayla');
-		$form = new Form('index.php?module=rss_news_bot-queue&amp;action='.$action.'&amp;qid='.$qid, 'post');
+		$form = new Form('index.php?module=rss_news_bot-queue&amp;action='.$action.'&amp;qid='.$qid.$filter_suffix, 'post');
 
 		if($action == 'approve')
 		{
@@ -106,7 +124,7 @@ if($action == 'approve' || $action == 'reject')
 		flash_message($message, 'success');
 	}
 
-	admin_redirect('index.php?module=rss_news_bot-queue');
+	admin_redirect('index.php?module=rss_news_bot-queue'.$filter_suffix);
 }
 
 if($action == 'fetch')
@@ -122,19 +140,25 @@ if($action == 'fetch')
 	}
 	flash_message($message, $report['errors'] ? 'error' : 'success');
 
-	admin_redirect('index.php?module=rss_news_bot-queue');
+	admin_redirect('index.php?module=rss_news_bot-queue'.$filter_suffix);
 }
 
 /* ---------------------------------------------------------------- list --- */
 
-$page->output_header('RSS Onay Kuyruğu');
+$page->output_header('RSS Onay Kuyruğu'.($filter_cat ? ' - '.htmlspecialchars_uni($filter_cat['title']) : ''));
 
-$form = new Form('index.php?module=rss_news_bot-queue&amp;action=fetch', 'post');
+if($filter_cat)
+{
+	flash_message('Yalnızca <strong>'.htmlspecialchars_uni($filter_cat['title']).'</strong> kategorisi gösteriliyor. <a href="index.php?module=rss_news_bot-queue">Tüm kuyruğu göster</a>', 'success');
+}
+
+$form = new Form('index.php?module=rss_news_bot-queue&amp;action=fetch'.$filter_suffix, 'post');
 $buttons = array($form->generate_submit_button('Beslemeleri Şimdi Çek'));
 $form->output_submit_wrapper($buttons);
 $form->end();
 
-$pending = $db->fetch_field($db->simple_select('rss_queue', 'COUNT(*) AS c', "status='queued'"), 'c');
+$pending_where = "status='queued'".($where !== '' ? " AND {$where}" : '');
+$pending = $db->fetch_field($db->simple_select('rss_queue', 'COUNT(*) AS c', $pending_where), 'c');
 if($pending)
 {
 	flash_message($pending.' haber onay bekliyor.', 'success');
@@ -153,7 +177,7 @@ $status_labels = array(
 	'rejected' => array('Reddedildi', '#ef4444'),
 );
 
-$query = $db->simple_select('rss_queue', '*', '', array('order_by' => 'dateline', 'order_dir' => 'DESC', 'limit' => 200));
+$query = $db->simple_select('rss_queue', '*', $where, array('order_by' => 'dateline', 'order_dir' => 'DESC', 'limit' => 200));
 
 $count = 0;
 while($item = $db->fetch_array($query))
@@ -176,8 +200,8 @@ while($item = $db->fetch_array($query))
 	if($item['status'] == 'queued')
 	{
 		$key = $mybb->post_code;
-		$controls = '<a href="index.php?module=rss_news_bot-queue&amp;action=approve&amp;qid='.$row_qid.'&amp;my_post_key='.$key.'">Onayla</a>';
-		$controls .= ' &middot; <a href="index.php?module=rss_news_bot-queue&amp;action=reject&amp;qid='.$row_qid.'&amp;my_post_key='.$key.'">Reddet</a>';
+		$controls = '<a href="index.php?module=rss_news_bot-queue&amp;action=approve&amp;qid='.$row_qid.$filter_suffix.'&amp;my_post_key='.$key.'">Onayla</a>';
+		$controls .= ' &middot; <a href="index.php?module=rss_news_bot-queue&amp;action=reject&amp;qid='.$row_qid.$filter_suffix.'&amp;my_post_key='.$key.'">Reddet</a>';
 		$table->construct_cell($controls, array('class' => 'align_center'));
 	}
 	elseif($item['status'] == 'approved' && $item['tid'])
